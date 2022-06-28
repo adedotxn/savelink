@@ -1,0 +1,25 @@
+{
+    "data" : [
+        {
+            "_id" : 1,
+            "title" : "an indepth explainer on useeffect by dan",
+            "url" : "https://sdkjhk.sdjlj",
+            "category" : "social",
+            "starred" : true
+        },
+        {
+            "_id" : 2,
+            "title" : "an indepth explainer on useeffect by dan",
+            "url" : "https://sdkjhk.sdjlj",
+            "category" : "react js",
+            "starred" : true
+        },
+        {
+            "_id" : 3,
+            "title" : "an indepth explainer on useeffect by dan",
+            "url" : "https://sdkjhk.sdjlj",
+            "category" : "to read",
+            "starred" : false
+        }
+    ]
+}

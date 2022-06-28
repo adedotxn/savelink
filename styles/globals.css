@@ -19,7 +19,7 @@ a {
 }
 :root {
   --background: #212125;
-  --accent-color: #bcbab9;
+  --accent-color: #3b3b40;
   --text-color: white;
 
 }
@@ -28,5 +28,10 @@ a {
 }
 .show {
   display: block;
-
+  transition: all .15s linear 0s;
 }
+
+.hoverOn {
+  box-shadow: 1px 0px 3px black;
+}
+

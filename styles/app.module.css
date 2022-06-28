@@ -1,0 +1,16 @@
+.header {
+    padding:1rem 1.4rem
+}
+@media screen and (min-width: 768px) {
+    .main {
+        display: grid;
+        grid-template-columns: 10vw 1fr;
+    }
+    .side {
+        width:50vw;
+        z-index: 2;
+    }
+    .header {
+        padding:0rem;
+    }
+}
