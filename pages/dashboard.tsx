@@ -4,16 +4,17 @@ import styles from '../styles/dashboard.module.css'
 import links from '../data/dummydata.json' 
 // import Layout from '../components/layout'
 import { NextPage } from 'next'
-import { useRef, useState } from 'react'
+import React, { FormEvent, useRef, useState } from 'react'
 import { Modal, Dialog } from 'react-dialog-polyfill'
 
 
 const Dashboard:NextPage = () => {
     const link = links.data
 
+
     const [dialog, setDialog] = useState(false);
 
-    function handleSubmit (e) {
+    function handleSubmit (e : React.SyntheticEvent) {
         e.preventDefault()
 
         setDialog(false)

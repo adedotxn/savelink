@@ -1,14 +1,27 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/list.module.css'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import SvgComponent from './svg/starsvg'
 
-const List = ({array}) => {
+interface IProps {
+    array : {
+    _id : number;
+    title : string;
+    url : string;
+    category : string;
+    }[]
+}
+
+const List:FC<IProps> = ({array}) => {
     const [bkmrkd, setBkmrkd] = useState(false)
 
     function star() {
         setBkmrkd(!bkmrkd)
+    }
+
+    const starProps = {
+        starred : bkmrkd
     }
 
     

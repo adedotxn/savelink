@@ -10,10 +10,16 @@ import { Modal, Dialog } from 'react-dialog-polyfill'
 
 const Dashboard:NextPage = () => {
     const link = links.data
+    console.log(link)
+    let categories = []
+    for (let i = 0 ; i < link.length ; ++i) {
+        categories.push(link[i].category)
+    }
+    console.log(categories)
 
     const [dialog, setDialog] = useState(false);
 
-    function handleSubmit (e) {
+    function handleSubmit (e : React.SyntheticEvent) {
         e.preventDefault()
 
         setDialog(false)
@@ -36,9 +42,11 @@ const Dashboard:NextPage = () => {
             <p>Select Category</p>
             <select>
                 <option value="default">Choose...</option>
-                <option>Brine shrimp</option>
-                <option>Red panda</option>
-                <option>Spider monkey</option>
+                {categories.map((e, index) => (
+                    <>
+                        <option key={index} value={e}> {e} </option>
+                    </>
+                ))}
             </select>
 
             <button type="submit">Add</button>

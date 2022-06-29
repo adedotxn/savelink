@@ -1,10 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useRef, useState } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import styles from '../../styles/dashboard.module.css'
 
-const MobileSidebar = ({side, setSide}) => {
+
+interface IProps  {
+    side : boolean; setSide : 
+    React.Dispatch<React.SetStateAction<boolean>>
+}
+const MobileSidebar:FC<IProps> = ({side, setSide} ) => {
     const router = useRouter()
 
     return (

@@ -22,7 +22,7 @@
     border: 0px solid;
     display: grid;
     place-items: center;
-    background-color: white;
+    background-color: var(--text-color);
     cursor: pointer;
 }
 .add:hover {

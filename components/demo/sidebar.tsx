@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import styles from '../../styles/dashboard.module.css'
+import BookmarkSvg from '../svg/bookmarksvg'
+import CategoriesSvg from '../svg/categoriesvg'
+import LinkSvg from '../svg/linksvg'
 
-const Sidebar = () => {
+const Sidebar:FC = () => {
     const navRef = useRef<HTMLElement>(null)
     const router = useRouter()
 
@@ -28,12 +31,7 @@ const Sidebar = () => {
                 <Link href='/demo/dashboard' >
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/demo/dashboard' ? styles.active_route : ""} >
-                                <Image 
-                                    src='/links.svg' 
-                                    alt='links'
-                                    width={25}
-                                    height={25}   
-                                /> 
+                            <LinkSvg/>
                         </div>
                         <span className={hovering ? 'show' : 'hide'} >All links </span>
                     </li>
@@ -42,12 +40,7 @@ const Sidebar = () => {
                 <Link href='/demo/bookmarked' >
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/demo/bookmarked' ? styles.active_route : ""} >
-                            <Image 
-                                src='/bookmark.svg' 
-                                alt='links'
-                                width={25}
-                                height={25}
-                            />
+                            <BookmarkSvg/>
                         </div> 
                         <span className={hovering ? 'show' : 'hide'}>Starred</span>
                     </li>
@@ -56,12 +49,7 @@ const Sidebar = () => {
                 <Link href='/demo/categories'>
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/demo/categories' ? styles.active_route : ""} >
-                            <Image 
-                                src='/lightbulb.svg' 
-                                alt='links'
-                                width={25}
-                                height={25}
-                            /> 
+                            <CategoriesSvg/>
                         </div> 
                         <span className={hovering ? 'show' : 'hide'} >Categories</span>
                     </li>
