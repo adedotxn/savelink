@@ -2,7 +2,7 @@
     margin: 0;
 }
 .link_wrapper {
-    background-color: #3b3b40;
+    background-color: var(--accent-color);
     border-radius: .5rem;;
 }
 .link_list {

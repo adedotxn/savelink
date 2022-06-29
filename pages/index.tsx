@@ -19,9 +19,11 @@ const Home: NextPage = () => {
         <p>Save and categorise your important links from all across the internet in one place.</p>
 
         <div>
-          <button> Sign in with google </button>
-          <button> Sign in with twitter</button>
-          <Link href='/dashboard'>  
+          <Link href="/dashboard">
+            <button> Sign in with google </button>
+          </Link>
+          {/* <button> Sign in with twitter</button> */}
+          <Link href='/demo/dashboard'>  
             <button> Demo sign in </button>
           </Link> 
 

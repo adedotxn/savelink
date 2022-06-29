@@ -1,7 +1,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    background-color: gray;
+    background-color: var(--accent-color);
     padding:.5rem 1rem;
     border-radius: 1.3rem;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .searchbar input {
-    background-color: grey;
+    background-color: var(--accent-color);
     border: 0px solid;
     width:70vw;
     padding: .5rem;
@@ -21,7 +21,7 @@
     color: var(--text-color);
 }
 .searchbar input::placeholder {
-    color: white;
+    color: var(--text-color);
 }
 
 @media screen and (min-width: 768px) {
@@ -39,7 +39,7 @@
         margin-left: 25vw;;
     }
     .searchbar input {
-        background-color: grey;
+        background-color: var(--accent-color);
         width:40vw;
         border-radius: .5rem;
         padding:.5rem 3rem;
@@ -47,6 +47,7 @@
         background-image: url('../public/search.svg');
         background-repeat: no-repeat;
         background-position: 10px center;
+        color: var(--text-color)
     }
     .searchbar input::placeholder {
         font-weight: 200;
