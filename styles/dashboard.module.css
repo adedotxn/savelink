@@ -5,7 +5,7 @@
 }
 
 .footer {
-    position:fixed;
+    position:absolute;
     bottom: 5rem;
     right:3rem;
 }
@@ -86,7 +86,7 @@
 .dialog {
     width:80vw;
     display: absolute;
-    top:0;
+    top:15rem;
     background-color: var(--accent-color);
     border: 1px solid white;
     border-radius: .5rem;
@@ -94,7 +94,7 @@
 .dialog form {
     display: grid;
 }
-.dialog form input {
+.dialog form>input {
     padding:.2rem .5rem;
     margin-top: .5rem;
 }
@@ -103,14 +103,49 @@
 }
 .dialog select {
     width: fit-content;
-    margin-bottom: 2rem;;
+    height: 1.5rem;
+    font-size: 1rem;
 }
 .dialog form button {
     width: fit-content;
     margin: 0 auto;
     padding: .2rem .5rem;;
 }
+.dialog section {
+    /* border: 1px solid white; */
+    margin-top: 1rem;;
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.dialog section div select {
+    margin-top: .5rem;;
+}
+.dialog section div p {
+    padding:0rem;
+    margin: 0rem;
+}
+.dialog section div:nth-child(2) input {
+    padding:.3rem .2rem;
+}
+.create_category {
+    
+}
+.create_category input {
+    margin-bottom: .5rem;
+    padding: .2rem .5rem;
+}
+
+
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
 
 @media screen and (min-width: 768px) {
     .open_sidebar, .close_sidebar {
@@ -159,13 +194,7 @@
     }
     
     
-    .hide {
-        display: none;
-    }
-    .show {
-        display: block;
-      
-    }
+
     .li_hover {
         background-color: var(--accent-color);
         color: black
@@ -181,7 +210,15 @@
         column-gap: .9rem;;
     }
     .dialog {
-        width:50vw;;
+        width:50vw;
+        display: absolute;
+        top:0rem;
     }
-
+    .dialog section {
+        padding: 0rem 2rem;
+    }
+    .create_category {
+        display: grid;
+    }
+    
 }

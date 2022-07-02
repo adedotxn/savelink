@@ -4,9 +4,10 @@ import styles from '../../styles/dashboard.module.css'
 import links from '../../data/dummydata.json' 
 // import Layout from '../components/layout'
 import { NextPage } from 'next'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { Modal, Dialog } from 'react-dialog-polyfill'
 import DemoList from '../../components/demo/lists'
+import MoreSvg from '../../components/svg/moresvg'
 
 interface IData {
     _id : number;
@@ -15,6 +16,7 @@ interface IData {
     category : string;
     starred : boolean
 }
+
 
 const Dashboard:NextPage = () => {
 
@@ -35,21 +37,28 @@ const Dashboard:NextPage = () => {
     }
 
     const [dialog, setDialog] = useState(false);
+    const [modal, setModal] = useState(false)
+
+   
 
     function handleSubmit (e : FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        const data = new FormData(e.target);
+        const data = new FormData(e.target as HTMLFormElement);
         let nutitle :string = data.get("title")?.toString() || ''
         let nulink:string =  data.get("link")?.toString()!
-        const form = document.forms['input-form'].categories;
+        const form : HTMLFormElement = document.forms['input-form'].categories;
         console.log(form)
         let latestID = DLinks[DLinks.length - 1]._id++
+        let nucategory :string = data.get("category")?.toString() || ''
+
+        let category = form.value === "Choose..." ? nucategory : form.value;
+
         
         const newDlinks :IData = {
             _id : Math.random(),
             title : nutitle,
             url: nulink,
-            category: form.value,
+            category: category,
             starred: false
         }
         DLinks.push(newDlinks)
@@ -63,9 +72,7 @@ const Dashboard:NextPage = () => {
 
 
     useEffect(() => {
-
-
-        const retrievedData =  JSON.parse(localStorage.getItem('savelink-data'))
+        const retrievedData : IData =  JSON.parse(localStorage.getItem('savelink-data'))
 
         if(retrievedData === null) {
             const stringifyData = JSON.stringify(DLinks)
@@ -73,10 +80,14 @@ const Dashboard:NextPage = () => {
         }
         setDLinks(retrievedData)
         console.log(retrievedData)
-
     },[])
 
     
+    const [newCategory, setNewCategory] = useState('');
+    const handleNewCategory = (e) => {
+        e.preventDefault()
+        setNewCategory(e.target.value)
+    }
 
 
     return (
@@ -90,20 +101,33 @@ const Dashboard:NextPage = () => {
             <div>
       <Dialog className={styles.dialog} open={dialog}>
         <form id = "input-form" onSubmit={handleSubmit} action="">
-            <input name = "title"  placeholder='Title'/>
-            <input name = "link" placeholder='Link' required />
+            <input name = "title"   placeholder='Title'/>
+            <input name = "link"  placeholder='Link' required />
 
-            <p>Select Category</p>
-            <select name = "categories">
-                <option value="">Choose...</option>
-                {categories.map((e, index) => (
-                    <>
-                        <option key={index} value={e}> {e} </option>
-                    </>
-                ))}
-            </select>
+            <section>
+                <div className={styles.create_category} >
+                    <input type="text" placeholder='you can select from preexisting categories' />
+                    <button onClick={handleNewCategory}>
+                        <span>+</span> Create category
+                    </button>
+                </div>
 
-            <button type="submit">Add</button>
+                <div>
+                    <p>Select Category</p>
+                    <select name = "categories">
+                        <option value="">Choose...</option>
+                        {categories.map((e, index) => (
+                            <>
+                                <option key={index} value={e}> {e} </option>
+                            </>
+                        ))}
+                    </select>
+                </div>
+
+               
+            </section>
+
+            <button type="submit">Save Link</button>
         </form>
       </Dialog>
     </div>

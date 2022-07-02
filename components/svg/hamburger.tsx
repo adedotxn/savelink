@@ -4,7 +4,7 @@ import styles  from '../../styles/header.module.css'
 
 
 const HamburgerSvg = (props: SVGProps<SVGSVGElement>) => (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="1em" height="2em">
     <path fill="none" d="M0 0h24v24H0z" />
     <path
     className={styles.svg_fill}
