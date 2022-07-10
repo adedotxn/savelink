@@ -25,9 +25,9 @@ const Sidebar = () => {
             <ul onMouseOver={mouseOver}
                 onMouseLeave={mouseLeave }>
 
-                <Link href='/dashboard' >
+                <Link href='/v1//dashboard' >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/dashboard' ? styles.active_route : ""} >
+                        <div className={router.pathname === '/v1/dashboard' ? styles.active_route : ""} >
                                 <Image 
                                     src='/links.svg' 
                                     alt='links'
@@ -39,9 +39,9 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/bookmarked' >
+                <Link href='/v1//bookmarked' >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/bookmarked' ? styles.active_route : ""} >
+                        <div className={router.pathname === '/v1/bookmarked' ? styles.active_route : ""} >
                             <Image 
                                 src='/bookmark.svg' 
                                 alt='links'
@@ -53,9 +53,9 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/categories'>
+                <Link href='/v1//categories'>
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/categories' ? styles.active_route : ""} >
+                        <div className={router.pathname === '/v1/categories' ? styles.active_route : ""} >
                             <Image 
                                 src='/lightbulb.svg' 
                                 alt='links'

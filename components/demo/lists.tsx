@@ -6,14 +6,15 @@ import SvgComponent from '../svg/starsvg'
 
 interface IProps {
     array : {
-    _id : number;
-    title : string;
-    url : string;
-    category : string;
+        _id : number;
+        title : string;
+        url : string;
+        category : string;
+        starred : boolean;
     }[]
 }
 
-const DemoList:FC<IProps> = ({array}) => {
+const DemoList:FC<IProps> = (props) => {
     const [bkmrkd, setBkmrkd] = useState(false)
 
     function star() {
@@ -27,7 +28,7 @@ const DemoList:FC<IProps> = ({array}) => {
     
   return (
     <>
-    {array?.map(data => (
+    {props.array.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
             <div className={styles.links}>

@@ -9,7 +9,7 @@ interface IProps  {
     setSide : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MobileSidebar:FC<IProps> = ({side, setSide}) => {
+const MobileSidebar  = ({side, setSide}: IProps) => {
     const router = useRouter()
 
     return (
@@ -17,8 +17,8 @@ const MobileSidebar:FC<IProps> = ({side, setSide}) => {
         <nav className={styles.mobile_sidebar} >
             <h1>Savelink</h1>
             <ul>
-                <Link href='/dashboard' >
-                    <li  className={router.pathname === '/dashboard' ? styles.mobile_active_route : ""} >
+                <Link href='/v1//dashboard' >
+                    <li  className={router.pathname === '/v1/dashboard' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
                                 src='/links.svg' 
@@ -31,8 +31,8 @@ const MobileSidebar:FC<IProps> = ({side, setSide}) => {
                     </li>
                 </Link>
 
-                <Link href='/bookmarked' >
-                    <li className={router.pathname === '/bookmarked' ? styles.mobile_active_route : ""} >
+                <Link href='/v1//bookmarked' >
+                    <li className={router.pathname === '/v1/bookmarked' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
                                 src='/bookmark.svg' 
@@ -45,8 +45,8 @@ const MobileSidebar:FC<IProps> = ({side, setSide}) => {
                     </li>
                 </Link>
 
-                <Link href='/categories'>
-                    <li  className={router.pathname === '/categories' ? styles.mobile_active_route : ""} >
+                <Link href='/v1//categories'>
+                    <li  className={router.pathname === '/v1/categories' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
                                 src='/lightbulb.svg' 

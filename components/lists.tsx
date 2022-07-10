@@ -13,7 +13,7 @@ interface IProps {
     }[]
 }
 
-const List:FC<IProps> = ({array}) => {
+const List= ({array} : IProps) => {
     const [bkmrkd, setBkmrkd] = useState(false)
 
     function star() {

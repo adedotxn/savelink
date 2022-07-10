@@ -5,11 +5,8 @@ import Sidebar from './sidebar'
 import MobileSidebar from './mobile_sidebar'
 import { ReactNode, useState } from 'react'
 
-interface Props {
-    children: ReactNode
-}
 
-export default function Layout({ children } : Props) {
+export default function Layout({ children } : {children : ReactNode}) {
     const [side, setSide] = useState(false)
 
   return (

@@ -1,28 +1,23 @@
 import Image from 'next/image'
-import List from '../../components/lists'
 import styles from '../../styles/dashboard.module.css'
-import links from '../../data/dummydata.json' 
-// import Layout from '../components/layout'
 import { NextPage } from 'next'
 import React, { FormEvent, useEffect, useState } from 'react'
 import { Modal, Dialog } from 'react-dialog-polyfill'
 import DemoList from '../../components/demo/lists'
-import MoreSvg from '../../components/svg/moresvg'
 
-interface IData {
+type Data = {
     _id : number;
     title? : string;
     url : string;
     category? : string;
-    starred : boolean
+    starred? : boolean
 }
-
 
 
 
 const Dashboard:NextPage = () => {
 
-    const data : IData[] =  [
+    const data  =  [
         {
             _id : 1,
             title : "Title from the shared link will go here",
@@ -39,22 +34,22 @@ const Dashboard:NextPage = () => {
     }
 
     const [dialog, setDialog] = useState(false);
-    const [modal, setModal] = useState(false)
+    // const [modal, setModal] = useState(false)
 
    
 
     function handleSubmit (e : FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-
+        
         const data = new FormData(e.target as HTMLFormElement);
         let inputedTitle :string = data.get("title")?.toString() || ''
         let inputedLink:string =  data.get("link")?.toString()!
-        const form : HTMLFormElement = document.forms['input-form'].categories;
-        let selectedCategory = form.value;
+        const form : HTMLFormElement = document.forms['input-form' as unknown as number].categories;
+        let selectedCategory:string = form.value;
 
 
-        const newDlinks :IData = {
+        const newDlinks = {
             _id : Math.random(),
             title : inputedTitle,
             url: inputedLink,
@@ -75,13 +70,12 @@ const Dashboard:NextPage = () => {
 
 
     const [newCat, setNewCat] = useState<string | number>('')
-    const [category, setCategory] = useState([])
+    const [category, setCategory] = useState<string[] >([])
 
     const createCategory = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setCategory(prev => {
-         const nu = [...prev, newCat]
-         return nu;
+         return [...prev, newCat];
         })
         const stringifyCat = JSON.stringify(category);
 
@@ -89,7 +83,8 @@ const Dashboard:NextPage = () => {
     }
 
     useEffect(() => {
-        const retrievedData : IData =  JSON.parse(localStorage.getItem('savelink-data') || '{}')
+        const retrievedData =  JSON.parse(localStorage.getItem('savelink-data') || '{}')
+        console.log("retrieeved", retrievedData)
         if(retrievedData === null) {
             const stringifyData = JSON.stringify(DLinks)
             localStorage.setItem('savelink-data', stringifyData)

@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FC, useRef, useState } from 'react'
+import {useRef, useState } from 'react'
 import styles from '../../styles/dashboard.module.css'
 import BookmarkSvg from '../svg/bookmarksvg'
 import CategoriesSvg from '../svg/categoriesvg'
 import LinkSvg from '../svg/linksvg'
 
-const Sidebar:FC = () => {
+const Sidebar = () => {
     const navRef = useRef<HTMLElement>(null)
     const router = useRouter()
 
@@ -26,7 +26,7 @@ const Sidebar:FC = () => {
     return (
         <nav ref = {navRef} className={[styles.sidebar, 'hide'].join(' ')} >
             <ul onMouseOver={mouseOver}
-                onMouseLeave={mouseLeave }>
+                onMouseLeave={mouseLeave}>
 
                 <Link href='/demo/dashboard' >
                     <li className={hovering ? styles.sidebar__li : ''}>

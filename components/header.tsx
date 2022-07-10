@@ -9,7 +9,7 @@ interface IProps {
     setSide : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header:FC<IProps> = ({side, setSide}) => {
+const Header = ({side, setSide}:IProps) => {
     const handleSidebar =() => {
         setSide(!side)
         // alert("open")
