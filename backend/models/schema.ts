@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model, models } from "mongoose";
 
-const LinksSchema = new 
+const LinkSchema = new 
     Schema({
-        owner : {type : Schema.Types.ObjectId},
+        identifier : {type : String, unique : true},
         title : {type : String},
         url : {type : String, required: true},
         category : {type : String},
@@ -12,6 +11,6 @@ const LinksSchema = new
     }
 );
 
-const Links = mongoose.model('Links', LinksSchema);
+const Link = models.Link || model('Link', LinkSchema);
 
-module.exports = Links;
+export default Link;
