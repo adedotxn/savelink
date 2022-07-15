@@ -30,6 +30,7 @@ const List= ({array} : IProps) => {
         {
             onSuccess : () => {
                 queryClient.invalidateQueries(['links'])
+                queryClient.invalidateQueries(['bookmarks'])
             }
         }
     )
@@ -39,12 +40,18 @@ const List= ({array} : IProps) => {
         {
             onSuccess : () => {
                 queryClient.invalidateQueries(['links'])
+                queryClient.invalidateQueries(['bookmarks'])
             }
         }
     )
   return (
     <>
-    {array.map(data => (
+    {array.length === 0 ?   
+    <div>
+        <h2>Wow, such nothing 👀</h2>
+    </div>
+    :
+    array.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
             <div className={styles.links}>

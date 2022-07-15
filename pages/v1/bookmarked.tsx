@@ -1,17 +1,51 @@
-import type { NextPage } from 'next'
+import type { GetServerSidePropsContext, NextPage } from 'next'
 import List from '../../components/lists'
 import styles from '../../styles/dashboard.module.css'
-import links from '../../data/dummydata.json'
+import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { useSession } from 'next-auth/react'
+import { userLinks } from '../../utils/lib/api'
+import { authOptions } from '../api/auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth'
+import React, { useState } from 'react'
 
 const Bookmark: NextPage = () => {
-    const link = links.data
-    let starred = link.filter(e => e?.starred === true);
+    const { data: session, status } = useSession()
+    const name:string = session?.user?.email!
+
+    const { isLoading, error, data } = useQuery(['bookmarks', name], () => userLinks(name))
+
+    // if(data) console.log("data", data)
+
+    if(error) {
+        if(error instanceof Error) {
+            console.log("creation error", error.message)
+        } else {
+            console.log(`Unexpected error in bookmark page : ${error}`)
+        }
+    }
+
+    if(!isLoading) {
+        let bookmarked = data.filter((e: { bookmarked: boolean }) => e.bookmarked === true)
+        console.log("bk", bookmarked)
+
+
+        return (
+            <div className={styles.container}>
+                <main className = {styles.main}>
+                    <section>
+                        <List array = {bookmarked} />               
+                    </section>  
+                </main>
+            </div>
+        )
+    }
+
 
     return(
     <div className={styles.container}>
         <main className = {styles.main}>
             <section>
-                <List array = {starred} />               
+                <h2>Something went wrong</h2>              
             </section>  
         </main>
             
@@ -20,3 +54,22 @@ const Bookmark: NextPage = () => {
 }
 
 export default Bookmark;
+
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
+
+    const queryClient = new QueryClient()
+
+    await queryClient.prefetchQuery('bookmarks', () => userLinks(session?.user?.email!))
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    }
+  }

@@ -28,8 +28,7 @@ const Dashboard:NextPage = () => {
         onSettled :() => {
             setDialog(false)
         }
-    }
-    )
+    })
 
     if(error) {
         if(error instanceof Error) {
