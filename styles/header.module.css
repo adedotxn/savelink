@@ -2,9 +2,16 @@
     display: flex;
     justify-content: space-between;
     background-color: var(--accent-color);
-    padding:.5rem 1rem;
+    padding:.3rem 1rem;
+    margin: .5rem auto;
     border-radius: 1.3rem;
     align-items: center;
+    place-items: center;
+    position:fixed;
+    top: 0;
+    width:90vw;
+    z-index: 3;
+    /* border: 1px solid red; */
 }
 .header h1 {
     font-size: 1.5rem;;
@@ -44,13 +51,14 @@
         justify-content:space-between;
         border-bottom: 1px solid var(--accent-color);
         border-radius: 0;
-        padding-top: 1rem;;
-        padding-bottom: 1rem;;
+        padding: 1rem 3rem;
+        width:100vw;
+        margin: 0rem;
     }
 
     .searchbar input {
         background-color: var(--accent-color);
-        width:40vw;
+        width:30vw;
         border-radius: .5rem;
         padding:.5rem 3rem;
         font-size: 1.3rem;;
@@ -67,28 +75,30 @@
         outline: 3px solid white;
     }
     .header>div:nth-child(3) {
-        display: grid;
+        display: flex;
         place-items: center;
+        justify-content: space-between;
+    }
+
+    .header>div:nth-child(3) h2 {
+        margin:0;
+        font-weight: 400;
+        margin-right: .5rem;
+        padding:.2rem .4rem;
+        border-radius: .4rem;
+        background-color: var(--accent-color);
     }
 
     .switch {
-        border: 1px solid var(--text-color);
-        padding: 0;
-        margin: 0;
-        width: 3vw;
-        height:6vh;
+        border: 0px solid var(--text-color);
+        padding: .3rem;
+        margin: 0 auto;
+        /* width: 3vw;
+        height:6vh; */
         background-color: var(--accent-color);
         display: grid;
         place-items: center;
         cursor: pointer;
         border-radius: .3rem;;
-    }
-    .switch svg {
-        padding: 0;
-        margin: 0;
-        width:5vw;
-        height: 5vh;
-        display: grid;
-        place-items: center;
     }
 }

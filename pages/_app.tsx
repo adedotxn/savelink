@@ -1,19 +1,26 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'next-themes'
-import Head from 'next/head'
-import Header from '../components/header'
-import Sidebar from '../components/sidebar'
-import styles from '../styles/app.module.css'
 import { FC, ReactNode, useState } from 'react'
 import Layout from '../components/layout'
 import DemoLayout from '../components/demo/layout'
+import { SessionProvider } from "next-auth/react"
+import {
+  QueryClient,
+  QueryClientProvider,
+  Hydrate,
+} from 'react-query'
 
-function MyApp({ Component, pageProps, ...appProps }: AppProps) {
+const queryClient = new QueryClient()
+
+function MyApp({ Component, session, pageProps, ...appProps}: AppProps) {
 
   const getContent = () => {
     if([`/`].includes(appProps.router.pathname)){
-      return <Component {...pageProps} />
+      return (
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+      )
     }
 
     if((appProps.router.pathname).includes('/demo')){
@@ -25,9 +32,15 @@ function MyApp({ Component, pageProps, ...appProps }: AppProps) {
     }
 
     return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
     )
   }
 

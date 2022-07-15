@@ -3,8 +3,28 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
+import {signOut, signIn, useSession} from 'next-auth/react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
+  const {data : session, status} = useSession();
+  const loading = status === 'loading'
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    signIn("google")
+  }
+  const router = useRouter()
+
+
+  useEffect(() => {
+    if(session) {console.log(session?.user?.email, session?.user?.image)}
+
+    if(session) {router.push('/v1/dashboard')}
+  }, [session])
+  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,9 +39,10 @@ const Home: NextPage = () => {
         <p>Save and categorise your important links from all across the internet in one place.</p>
 
         <div>
-          <Link href="/dashboard">
-            <button> Sign in with google </button>
-          </Link>
+            <a href={`/api/auth/signin`}
+             onClick={handleSignIn}>
+              <button> Sign in with google </button>
+            </a>
           {/* <button> Sign in with twitter</button> */}
           <Link href='/demo/dashboard'>  
             <button> Demo sign in </button>

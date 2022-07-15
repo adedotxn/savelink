@@ -6,10 +6,10 @@ import styles from '../../styles/dashboard.module.css'
 
 
 interface IProps  {
-    side : boolean; setSide : 
-    React.Dispatch<React.SetStateAction<boolean>>
+    side : boolean; 
+    setSide : React.Dispatch<React.SetStateAction<boolean>>
 }
-const MobileSidebar:FC<IProps> = ({side, setSide} ) => {
+const MobileSidebar= ({side, setSide}:IProps) => {
     const router = useRouter()
 
     return (

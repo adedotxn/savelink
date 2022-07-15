@@ -4,13 +4,18 @@ import Header from './header'
 import Sidebar from './sidebar'
 import MobileSidebar from './mobile_sidebar'
 import { ReactNode, useState } from 'react'
+import { useSession } from 'next-auth/react'
 
-interface Props {
-    children: ReactNode
-}
 
-export default function Layout({ children } : Props) {
+export default function Layout({ children } : {children : ReactNode}) {
     const [side, setSide] = useState(false)
+
+    const { data: session, status } = useSession()
+
+    
+
+    const mail:string = session ? session.user?.name! : ""
+    
 
   return (
     <>
@@ -21,7 +26,7 @@ export default function Layout({ children } : Props) {
         </Head>
 
         <header className={styles.header} >
-            <Header side={side} setSide = {setSide} />
+            <Header side={side} setSide = {setSide} name = {mail} />
         </header>
 
         {side && <MobileSidebar side={side} setSide={setSide} />}

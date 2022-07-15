@@ -6,15 +6,29 @@ import SvgComponent from '../svg/starsvg'
 
 interface IProps {
     array : {
-    _id : number;
-    title : string;
-    url : string;
-    category : string;
+        _id : number;
+        title : string;
+        url : string;
+        category : string;
+        starred : boolean;
     }[]
 }
 
-const DemoList:FC<IProps> = ({array}) => {
+
+
+const DemoList:FC<IProps> = (props) => {
+
     const [bkmrkd, setBkmrkd] = useState(false)
+
+    
+    // useEffect(() => {
+    //     const storedData = JSON.parse(localStorage.getItem('savelink-data') || '{}')
+    //    console.log("data",storedData)
+    //    storedData.forEach(e => console.log([e.starred]))
+
+    // },[])
+
+
 
     function star() {
         setBkmrkd(!bkmrkd)
@@ -27,7 +41,7 @@ const DemoList:FC<IProps> = ({array}) => {
     
   return (
     <>
-    {array?.map(data => (
+    {props.array.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
             <div className={styles.links}>
@@ -53,7 +67,7 @@ const DemoList:FC<IProps> = ({array}) => {
                 <div  className={styles.link__images}>
                     <div className={styles.link__image}
                     onClick = {star} >
-                        <SvgComponent starred = {bkmrkd} />
+                        <SvgComponent starred = {data.starred} />
                     </div>
 
                     <div className={styles.link__image}>
