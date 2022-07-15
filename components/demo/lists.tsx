@@ -14,8 +14,21 @@ interface IProps {
     }[]
 }
 
+
+
 const DemoList:FC<IProps> = (props) => {
+
     const [bkmrkd, setBkmrkd] = useState(false)
+
+    
+    // useEffect(() => {
+    //     const storedData = JSON.parse(localStorage.getItem('savelink-data') || '{}')
+    //    console.log("data",storedData)
+    //    storedData.forEach(e => console.log([e.starred]))
+
+    // },[])
+
+
 
     function star() {
         setBkmrkd(!bkmrkd)
@@ -54,7 +67,7 @@ const DemoList:FC<IProps> = (props) => {
                 <div  className={styles.link__images}>
                     <div className={styles.link__image}
                     onClick = {star} >
-                        <SvgComponent starred = {bkmrkd} />
+                        <SvgComponent starred = {data.starred} />
                     </div>
 
                     <div className={styles.link__image}>

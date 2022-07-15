@@ -17,7 +17,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
         <nav className={styles.mobile_sidebar} >
             <h1>Savelink</h1>
             <ul>
-                <Link href='/v1//dashboard' >
+                <Link href='/v1/dashboard' >
                     <li  className={router.pathname === '/v1/dashboard' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
@@ -31,7 +31,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
                     </li>
                 </Link>
 
-                <Link href='/v1//bookmarked' >
+                <Link href='/v1/bookmarked' >
                     <li className={router.pathname === '/v1/bookmarked' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
@@ -45,7 +45,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
                     </li>
                 </Link>
 
-                <Link href='/v1//categories'>
+                <Link href='/v1/categories'>
                     <li  className={router.pathname === '/v1/categories' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 

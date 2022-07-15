@@ -4,6 +4,7 @@
 .link_wrapper {
     background-color: var(--accent-color);
     border-radius: .5rem;;
+    width:80vw;
 }
 .link_list {
     padding: .5rem 1rem;
@@ -50,6 +51,23 @@
     /* border: 1px solid green;; */
     position: relative;
     cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .link_wrapper {
+        height:fit-content;
+        width:15rem;
+        border: 1px solid white;
+    }
+
+    .links h3 {
+        font-size: 1.0rem;
+        font-weight:  700;
+    }
+
+    .links p {
+        width:13rem;
+    }
 }
 
 

@@ -59,49 +59,58 @@ const Dashboard:NextPage = () => {
 
         DLinks.push(newDlinks)
         const stringifyData = JSON.stringify(DLinks)
-        
         localStorage.setItem('savelink-data', stringifyData)
 
         setDialog(false)
     }
 
 
-
-
-
-    const [newCat, setNewCat] = useState<string | number>('')
+    // const [newCat, setNewCat] = useState<string | number>('')
+    let [newCat, setNewCat] = useState<string | string[]>([])
     const [category, setCategory] = useState<string[] >([])
+    const [word, setWord] = useState<string | string[]>([])
 
     const createCategory = (e : React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        setCategory(prev => {
-         return [...prev, newCat];
-        })
-        const stringifyCat = JSON.stringify(category);
 
-        localStorage.setItem("savelink-catogories", stringifyCat)
+        setWord(arr => [...arr, newCat])
+        // console.log("category", word)
     }
 
     useEffect(() => {
+        let categoriesArray = JSON.parse(localStorage.getItem('savelink-categories') || '{}')
+        
+        if(categoriesArray === null || !categoriesArray.length) {
+            localStorage.setItem('savelink-categories', JSON.stringify(['default']) )
+            categoriesArray = JSON.parse(localStorage.getItem('savelink-categories') || '{}')
+        }
+
+        if(!word.length) {  
+            localStorage.setItem("savelink-categories", JSON.stringify(categoriesArray))
+        }
+
+        
+        const previousWords = categoriesArray;
+        let updated  = previousWords.concat(word)
+        const stringifiedCategory = JSON.stringify(updated);
+        localStorage.setItem("savelink-categories", stringifiedCategory)
+
+        // console.log("gotten", JSON.parse(localStorage.getItem("savelink-categories") || '{}'))
+        setCategory(JSON.parse(localStorage.getItem("savelink-categories") || '{}'))
+    },[word])
+
+    useEffect(() => {
         const retrievedData =  JSON.parse(localStorage.getItem('savelink-data') || '{}')
-        console.log("retrieeved", retrievedData)
-        if(retrievedData === null) {
-            const stringifyData = JSON.stringify(DLinks)
-            localStorage.setItem('savelink-data', stringifyData)
+        if(retrievedData === null || !retrievedData.length ) {
+            const stringifiedData = JSON.stringify(data)
+            localStorage.setItem('savelink-data', stringifiedData)
+            setDLinks(JSON.parse(localStorage.getItem('savelink-data') || '{}'));
+            return
+        } else {
+            setDLinks( retrievedData)
         }
-        setDLinks(retrievedData)
+
     },[])
-
-    useEffect(()=> {
-        const retrievedCat =  JSON.parse(localStorage.getItem('savelink-catogories') || '{}');
-        if(retrievedCat === null) {
-            setCategory(['default'])
-            const stringifyCat = JSON.stringify(category);
-            localStorage.setItem("savelink-catogories", stringifyCat)
-        }
-    },[])
-
-
 
     return (
         <div className={styles.container}>

@@ -3,9 +3,15 @@ import Link from 'next/link'
 import styles from '../styles/list.module.css'
 import { FC, useEffect, useState } from 'react'
 import SvgComponent from './svg/starsvg'
+import DeleteSvg from './svg/delete'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
+import apiClient from '../utils/http-config'
+import { AxiosResponse } from 'axios'
+import { bookmarkLink, deleteLink } from '../utils/lib/api'
 
 interface IProps {
     array : {
+    bookmarked: boolean
     _id : number;
     title : string;
     url : string;
@@ -13,18 +19,29 @@ interface IProps {
     }[]
 }
 
+
+
 const List= ({array} : IProps) => {
-    const [bkmrkd, setBkmrkd] = useState(false)
 
-    function star() {
-        setBkmrkd(!bkmrkd)
-    }
+    const queryClient = useQueryClient();
 
-    const starProps = {
-        starred : bkmrkd
-    }
+    const deleteMutation = useMutation(
+        deleteLink, 
+        {
+            onSuccess : () => {
+                queryClient.invalidateQueries(['links'])
+            }
+        }
+    )
 
-    
+    const bookmarkMutation = useMutation(
+        bookmarkLink, 
+        {
+            onSuccess : () => {
+                queryClient.invalidateQueries(['links'])
+            }
+        }
+    )
   return (
     <>
     {array.map(data => (
@@ -33,9 +50,18 @@ const List= ({array} : IProps) => {
             <div className={styles.links}>
                 <h3>{data.title}</h3>
                 <p> 
-                    <Link href={data.url}>
-                        {data.url}
+                    {!data.url.includes('http') ? 
+                    <Link href={`https://${data.url}`}>
+                        <a target="_blank">
+                            {data.url}
+                        </a>
+                    </Link> : 
+                    <Link href={`${data.url}`}>
+                        <a target="_blank">
+                            {data.url}
+                        </a>
                     </Link>
+                    }
                 </p>
             </div>
             <div className={styles.link__footer} >
@@ -45,8 +71,10 @@ const List= ({array} : IProps) => {
 
                 <div  className={styles.link__images}>
                     <div className={styles.link__image}
-                    onClick = {star} >
-                        <SvgComponent starred = {bkmrkd} />
+                    onClick = {()=> {
+                        bookmarkMutation.mutate(data._id)
+                    }} >
+                        <SvgComponent starred = {data.bookmarked} />
                     </div>
 
                     <div className={styles.link__image}>
@@ -56,6 +84,12 @@ const List= ({array} : IProps) => {
                             width={20}
                             height={20}
                         />
+                    </div>
+
+                    <div onClick={
+                        () => deleteMutation.mutate(data._id)
+                    } className={styles.link__image}>
+                        <DeleteSvg/>
                     </div>
                 </div>    
             </div>

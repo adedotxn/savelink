@@ -7,9 +7,10 @@ import SunSvg from './svg/sun'
 interface IProps {
     side : boolean;
     setSide : React.Dispatch<React.SetStateAction<boolean>>
+    name : string
 }
 
-const Header = ({side, setSide}:IProps) => {
+const Header = ({side, setSide, name}:IProps) => {
     const handleSidebar =() => {
         setSide(!side)
         // alert("open")
@@ -50,8 +51,7 @@ const Header = ({side, setSide}:IProps) => {
   return (
     <header  className={styles.header}>
         <div className={styles.hamburger}
-        onClick={handleSidebar}
-        >
+            onClick={handleSidebar}>
            <HamburgerSvg/>
         </div>
 
@@ -61,6 +61,7 @@ const Header = ({side, setSide}:IProps) => {
 
 
         <div>
+            <h2>{name}</h2>
             <button onClick={switchTheme} className={styles.switch}  aria-label="light/dark mode">
                 {thm ? 
                     <SunSvg/>

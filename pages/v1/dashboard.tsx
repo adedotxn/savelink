@@ -1,38 +1,97 @@
 import Image from 'next/image'
 import List from '../../components/lists'
 import styles from '../../styles/dashboard.module.css'
-import links from '../../data/dummydata.json' 
-// import Layout from '../components/layout'
-import { NextPage } from 'next'
+import { GetServerSidePropsContext, NextPage } from 'next'
 import React, { FormEvent, useRef, useState } from 'react'
 import { Modal, Dialog } from 'react-dialog-polyfill'
-
+import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
+import {userLinks, addLink } from '../../utils/lib/api'
+import {unstable_getServerSession } from 'next-auth'
+import { useSession } from 'next-auth/react'
+import { authOptions } from '../api/auth/[...nextauth]'
 
 const Dashboard:NextPage = () => {
-    const link = links.data
 
-
+    
+    const queryClient = useQueryClient()
     const [dialog, setDialog] = useState(false);
 
-    function handleSubmit (e : React.SyntheticEvent) {
-        e.preventDefault()
+    const { data: session, status } = useSession()
+    const name:string = session?.user?.email!
 
-        setDialog(false)
+    const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
+    
+    const mutation = useMutation(addLink, {
+        onSuccess : () => {
+            queryClient.invalidateQueries(['links'])
+        },
+        onSettled :() => {
+            setDialog(false)
+        }
     }
+    )
+
+    if(error) {
+        if(error instanceof Error) {
+            console.log("creation error", error.message)
+        } else {
+            console.log(`Unexpected error in cr8 : ${error}`)
+        }
+    }
+
+    if(data) console.log("data", data)
+    console.log("isloading", isLoading)
+
+    const onSubmit = (event : FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const user:string = name;
+        const data = new FormData(event.target as HTMLFormElement);
+        let inputedTitle :string = data.get("title")?.toString() || ''
+        let inputedLink:string =  data.get("link")?.toString()!
+        const form : HTMLFormElement = document.forms['input-form' as unknown as number].categories;
+        // let selectedCategory:string = form.value;
+
+        mutation.mutate({
+            identifier: name, 
+            title:inputedTitle, 
+            url : inputedLink,
+            category : "test",
+        })
+    }
+
+    if(mutation.error) {
+        if(mutation.error instanceof Error) {
+            console.log("mutation error", mutation.error)
+        } else {
+            console.log(`Unexpected error in mutation: ${mutation.error}`)
+        }
+    }
+
+    if(isLoading) return (
+        <div>
+            <h1>Loadinggggg</h1>
+        </div>
+    )
 
     return (
         <div className={styles.container}>
+            {data.length === 0 ? 
+            <div className={styles.such_nothing}>
+                <h2>Such nothing 👀 </h2>
+                <p>Click the button to start saving </p>
+            </div> 
+            :
             <main className = {styles.main}>
                 <section>
-                    <List array = {link} />               
+                    <List array = {data} />               
                 </section>  
-            </main>
+            </main>}
 
             <div>
       <Dialog className={styles.dialog} open={dialog}>
-        <form  onSubmit={handleSubmit} action="">
-            <input  placeholder='Title'/>
-            <input  placeholder='Link'/>
+        <form id = "input-form" onSubmit={onSubmit} action="">
+            <input name="title"  placeholder='Title'/>
+            <input name="link" placeholder='Link'/>
 
             <p>Select Category</p>
             <select>
@@ -65,6 +124,26 @@ const Dashboard:NextPage = () => {
 
 
 export default Dashboard;
+
+
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
+
+    const queryClient = new QueryClient()
+
+    await queryClient.prefetchQuery('links', () => userLinks(session?.user?.email!))
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    }
+  }
 
 
 

@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -25,7 +26,7 @@ const Sidebar = () => {
             <ul onMouseOver={mouseOver}
                 onMouseLeave={mouseLeave }>
 
-                <Link href='/v1//dashboard' >
+                <Link href='/v1/dashboard' >
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/v1/dashboard' ? styles.active_route : ""} >
                                 <Image 
@@ -39,7 +40,7 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/v1//bookmarked' >
+                <Link href='/v1/bookmarked' >
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/v1/bookmarked' ? styles.active_route : ""} >
                             <Image 
@@ -53,7 +54,7 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/v1//categories'>
+                <Link href='/v1/categories'>
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div className={router.pathname === '/v1/categories' ? styles.active_route : ""} >
                             <Image 
@@ -65,6 +66,15 @@ const Sidebar = () => {
                         </div> 
                         <span className={hovering ? 'show' : 'hide'} >Categories</span>
                     </li>
+                </Link>
+
+                <Link href={`/api/auth/signout`}
+                    className={styles.button}
+                    onClick={(e) => {
+                    e.preventDefault()
+                    signOut()
+                    }}>
+                <li>Logout</li>
                 </Link>
             </ul>
         </nav>
