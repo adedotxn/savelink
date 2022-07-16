@@ -1,17 +1,41 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useQuery } from 'react-query'
 import List from '../../components/lists'
-import styles from '../../styles/dashboard.module.css'
-import Sidebar from '../../components/sidebar'
+import styles from '../../styles/categories.module.css'
+import { userLinks } from '../../utils/lib/api'
 
-const Categories: NextPage = () => {
-    return(
-        <div>
-            
-        </div>
-    )
+const Categories = () => {
+    const { data: session, status } = useSession()
+    const name:string = session?.user?.email!
+    const { isLoading, error, data } = useQuery(['bookmarks', name], () => userLinks(name))
+
+    if(data) console.log("data", data)
+    const categories = []
+    if(!isLoading) {
+        for( let i = 0 ; i < data.length ; ++i) { 
+            console.log("catss", data[i].category)
+            categories.push(data[i].category)
+        }
+        const allcategories = [... new Set(categories)];
+        console.log("catts", allcategories)
+
+        return(
+            <div className={styles.container}>
+                <div className={styles.categories}>
+                    {allcategories?.map((data) => (
+                        <Link key={data} href={`category/${data}`}>
+                            <div className={styles.category_cards} >
+                                <h1>{data}</h1>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
 }
 
 export default Categories;

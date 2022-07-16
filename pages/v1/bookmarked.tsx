@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 import { userLinks } from '../../utils/lib/api'
 import { authOptions } from '../api/auth/[...nextauth]'
 import { unstable_getServerSession } from 'next-auth'
-import React, { useState } from 'react'
+import React from 'react'
 
 const Bookmark: NextPage = () => {
     const { data: session, status } = useSession()

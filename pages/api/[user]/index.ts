@@ -9,8 +9,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
     try {
+        const {user} = req.query
         await connect();
-        const specificLink = await Link.find({bookmarked: true})
+        const specificLink = await Link.find({identifier: `${user}`})
         res.json(specificLink)
     } catch(error) {
         res.json(error)

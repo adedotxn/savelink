@@ -2,7 +2,7 @@ import Image from 'next/image'
 import List from '../../components/lists'
 import styles from '../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Modal, Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
 import {userLinks, addLink } from '../../utils/lib/api'
@@ -21,6 +21,27 @@ const Dashboard:NextPage = () => {
 
     const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
     
+    let returnedCategories:[] = []
+   
+
+    if(!isLoading) {
+        for(let i = 0 ; i < data.length ; ++i) { 
+            // console.log(data[i].category)
+            returnedCategories.push(data[i].category)
+        }
+    }
+
+    const categories = [...new Set(returnedCategories)]
+    console.log("categories", categories)
+
+    const [selected, setSelected] = useState("")
+    const handleChange = useCallback((e: { target: { value: React.SetStateAction<string> } }) => {
+        setSelected(e.target.value)
+        console.log("selected handlechange", e.target.value)
+    },[])
+
+    const [addCategory, setAddCategory] = useState<string[] >([])
+
     const mutation = useMutation(addLink, {
         onSuccess : () => {
             queryClient.invalidateQueries(['links'])
@@ -47,15 +68,16 @@ const Dashboard:NextPage = () => {
         const data = new FormData(event.target as HTMLFormElement);
         let inputedTitle :string = data.get("title")?.toString() || ''
         let inputedLink:string =  data.get("link")?.toString()!
-        const form : HTMLFormElement = document.forms['input-form' as unknown as number].categories;
-        // let selectedCategory:string = form.value;
 
         mutation.mutate({
             identifier: name, 
             title:inputedTitle, 
             url : inputedLink,
-            category : "test",
+            category : selected,
         })
+
+        console.log("selected", selected)
+
     }
 
     if(mutation.error) {
@@ -92,31 +114,38 @@ const Dashboard:NextPage = () => {
             <input name="title"  placeholder='Title'/>
             <input name="link" placeholder='Link'/>
 
-            <p>Select Category</p>
-            <select>
-                <option value="default">Choose...</option>
-                <option>Brine shrimp</option>
-                <option>Red panda</option>
-                <option>Spider monkey</option>
-            </select>
+            <section className={styles.category}>
+                <p>Add new category or select from preexisting</p>
+
+                <div className={styles.add_category} >
+                    <input onChange = {handleChange} type="text" placeholder='you can select from preexisting categories' />
+               
+                    <select value={selected} onChange = {handleChange} >
+                        {
+                            categories.map((data) => (
+                                <option key = {data} value={data}>{data}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+            </section>
 
             <button type="submit">Add</button>
         </form>
       </Dialog>
     </div>
-
-            <footer className={styles.footer}>
-                <div  onClick={() => setDialog(!dialog)} className={styles.add} >
-                    <div className={styles.cr8}>
-                        <Image 
-                            src='/add-circle.svg'
-                            alt='add'
-                            width={60}
-                            height={60} 
-                        />
-                    </div>
+        <footer className={styles.footer}>
+            <div  onClick={() => setDialog(!dialog)} className={styles.add} >
+                <div className={styles.cr8}>
+                    <Image 
+                        src='/add-circle.svg'
+                        alt='add'
+                        width={60}
+                        height={60} 
+                    />
                 </div>
-            </footer>
+            </div>
+        </footer>
         </div>
   )
 }

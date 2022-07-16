@@ -121,21 +121,16 @@
     align-items: center;
 }
 
-.dialog section div select {
-    margin-top: .5rem;;
-}
+
 .dialog section div p {
     padding:0rem;
     margin: 0rem;
 }
-.dialog section div:nth-child(2) input {
+.dialog section div input {
     padding:.3rem .2rem;
 }
 
-.create_category input {
-    margin-bottom: .5rem;
-    padding: .2rem .5rem;
-}
+
 
 
 .hide {
@@ -143,6 +138,21 @@
 }
 .show {
     display: block;
+}
+
+.category{
+    /* border: 1px solid white */
+}
+.category p {
+    margin: 0;
+}
+.add_category {
+    /* border: 1px solid green; */
+    display: grid;;
+}
+
+.add_category select {
+    margin-top: .5rem;
 }
 
 @media screen and (min-width: 768px) {

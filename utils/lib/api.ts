@@ -26,3 +26,6 @@ export const bookmarkLink = (id : string | number) => {
     return apiClient.post(`/bookmark/${id}`)
 }
 
+export const getCategories = (category : string) => {
+    return apiClient.post(`/category/${category}`)
+}
