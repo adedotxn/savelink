@@ -9,10 +9,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
     try {
-        const {id} = req.query
+        const {category} = req.query
         await connect();
-        const deleteLink = await Link.findByIdAndDelete(id)
-        res.json(deleteLink)
+        const categories = await Link.find({category : `${category}` })
+        res.json(categories)
     } catch(error) {
         res.json(error)
     }

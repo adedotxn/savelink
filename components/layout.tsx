@@ -14,7 +14,9 @@ export default function Layout({ children } : {children : ReactNode}) {
 
     
 
-    const mail:string = session ? session.user?.name! : ""
+    const name:string = session ? session.user?.name! : ""
+    const mail:string = session?.user?.email!
+
     
 
   return (
@@ -26,13 +28,13 @@ export default function Layout({ children } : {children : ReactNode}) {
         </Head>
 
         <header className={styles.header} >
-            <Header side={side} setSide = {setSide} name = {mail} />
+            <Header side={side} setSide = {setSide} name = {name} />
         </header>
 
         {side && <MobileSidebar side={side} setSide={setSide} />}
         <main className={styles.main} >
             <div className={styles.side}>
-                <Sidebar/>
+                <Sidebar name = {mail} />
             </div>
             <div className={styles.pages}>
                 <main>{children}</main>

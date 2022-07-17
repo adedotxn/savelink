@@ -1,4 +1,8 @@
+import { useSession } from "next-auth/react";
 import apiClient from "../http-config";
+
+
+
 
 export interface LinkInterface {
     bookmarked?: boolean,
@@ -15,17 +19,17 @@ export const userLinks = async (user:string) => {
 }
 
 export const addLink = (newLink : LinkInterface) => {
-    return apiClient.post('/cr8', newLink)
+    return apiClient.post(`/${newLink.identifier}/cr8`, newLink)
 }
 
 export const deleteLink = (id : string | number) => {
     return apiClient.delete(`/delete/${id}`)
 }
 
-export const bookmarkLink = (id : string | number) => {
+export const bookmarkLink = ( id : string | number) => {
     return apiClient.post(`/bookmark/${id}`)
 }
 
-export const getCategories = (category : string) => {
-    return apiClient.post(`/category/${category}`)
+export const getCategories = (user:string, category : string) => {
+    return apiClient.get(`/${user}/category/${category}`)
 }

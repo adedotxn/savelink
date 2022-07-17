@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { FC, ReactNode, useState } from 'react'
 import Layout from '../components/layout'
 import DemoLayout from '../components/demo/layout'
 import { SessionProvider } from "next-auth/react"

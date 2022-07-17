@@ -1,14 +1,14 @@
 import Image from 'next/image'
-import List from '../../components/lists'
-import styles from '../../styles/dashboard.module.css'
+import List from '../../../components/lists'
+import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
-import { Modal, Dialog } from 'react-dialog-polyfill'
+import React, { FormEvent, useCallback, useState } from 'react'
+import { Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
-import {userLinks, addLink } from '../../utils/lib/api'
+import {userLinks, addLink } from '../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
-import { authOptions } from '../api/auth/[...nextauth]'
+import { authOptions } from '../../api/auth/[...nextauth]'
 
 const Dashboard:NextPage = () => {
 
@@ -21,11 +21,11 @@ const Dashboard:NextPage = () => {
 
     const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
     
-    let returnedCategories:[] = []
+    let returnedCategories:string[] = []
    
 
     if(!isLoading) {
-        for(let i = 0 ; i < data.length ; ++i) { 
+        for(let i:number = 0 ; i < data.length ; ++i) { 
             // console.log(data[i].category)
             returnedCategories.push(data[i].category)
         }

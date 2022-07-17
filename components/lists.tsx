@@ -8,6 +8,7 @@ import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import apiClient from '../utils/http-config'
 import { AxiosResponse } from 'axios'
 import { bookmarkLink, deleteLink } from '../utils/lib/api'
+import ShareSvg from './svg/share'
 
 interface IProps {
     array : {
@@ -41,9 +42,14 @@ const List= ({array} : IProps) => {
             onSuccess : () => {
                 queryClient.invalidateQueries(['links'])
                 queryClient.invalidateQueries(['bookmarks'])
+            },
+            onError: error => {
+                console.log("Mutation error", error)
             }
         }
     )
+
+
   return (
     <>
     {array.length === 0 ?   
@@ -79,22 +85,17 @@ const List= ({array} : IProps) => {
                 <div  className={styles.link__images}>
                     <div className={styles.link__image}
                     onClick = {()=> {
-                        bookmarkMutation.mutate(data._id)
+                        bookmarkMutation.mutate( data._id)
                     }} >
                         <SvgComponent starred = {data.bookmarked} />
                     </div>
 
                     <div className={styles.link__image}>
-                        <Image 
-                            src='/share.svg'
-                            alt='share button'
-                            width={20}
-                            height={20}
-                        />
+                        <ShareSvg/>
                     </div>
 
                     <div onClick={
-                        () => deleteMutation.mutate(data._id)
+                        () => deleteMutation.mutate( data._id)
                     } className={styles.link__image}>
                         <DeleteSvg/>
                     </div>

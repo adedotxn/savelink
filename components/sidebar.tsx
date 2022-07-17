@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import styles from '../styles/dashboard.module.css'
 
-const Sidebar = () => {
+const Sidebar = ({name}:{name : string}) => {
     const navRef = useRef<HTMLElement>(null)
     const router = useRouter()
 
@@ -26,9 +26,9 @@ const Sidebar = () => {
             <ul onMouseOver={mouseOver}
                 onMouseLeave={mouseLeave }>
 
-                <Link href='/v1/dashboard' >
+                <Link href={`/v1/${name}`} >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/v1/dashboard' ? styles.active_route : ""} >
+                        <div className={router.pathname.includes("v1") ? styles.active_route : ""} >
                                 <Image 
                                     src='/links.svg' 
                                     alt='links'
@@ -40,9 +40,9 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/v1/bookmarked' >
+                <Link href={`/v1/${name}/bookmarked`} >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/v1/bookmarked' ? styles.active_route : ""} >
+                        <div className={router.pathname.includes('bookmarked') ? styles.active_route : ""} >
                             <Image 
                                 src='/bookmark.svg' 
                                 alt='links'
@@ -54,9 +54,9 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <Link href='/v1/categories'>
+                <Link href={`/v1/${name}/categories`}>
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname === '/v1/categories' ? styles.active_route : ""} >
+                        <div className={router.pathname.includes("categories") ? styles.active_route : ""} >
                             <Image 
                                 src='/lightbulb.svg' 
                                 alt='links'

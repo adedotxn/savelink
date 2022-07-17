@@ -1,9 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import {signOut, signIn, useSession} from 'next-auth/react'
+import { signIn, useSession} from 'next-auth/react'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
@@ -11,17 +10,19 @@ const Home: NextPage = () => {
   const {data : session, status} = useSession();
   const loading = status === 'loading'
 
-  const handleSignIn = (e) => {
+  console.log("status ", status)
+
+  const handleSignIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signIn("google")
   }
   const router = useRouter()
-
+  let name = session?.user?.email
 
   useEffect(() => {
     if(session) {console.log(session?.user?.email, session?.user?.image)}
-
-    if(session) {router.push('/v1/dashboard')}
+    
+    if(session) {router.push(`/v1/${name}/`)}
   }, [session])
   
 
