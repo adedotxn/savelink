@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from '../components/layout'
-import DemoLayout from '../components/demo/layout'
 import { SessionProvider } from "next-auth/react"
 import {
   QueryClient,
@@ -22,13 +21,6 @@ function MyApp({ Component, session, pageProps, ...appProps}: AppProps) {
       )
     }
 
-    if((appProps.router.pathname).includes('/demo')){
-      return (
-        <DemoLayout>
-          <Component {...pageProps} />
-        </DemoLayout>
-      )
-    }
 
     return (
       <SessionProvider session={session}>
