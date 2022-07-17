@@ -7,9 +7,10 @@ import styles from '../styles/dashboard.module.css'
 interface IProps  {
     side : boolean; 
     setSide : React.Dispatch<React.SetStateAction<boolean>>
+    name : string
 }
 
-const MobileSidebar  = ({side, setSide}: IProps) => {
+const MobileSidebar  = ({side, setSide, name}: IProps) => {
     const router = useRouter()
 
     return (
@@ -17,7 +18,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
         <nav className={styles.mobile_sidebar} >
             <h1>Savelink</h1>
             <ul>
-                <Link href='/v1/dashboard' >
+                <Link href={`/v1/${name}`} >
                     <li  className={router.pathname === '/v1/dashboard' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
@@ -31,7 +32,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
                     </li>
                 </Link>
 
-                <Link href='/v1/bookmarked' >
+                <Link href={`/v1/${name}/bookmarked`} >
                     <li className={router.pathname === '/v1/bookmarked' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 
@@ -45,7 +46,7 @@ const MobileSidebar  = ({side, setSide}: IProps) => {
                     </li>
                 </Link>
 
-                <Link href='/v1/categories'>
+                <Link href={`/v1/${name}/categories`}>
                     <li  className={router.pathname === '/v1/categories' ? styles.mobile_active_route : ""} >
                         <div>
                             <Image 

@@ -9,6 +9,8 @@ import { authOptions } from '../../../api/auth/[...nextauth]'
 import { useRouter } from 'next/router'
 import List from '../../../../components/lists'
 
+
+
 const Category = () => {
     const router = useRouter()
     const {user, category} = router.query;

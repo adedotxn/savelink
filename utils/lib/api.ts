@@ -30,6 +30,6 @@ export const bookmarkLink = ( id : string | number) => {
     return apiClient.post(`/bookmark/${id}`)
 }
 
-export const getCategories = (user:string, category : string) => {
+export const getCategories = (user: string | string[] | undefined, category: string | string[] | undefined) => {
     return apiClient.get(`/${user}/category/${category}`)
 }

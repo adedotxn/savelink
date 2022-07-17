@@ -31,7 +31,7 @@ export default function Layout({ children } : {children : ReactNode}) {
             <Header side={side} setSide = {setSide} name = {name} />
         </header>
 
-        {side && <MobileSidebar side={side} setSide={setSide} />}
+        {side && <MobileSidebar name = {mail} side={side} setSide={setSide} />}
         <main className={styles.main} >
             <div className={styles.side}>
                 <Sidebar name = {mail} />

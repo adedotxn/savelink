@@ -10,12 +10,12 @@ import {
 
 const queryClient = new QueryClient()
 
-function MyApp({ Component, session, pageProps, ...appProps}: AppProps) {
+function MyApp({ Component, pageProps, ...appProps}: AppProps) {
 
   const getContent = () => {
     if([`/`].includes(appProps.router.pathname)){
       return (
-      <SessionProvider session={session}>
+      <SessionProvider  session={pageProps.session}>
         <Component {...pageProps} />
       </SessionProvider>
       )
@@ -23,7 +23,7 @@ function MyApp({ Component, session, pageProps, ...appProps}: AppProps) {
 
 
     return (
-      <SessionProvider session={session}>
+      <SessionProvider  session={pageProps.session}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <Layout>

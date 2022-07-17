@@ -10,7 +10,6 @@ const Home: NextPage = () => {
   const {data : session, status} = useSession();
   const loading = status === 'loading'
 
-  console.log("status ", status)
 
   const handleSignIn = (e: { preventDefault: () => void }) => {
     e.preventDefault();
