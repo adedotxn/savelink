@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { FC, useRef, useState } from 'react'
 import styles from '../styles/dashboard.module.css'
 
 interface IProps  {
