@@ -9,6 +9,9 @@ import {userLinks, addLink } from '../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
+import HamburgerSvg from '../../../components/svg/hamburger'
+import MoreSvg from '../../../components/svg/moresvg'
+import AddSvg from '../../../components/svg/add'
 
 const Dashboard:NextPage = () => {
 
@@ -109,43 +112,65 @@ const Dashboard:NextPage = () => {
             </main>}
 
             <div>
-      <Dialog className={styles.dialog} open={dialog}>
-        <form id = "input-form" onSubmit={onSubmit} action="">
-            <input name="title"  placeholder='Title'/>
-            <input name="link" placeholder='Link'/>
+                <Dialog className={styles.dialog} open={dialog}>
+                    <form id = "input-form" onSubmit={onSubmit} action="">
+                        <input name="title"  placeholder='Title'/>
+                        <input name="link" placeholder='Link'/>
 
-            <section className={styles.category}>
-                <p>Add new category or select from preexisting</p>
+                        <section className={styles.category}>
+                            <p>Add new category or select from preexisting</p>
 
-                <div className={styles.add_category} >
-                    <input onChange = {handleChange} type="text" placeholder='you can select from preexisting categories' />
-               
-                    <select value={selected} onChange = {handleChange} >
-                        {
-                            categories.map((data) => (
-                                <option key = {data} value={data}>{data}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-            </section>
+                            <div className={styles.add_category} >
+                                <input onChange = {handleChange} type="text" placeholder='you can select from preexisting categories' />
+                        
+                                <select value={selected} onChange = {handleChange} >
+                                    {
+                                        categories.map((data) => (
+                                            <option key = {data} value={data}>{data}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                        </section>
 
-            <button type="submit">Add</button>
-        </form>
-      </Dialog>
-    </div>
-        <footer className={styles.footer}>
-            <div  onClick={() => setDialog(!dialog)} className={styles.add} >
-                <div className={styles.cr8}>
-                    <Image 
-                        src='/add-circle.svg'
-                        alt='add'
-                        width={60}
-                        height={60} 
-                    />
-                </div>
+                        <button type="submit">Add</button>
+                    </form>
+                </Dialog>
             </div>
-        </footer>
+
+            <footer className={styles.footer}>
+                <div className={styles.mobile_footer}>
+                    <div>
+                        <HamburgerSvg/>
+                    </div>
+                    
+                    <div onClick={() => setDialog(!dialog)} className={styles.cr8m}>
+                        <Image 
+                            src='/add-circle-fill.svg'
+                            alt='add'
+                            width={60}
+                            height={60} 
+                        />
+                    </div>
+
+                    <div>
+                        <MoreSvg/>
+                    </div>
+                </div>
+
+                <div className={styles.desktop_footer}>
+                    <div  onClick={() => setDialog(!dialog)} className={styles.add} >
+                        <div className={styles.cr8}>
+                            <Image 
+                                src='/add-circle-fill.svg'
+                                alt='add'
+                                width={60}
+                                height={60} 
+                            />
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
   )
 }
