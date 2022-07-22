@@ -9,15 +9,13 @@ import {userLinks, addLink } from '../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
-import HamburgerSvg from '../../../components/svg/hamburger'
-import MoreSvg from '../../../components/svg/moresvg'
-import AddSvg from '../../../components/svg/add'
+import { useDialog } from '../../../utils/helper/context'
 
 const Dashboard:NextPage = () => {
 
-    
+    const {dialog, setDialog, toggleDialog} = useDialog()
+
     const queryClient = useQueryClient()
-    const [dialog, setDialog] = useState(false);
 
     const { data: session, status } = useSession()
     const name:string = session?.user?.email!
@@ -97,6 +95,7 @@ const Dashboard:NextPage = () => {
         </div>
     )
 
+
     return (
         <div className={styles.container}>
             {data.length === 0 ? 
@@ -139,27 +138,8 @@ const Dashboard:NextPage = () => {
             </div>
 
             <footer className={styles.footer}>
-                <div className={styles.mobile_footer}>
-                    <div>
-                        <HamburgerSvg/>
-                    </div>
-                    
-                    <div onClick={() => setDialog(!dialog)} className={styles.cr8m}>
-                        <Image 
-                            src='/add-circle-fill.svg'
-                            alt='add'
-                            width={60}
-                            height={60} 
-                        />
-                    </div>
-
-                    <div>
-                        <MoreSvg/>
-                    </div>
-                </div>
-
                 <div className={styles.desktop_footer}>
-                    <div  onClick={() => setDialog(!dialog)} className={styles.add} >
+                    <div  onClick={toggleDialog} className={styles.add} >
                         <div className={styles.cr8}>
                             <Image 
                                 src='/add-circle-fill.svg'

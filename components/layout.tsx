@@ -5,7 +5,7 @@ import Sidebar from './sidebar'
 import MobileSidebar from './mobile_sidebar'
 import { ReactNode, useState } from 'react'
 import { useSession } from 'next-auth/react'
-
+import Footer from './footer'
 
 export default function Layout({ children } : {children : ReactNode}) {
     const [side, setSide] = useState(false)
@@ -17,7 +17,6 @@ export default function Layout({ children } : {children : ReactNode}) {
     const name:string = session ? session.user?.name! : ""
     const mail:string = session?.user?.email!
 
-    
 
   return (
     <>
@@ -40,6 +39,10 @@ export default function Layout({ children } : {children : ReactNode}) {
                 <main>{children}</main>
             </div>
         </main>
+
+        <footer>
+            <Footer side={side} setSide = {setSide}/>
+        </footer>
     </>
   )
 }

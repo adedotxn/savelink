@@ -1,47 +1,49 @@
 import Image from 'next/image'
-import { FC, useEffect,useState } from 'react'
-import styles from '../styles/header.module.css'
+import { FC, useCallback, useEffect,useState } from 'react'
+import styles from '../styles/footer.module.css'
 import HamburgerSvg from './svg/hamburger'
 import MoonSvg from './svg/moon'
+import MoreSvg from './svg/moresvg'
 import SunSvg from './svg/sun'
+import { useDialog } from '../utils/helper/context'
 
 interface IProps {
     side : boolean;
     setSide : React.Dispatch<React.SetStateAction<boolean>>
-    name : string
 }
 
-const Footer = ({side, setSide, name}:IProps) => {
-    // <footer className={styles.footer}>
-    //         <div className={styles.mobile_footer}>
-    //             <div>
-    //                 <HamburgerSvg/>
-    //             </div>
+const Footer = ({side, setSide}:IProps) => {
+    const handleSidebar = () => {
+        setSide(!side)
+        // alert("open")
+    }
 
-    //             <div className={styles.cr8m}>
-    //                 <Image
-    //                     src='/add-circle.svg'
-    //                     alt='add'
-    //                     width={60}
-    //                     height={60} 
-    //                 />
-    //             </div>
+    const {dialog, setDialog} = useDialog()
 
-    //             <div>
-    //                 <MoreSvg/>
-    //             </div>
-    //         </div>
-    //         <div  onClick={() => setDialog(!dialog)} className={styles.add} >
-    //             <div className={styles.cr8}>
-    //                 <Image 
-    //                     src='/add-circle.svg'
-    //                     alt='add'
-    //                     width={60}
-    //                     height={60} 
-    //                 />
-    //             </div>
-    //         </div>
-        // </footer>
+    return (
+    <div className={styles.footer}>
+        <div className={styles.mobile_footer}>
+            <div onClick={handleSidebar}>
+                <HamburgerSvg/>
+            </div>
+            
+            <div 
+            onClick={() => setDialog(!dialog)} 
+            className={styles.cr8m}>
+                <Image 
+                    src='/add-circle-fill.svg'
+                    alt='add'
+                    width={60}
+                    height={60} 
+                />
+            </div>
+
+            <div>
+                <MoreSvg/>
+            </div>
+        </div>
+    </div>
+    )
 }
 
 export default Footer;

@@ -1,0 +1,35 @@
+.footer {
+    position:fixed;
+    bottom: 0rem;
+    width:100vw;
+    left:0;
+    z-index: 4;
+}
+.mobile_footer {
+    display: flex;
+    justify-content: space-between;
+    width:100vw;
+    /* border: 1px solid red; */
+    margin: 0;;
+    padding:.5rem 1rem;
+    background-color: var(--background);;
+    position: relative;
+}
+.mobile_footer div {
+    /* border: 1px solid green; */
+    padding: 0;
+    margin: 0;
+}
+.cr8m {
+    position: absolute;
+    bottom:1rem;
+    margin: 0 auto;
+    left:50%;
+    transform: translate(-50%, 0%);
+}
+
+@media screen and (min-width: 768px) {
+    .footer {
+        display: none;
+    }
+}

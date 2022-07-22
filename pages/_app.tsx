@@ -7,6 +7,7 @@ import {
   QueryClientProvider,
   Hydrate,
 } from 'react-query'
+import { DialogProvider } from '../utils/helper/context'
 
 const queryClient = new QueryClient()
 
@@ -26,9 +27,11 @@ function MyApp({ Component, pageProps, ...appProps}: AppProps) {
       <SessionProvider  session={pageProps.session}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <DialogProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </DialogProvider>
           </Hydrate>
         </QueryClientProvider>
       </SessionProvider>
