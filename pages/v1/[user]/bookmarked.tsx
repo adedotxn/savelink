@@ -24,6 +24,17 @@ const Bookmark: NextPage = () => {
         }
     }
 
+    if(isLoading) {
+        return (
+            <div className="loading_container">
+                <div className="lds_ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        );
+    }
+
     if(!isLoading) {
         let bookmarked = data.filter((e: { bookmarked: boolean }) => e.bookmarked === true)
         console.log("bk", bookmarked)

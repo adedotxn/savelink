@@ -43,10 +43,6 @@
     display: none;
 }
 
-.bkg2__stroke {
-    color:var(--text-color);
-}
-
 .svg_fill {
     color: var(--text-color)
 }

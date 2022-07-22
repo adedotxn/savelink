@@ -28,6 +28,16 @@ const Categories = () => {
     if(data) console.log("data", data)
     const categories:string[] = []
 
+    if(isLoading) {
+        return (
+            <div className="loading_container">
+                <div className="lds_ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        );
+    }
 
     if(!isLoading) {
         for( let i = 0 ; i < data.length ; ++i) { 
@@ -41,11 +51,7 @@ const Categories = () => {
             <div className={styles.container}>
                 <div className={styles.categories}>
                     {allcategories?.map((data) => (
-                        <Link key={data} href={
-                            {pathname : `/v1/${name}/category/[data]`,
-                            query : {data: data}
-                            }
-                            }>
+                        <Link key={data} href={ `/v1/${name}/category/${data}`}>
                             <div className={styles.category_cards} >
                                 <h1>{data}</h1>
                             </div>

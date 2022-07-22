@@ -102,11 +102,15 @@ const Dashboard:NextPage = () => {
         }
     }
 
-    if(isLoading) return (
-        <div>
-            <h1>Loadinggggg</h1>
+    if(isLoading) 
+        return (
+        <div className="loading_container">
+            <div className="lds_ripple">
+                <div></div>
+                <div></div>
+            </div>
         </div>
-    )
+    );
 
 
     return (

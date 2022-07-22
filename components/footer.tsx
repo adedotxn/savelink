@@ -8,6 +8,7 @@ import SunSvg from './svg/sun'
 import { useDialog } from '../utils/helper/context'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { ThemeSwitcher } from './theme_switcher'
 
 interface IProps {
     side : boolean;
@@ -28,6 +29,9 @@ const Footer = ({side, setSide, name}:IProps) => {
     return (
     <div className={styles.footer}>
         {side && <div className={styles.footer_nav}>
+            <div>
+                <ThemeSwitcher/>
+            </div>
             <ul>
                 <Link href={`/v1/${name}`} >
                     <li>

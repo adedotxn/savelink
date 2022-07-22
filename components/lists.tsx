@@ -7,6 +7,7 @@ import { useBookmark, useDelete } from '../utils/lib/api'
 
 interface IProps {
     array : {
+    identifier : string,
     bookmarked: boolean
     _id : number;
     title : string;
@@ -32,26 +33,25 @@ const List= ({array} : IProps) => {
     array.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
-            <div className={styles.links}>
-                <h3>{data.title}</h3>
-                <p> 
-                    {!data.url.includes('http') ? 
-                    <Link href={`https://${data.url}`}>
-                        <a target="_blank">
-                            {data.url}
-                        </a>
-                    </Link> : 
-                    <Link href={`${data.url}`}>
-                        <a target="_blank">
-                            {data.url}
-                        </a>
-                    </Link>
-                    }
-                </p>
-            </div>
+            <Link href={data.url.includes('http') ? `${data.url}` : `https://${data.url}`}>
+                <a target="_blank">
+                    <div className={styles.links}>
+                        <h3>{data.title}</h3>
+                        <p> 
+                            <Link href={data.url.includes('http') ? `${data.url}` : `https://${data.url}`}>
+                                <a target="_blank">
+                                    {data.url}
+                                </a>
+                            </Link> 
+                        </p>
+                    </div>
+                </a>
+            </Link>
             <div className={styles.link__footer} >
                 <div className={styles.link__category}>
-                    <h3>{data.category}</h3>
+                    <Link href={ `/v1/${data.identifier}/category/${data.category}`}>
+                        <h3>{data.category}</h3>
+                    </Link>
                 </div>
 
                 <div  className={styles.link__images}>

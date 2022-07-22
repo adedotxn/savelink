@@ -1,7 +1,7 @@
 import styles from '../../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { Modal, Dialog } from 'react-dialog-polyfill'
-import { useQuery } from 'react-query'
+import { dehydrate, QueryClient, useQuery } from 'react-query'
 import {getCategories, userLinks, useDataGetter} from '../../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
@@ -56,24 +56,24 @@ export default Category;
 
 
 
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//     const session = await unstable_getServerSession(
-//         context.req,
-//         context.res,
-//         authOptions
-//     )
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    )
 
 
-//     const queryClient = new QueryClient()
+    const queryClient = new QueryClient()
 
-//     await queryClient.prefetchQuery('perCategory', () => (session?.user?.email!))
+    await queryClient.prefetchQuery('perCategory', () => (session?.user?.email!))
 
-//     return {
-//         props: {
-//             dehydratedState: dehydrate(queryClient),
-//         },
-//     }
-//   }
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    }
+  }
 
 
 

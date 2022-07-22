@@ -125,9 +125,7 @@
     display: block;
 }
 
-.category{
-    /* border: 1px solid white */
-}
+
 .category p {
     margin: 0;
 }
@@ -248,5 +246,5 @@
     .add:hover {
         transform: rotate(360deg);
     }
-    
+
 }
