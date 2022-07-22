@@ -1,8 +1,8 @@
 import styles from '../../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { Modal, Dialog } from 'react-dialog-polyfill'
-import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
-import {getCategories} from '../../../../utils/lib/api'
+import { useQuery } from 'react-query'
+import {getCategories, userLinks, useDataGetter} from '../../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '../../../api/auth/[...nextauth]'
@@ -14,8 +14,8 @@ import List from '../../../../components/lists'
 const Category = () => {
     const router = useRouter()
     const {user, category} = router.query;
-    console.log("user", user)
-    console.log('user/category', category)
+    // console.log("user", user)
+    // console.log('user/category', category)
 
     const { data: session, status } = useSession()
     const name:string = session?.user?.email!
@@ -23,9 +23,17 @@ const Category = () => {
     const { isLoading, error, data } = useQuery(
         ['perCategory', user, category], () => 
             getCategories(user, category)
-        );
+    );
 
-    if(data) console.log("dataa",data.data)
+    function useLinks() {
+        const { isLoading, error, data } = useDataGetter(name)
+        return data;
+    }
+
+
+    console.log("all linkss hook", useLinks())
+
+    // if(data) console.log("dataa",data.data)
     
 
     if(!isLoading) {

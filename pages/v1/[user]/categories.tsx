@@ -4,15 +4,31 @@ import Link from 'next/link'
 import { useQuery } from 'react-query'
 import List from '../../../components/lists'
 import styles from '../../../styles/categories.module.css'
-import { userLinks } from '../../../utils/lib/api'
+import { useDataGetter, userLinks } from '../../../utils/lib/api'
 
 const Categories = () => {
     const { data: session, status } = useSession()
     const name:string = session?.user?.email!
-    const { isLoading, error, data } = useQuery(['bookmarks', name], () => userLinks(name))
+    // const { isLoading, error, data } = useQuery(['bookmarks', name], () => userLinks(name))
+
+
+    function useLinks() {
+        const { isLoading, error, data } = useDataGetter(name)
+
+        return {
+            data, error, isLoading
+        }
+    }
+
+    const storedData = useLinks()
+    console.log("stored data", storedData?.data?.data)
+    const data = storedData?.data?.data!;
+    const isLoading = storedData.isLoading
 
     if(data) console.log("data", data)
     const categories:string[] = []
+
+
     if(!isLoading) {
         for( let i = 0 ; i < data.length ; ++i) { 
             console.log("catss", data[i].category)

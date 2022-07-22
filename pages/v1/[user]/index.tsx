@@ -2,56 +2,37 @@ import Image from 'next/image'
 import List from '../../../components/lists'
 import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useCallback, useState } from 'react'
+import React, { FormEvent, useCallback, useEffect, useState } from 'react'
 import { Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
-import {userLinks, addLink } from '../../../utils/lib/api'
+import {userLinks,  useDataGetter, useCreate } from '../../../utils/lib/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
 import { useDialog } from '../../../utils/helper/context'
+import {Toaster, toast} from 'react-hot-toast'
 
 const Dashboard:NextPage = () => {
 
     const {dialog, setDialog, toggleDialog} = useDialog()
 
-    const queryClient = useQueryClient()
-
     const { data: session, status } = useSession()
     const name:string = session?.user?.email!
 
-    const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
-    
-    let returnedCategories:string[] = []
-   
-
-    if(!isLoading) {
-        for(let i:number = 0 ; i < data.length ; ++i) { 
-            // console.log(data[i].category)
-            returnedCategories.push(data[i].category)
-        }
+    function useData() {
+        const { isLoading, error, data } = useDataGetter(name)
+        return { data, error, isLoading }
     }
+    const storedData = useData()
+    
+    // const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
+    let returnedCategories:string[] = []
 
-    const categories = [...new Set(returnedCategories)]
-    console.log("categories", categories)
-
-    const [selected, setSelected] = useState("")
-    const handleChange = useCallback((e: { target: { value: React.SetStateAction<string> } }) => {
-        setSelected(e.target.value)
-        console.log("selected handlechange", e.target.value)
-    },[])
-
-    const [addCategory, setAddCategory] = useState<string[] >([])
-
-    const mutation = useMutation(addLink, {
-        onSuccess : () => {
-            queryClient.invalidateQueries(['links'])
-        },
-        onSettled :() => {
-            setDialog(false)
-        }
-    })
-
+    const data = storedData?.data?.data;
+    const isLoading = storedData.isLoading
+    const error = storedData.error
+   
+ 
     if(error) {
         if(error instanceof Error) {
             console.log("creation error", error.message)
@@ -60,8 +41,40 @@ const Dashboard:NextPage = () => {
         }
     }
 
-    if(data) console.log("data", data)
-    console.log("isloading", isLoading)
+    if(!isLoading) {
+        for(let i:number = 0 ; i < data.length ; ++i) { 
+            // console.log(data[i].category)
+            returnedCategories.push(data[i].category)
+        }
+    }
+    const categories = [...new Set(returnedCategories)]
+    // console.log("categories", categories)
+
+    const [selected, setSelected] = useState("")
+    const handleChange = useCallback((e: { target: { value: React.SetStateAction<string> } }) => {
+        setSelected(e.target.value)
+        console.log("selected handlechange", e.target.value)
+    },[])
+
+
+
+    // if(data) console.log("data", data)
+    // console.log("isloading", isLoading)
+    const createMutation = useCreate()    
+
+    useEffect(() => {
+        if(createMutation.isLoading) {
+            toast("Saving link")
+        }
+        if(createMutation.isSuccess) {
+            setDialog(false)
+        }
+        if(createMutation.isError) {
+            toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
+        }
+        console.log("mutation", createMutation)
+        
+    }, [createMutation, setDialog])
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -70,7 +83,7 @@ const Dashboard:NextPage = () => {
         let inputedTitle :string = data.get("title")?.toString() || ''
         let inputedLink:string =  data.get("link")?.toString()!
 
-        mutation.mutate({
+        createMutation.mutate({
             identifier: name, 
             title:inputedTitle, 
             url : inputedLink,
@@ -81,11 +94,11 @@ const Dashboard:NextPage = () => {
 
     }
 
-    if(mutation.error) {
-        if(mutation.error instanceof Error) {
-            console.log("mutation error", mutation.error)
+    if(createMutation.error) {
+        if(createMutation.error instanceof Error) {
+            console.log("mutation error", createMutation.error)
         } else {
-            console.log(`Unexpected error in mutation: ${mutation.error}`)
+            console.log(`Unexpected error in mutation: ${createMutation.error}`)
         }
     }
 
@@ -98,6 +111,12 @@ const Dashboard:NextPage = () => {
 
     return (
         <div className={styles.container}>
+            <div>
+                <Toaster 
+                    position="top-center"
+                    reverseOrder={false}
+                />
+            </div>
             {data.length === 0 ? 
             <div className={styles.such_nothing}>
                 <h2>Such nothing 👀 </h2>

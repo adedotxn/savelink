@@ -1,14 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/list.module.css'
-import { FC, useEffect, useState } from 'react'
 import SvgComponent from './svg/starsvg'
 import DeleteSvg from './svg/delete'
-import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
-import apiClient from '../utils/http-config'
-import { AxiosResponse } from 'axios'
-import { bookmarkLink, deleteLink } from '../utils/lib/api'
 import ShareSvg from './svg/share'
+import { useBookmark, useDelete } from '../utils/lib/api'
 
 interface IProps {
     array : {
@@ -23,31 +18,8 @@ interface IProps {
 
 
 const List= ({array} : IProps) => {
-
-    const queryClient = useQueryClient();
-
-    const deleteMutation = useMutation(
-        deleteLink, 
-        {
-            onSuccess : () => {
-                queryClient.invalidateQueries(['links'])
-                queryClient.invalidateQueries(['bookmarks'])
-            }
-        }
-    )
-
-    const bookmarkMutation = useMutation(
-        bookmarkLink, 
-        {
-            onSuccess : () => {
-                queryClient.invalidateQueries(['links'])
-                queryClient.invalidateQueries(['bookmarks'])
-            },
-            onError: error => {
-                console.log("Mutation error", error)
-            }
-        }
-    )
+    const deleteMutation = useDelete()
+    const bookmarkMutation = useBookmark()
 
 
   return (

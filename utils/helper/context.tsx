@@ -14,7 +14,6 @@ export const dialogContextDefaultValue: DialogContextData = {
    
 
 
-
 export const DialogContext = createContext<DialogContextData>(dialogContextDefaultValue);
 
 export const useDialog = () => {
@@ -23,14 +22,14 @@ export const useDialog = () => {
 
 
 export const DialogProvider = ({children}:{children : React.ReactNode})  => {
-    const [dialog, setDialog] = useState<boolean>(false);
+  const [dialog, setDialog] = useState<boolean>(false);
 
-    const toggleDialog =() => {
-      setDialog(!dialog)
-    }
-    return (
-      <DialogContext.Provider value = {{dialog, setDialog, toggleDialog}}>
-        {children}
-      </DialogContext.Provider>
-    )
+  const toggleDialog =() => {
+    setDialog(!dialog)
+  }
+  return (
+    <DialogContext.Provider value = {{dialog, setDialog, toggleDialog}}>
+      {children}
+    </DialogContext.Provider>
+  )
 }
