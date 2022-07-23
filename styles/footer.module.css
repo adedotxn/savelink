@@ -30,7 +30,7 @@
     transform: translate(-50%, 0%);
 }
 .footer_nav {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     border-top: 1px solid white;;
     border-bottom: 1px solid var(--accent-color);
     position: relative;

@@ -68,13 +68,13 @@ const Dashboard:NextPage = () => {
         }
         if(createMutation.isSuccess) {
             setDialog(false)
+            // toast.success(`Saved ${createMutation.variables?.title}`)
         }
         if(createMutation.isError) {
             toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
         }
-        console.log("mutation", createMutation)
-        
-    }, [createMutation, setDialog])
+        // console.log("mutation", createMutation)
+    }, [createMutation])
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -89,9 +89,7 @@ const Dashboard:NextPage = () => {
             url : inputedLink,
             category : selected,
         })
-
-        console.log("selected", selected)
-
+        // console.log("selected", selected)
     }
 
     if(createMutation.error) {

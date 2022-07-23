@@ -4,6 +4,7 @@ import SvgComponent from './svg/starsvg'
 import DeleteSvg from './svg/delete'
 import ShareSvg from './svg/share'
 import { useBookmark, useDelete } from '../utils/lib/api'
+import toast, { Toaster } from 'react-hot-toast'
 
 interface IProps {
     array : {
@@ -22,6 +23,15 @@ const List= ({array} : IProps) => {
     const deleteMutation = useDelete()
     const bookmarkMutation = useBookmark()
 
+const handleShare = async  (title: string, url:string) => {
+    try {
+        await navigator.share({title, url})
+       toast.success(`Shared ${title}`)
+      } catch(err) {
+       toast.error(`Error sharing :${err}`)
+      }
+}
+
 
   return (
     <>
@@ -32,6 +42,12 @@ const List= ({array} : IProps) => {
     :
     array.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
+        <div>
+            <Toaster 
+            position="top-center"
+            reverseOrder={false}
+            />
+        </div>
         <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
             <Link href={data.url.includes('http') ? `${data.url}` : `https://${data.url}`}>
                 <a target="_blank">
@@ -62,7 +78,7 @@ const List= ({array} : IProps) => {
                         <SvgComponent starred = {data.bookmarked} />
                     </div>
 
-                    <div className={styles.link__image}>
+                    <div onClick={() => handleShare(data.title, data.url)} className={styles.link__image}>
                         <ShareSvg/>
                     </div>
 
