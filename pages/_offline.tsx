@@ -1,4 +1,4 @@
-export const Offline = () => {
+const Offline = () => {
     return (
         <div className="loading_container">
             <div className="offlne">
@@ -7,3 +7,5 @@ export const Offline = () => {
         </div>
     )
 }
+
+export default Offline;
