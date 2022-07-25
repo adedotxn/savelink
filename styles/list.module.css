@@ -10,7 +10,7 @@
 
 }
 .link_wrapper:hover {
-    margin-bottom: .5rem;
+    transform: scaleY(1.1);
 }
 .link_list {
     /* padding: .5rem 1rem; */
