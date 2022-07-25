@@ -1,14 +1,13 @@
 import Image from 'next/image'
-import { FC, useCallback, useEffect,useState } from 'react'
 import styles from '../styles/footer.module.css'
 import HamburgerSvg from './svg/hamburger'
-import MoonSvg from './svg/moon'
 import MoreSvg from './svg/moresvg'
-import SunSvg from './svg/sun'
 import { useDialog } from '../utils/helper/context'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ThemeSwitcher } from './theme_switcher'
+import AddSvg from './svg/add'
+import Logout from './Logout'
 
 interface IProps {
     side : boolean;
@@ -30,6 +29,7 @@ const Footer = ({side, setSide, name}:IProps) => {
     <div className={styles.footer}>
         {side && <div className={styles.footer_nav}>
             <div>
+                {/* <Logout/> */}
                 <ThemeSwitcher/>
             </div>
             <ul>
@@ -60,12 +60,14 @@ const Footer = ({side, setSide, name}:IProps) => {
             <div 
             onClick={() => setDialog(!dialog)} 
             className={styles.cr8m}>
-                <Image 
+                {/* <Image 
                     src='/add-circle-fill.svg'
                     alt='add'
                     width={60}
                     height={60} 
-                />
+                    className = "svg_fill"
+                /> */}
+                <AddSvg/>
             </div>
 
             <div>

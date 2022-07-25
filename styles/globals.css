@@ -87,6 +87,10 @@ a {
   background-color: var(--accent-color);
   opacity: .8;
 }
+.svg_fill {
+  color: var(--text-color);
+  fill: var(--text-color);
+}
 
 
 /*Loading animation global style*/

@@ -11,9 +11,9 @@ import { useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
 import { useDialog } from '../../../utils/helper/context'
 import {Toaster, toast} from 'react-hot-toast'
+import AddSvg from '../../../components/svg/add'
 
 const Dashboard:NextPage = () => {
-
     const {dialog, setDialog, toggleDialog} = useDialog()
 
     const { data: session, status } = useSession()
@@ -60,20 +60,18 @@ const Dashboard:NextPage = () => {
 
     // if(data) console.log("data", data)
     // console.log("isloading", isLoading)
-    const createMutation = useCreate()    
+    const createMutation = useCreate(setDialog)    
 
     useEffect(() => {
         if(createMutation.isLoading) {
             toast("Saving link")
         }
         if(createMutation.isSuccess) {
-            setDialog(false)
-            // toast.success(`Saved ${createMutation.variables?.title}`)
+            toast.success(`Saved ${createMutation.variables?.title}`)
         }
         if(createMutation.isError) {
             toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
         }
-        // console.log("mutation", createMutation)
     }, [createMutation])
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
@@ -162,12 +160,13 @@ const Dashboard:NextPage = () => {
                 <div className={styles.desktop_footer}>
                     <div  onClick={toggleDialog} className={styles.add} >
                         <div className={styles.cr8}>
-                            <Image 
+                            {/* <Image 
                                 src='/add-circle-fill.svg'
                                 alt='add'
                                 width={60}
                                 height={60} 
-                            />
+                            /> */}
+                            <AddSvg/>
                         </div>
                     </div>
                 </div>

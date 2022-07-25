@@ -1,6 +1,7 @@
 import { useTheme } from 'next-themes'
 import { FC, useEffect,useState } from 'react'
 import styles from '../styles/header.module.css'
+import Logout from './Logout'
 import HamburgerSvg from './svg/hamburger'
 import { ThemeSwitcher } from './theme_switcher'
 
@@ -31,6 +32,7 @@ const Header = ({side, setSide, name}:IProps) => {
             <div>
                 <h2>{name}</h2>
                 <ThemeSwitcher/>
+                <Logout/>
             </div>
         </header>
     ) 

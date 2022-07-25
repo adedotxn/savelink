@@ -43,17 +43,17 @@ export const getCategories = (user: string | string[] | undefined, category: str
     return apiClient.get(`/${user}/category/${category}`)
 }
 
-export const useCreate = () => {
+export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolean>>) => {
     const queryClient = useQueryClient()
 
     return useMutation(addLink, {
         onSuccess : () => {
             queryClient.invalidateQueries(['links'])
         }
-        // ,
-        // onSettled :() => {
-        //     setDialog(false)
-        // }
+        ,
+        onSettled :() => {
+            setDialog(false)
+        }
     })
 }
 

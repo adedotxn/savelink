@@ -50,6 +50,7 @@
     display: none;
 }
 
+
 @media screen and (min-width: 768px) {
 
     .header {
@@ -93,7 +94,7 @@
     .header>div:nth-child(3) h2 {
         margin:0;
         font-weight: 400;
-        margin-right: .5rem;
+        margin-right: 1rem;
         padding:.2rem .4rem;
         border-radius: .4rem;
         background-color: var(--accent-color);
@@ -102,7 +103,7 @@
     .switch {
         border: 0px solid var(--text-color);
         padding: .3rem;
-        margin: 0 auto;
+        margin: 0 .5rem 0 auto;
         /* width: 3vw;
         height:6vh; */
         background-color: var(--accent-color);

@@ -4,6 +4,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import styles from '../styles/dashboard.module.css'
+import ArchiveActive from './svg/active/archive'
+import BookmarkActive from './svg/active/bookmarked'
+import CategActive from './svg/active/categ'
+import ArchiveSvg from './svg/archive'
+import BookmarkSvg from './svg/bookmark'
+import CategoriesSvg from './svg/categoriesvg'
+import LinkSvg from './svg/linksvg'
 
 const Sidebar = ({name}:{name : string}) => {
     const navRef = useRef<HTMLElement>(null)
@@ -28,13 +35,9 @@ const Sidebar = ({name}:{name : string}) => {
 
                 <Link href={`/v1/${name}`} >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname.includes("v1") ? styles.active_route : ""} >
-                                <Image 
-                                    src='/links.svg' 
-                                    alt='links'
-                                    width={25}
-                                    height={25}   
-                                /> 
+                        <div>
+                            {router.pathname.includes(`/v1/${name}`) ? 
+                            <ArchiveActive/> : <ArchiveSvg/>} 
                         </div>
                         <span className={hovering ? 'show' : 'hide'} >All links </span>
                     </li>
@@ -42,13 +45,11 @@ const Sidebar = ({name}:{name : string}) => {
 
                 <Link href={`/v1/${name}/bookmarked`} >
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname.includes('bookmarked') ? styles.active_route : ""} >
-                            <Image 
-                                src='/bookmark.svg' 
-                                alt='links'
-                                width={25}
-                                height={25}
-                            />
+                        <div >
+                            {router.pathname.includes('bookmarked') ? 
+                            <BookmarkActive/> :  
+                            <BookmarkSvg/>}
+                                
                         </div> 
                         <span className={hovering ? 'show' : 'hide'}>Starred</span>
                     </li>
@@ -56,26 +57,22 @@ const Sidebar = ({name}:{name : string}) => {
 
                 <Link href={`/v1/${name}/categories`}>
                     <li className={hovering ? styles.sidebar__li : ''}>
-                        <div className={router.pathname.includes("categories") ? styles.active_route : ""} >
-                            <Image 
-                                src='/lightbulb.svg' 
-                                alt='links'
-                                width={25}
-                                height={25}
-                            /> 
+                        <div >
+                         {router.pathname.includes("categories") 
+                         ? <CategoriesSvg/> : <CategActive/>} 
                         </div> 
                         <span className={hovering ? 'show' : 'hide'} >Categories</span>
                     </li>
                 </Link>
 
-                <Link href={`/api/auth/signout`}
+                {/* <Link href={`/api/auth/signout`}
                     className={styles.button}
                     onClick={(e) => {
                     e.preventDefault()
                     signOut()
                     }}>
                 <li>Logout</li>
-                </Link>
+                </Link> */}
             </ul>
         </nav>
     )

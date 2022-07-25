@@ -14,12 +14,12 @@
 
 .main {
     margin-top: 1rem;
+    padding-bottom: 8rem;;
 }
 .main>section {
     display: grid;
     row-gap: 1.5rem;;
     place-items: center;
-    margin-bottom: 6rem;
 }
 .open_sidebar {
     display: flex;
@@ -206,6 +206,7 @@
     }
     .main>section {
         margin-top: 2rem;;
+        margin-left: 2rem;;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr ;
         column-gap: 2rem;;
@@ -245,6 +246,12 @@
     
     .add:hover {
         transform: rotate(360deg);
+    }
+
+    .cr8 {
+        transform: scale(2.5);
+        cursor: pointer;
+
     }
 
 }
