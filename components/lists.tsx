@@ -24,8 +24,13 @@ const List= ({array} : IProps) => {
     const bookmarkMutation = useBookmark()
 
 const handleShare = async  (title: string, url:string) => {
+    const shareOpts = {
+        title: title,
+        url: url
+    };
+
     try {
-        await navigator.share({title, url})
+        await navigator.share(shareOpts)
        toast.success(`Shared ${title}`)
       } catch(err) {
        toast.error(`Error sharing :${err}`)
@@ -40,7 +45,7 @@ const handleShare = async  (title: string, url:string) => {
         <h2>Wow, such nothing 👀</h2>
     </div>
     :
-    array.map(data => (
+    array?.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div>
             <Toaster 
@@ -78,7 +83,7 @@ const handleShare = async  (title: string, url:string) => {
                         <SvgComponent starred = {data.bookmarked} />
                     </div>
 
-                    <div onClick={() => handleShare(data.title, data.url)} className={styles.link__image}>
+                    <div onClick={() => handleShare(data.title, `${data.url}`)} className={styles.link__image}>
                         <ShareSvg/>
                     </div>
 

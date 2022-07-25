@@ -5,9 +5,10 @@ import MoreSvg from './svg/moresvg'
 import { useDialog } from '../utils/helper/context'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ThemeSwitcher } from './theme_switcher'
+import { ThemeSwitcher } from './buttons/theme_switcher'
 import AddSvg from './svg/add'
-import Logout from './Logout'
+import Logout from './buttons/Logout'
+import PinSvg from './svg/pin'
 
 interface IProps {
     side : boolean;
@@ -20,7 +21,6 @@ const Footer = ({side, setSide, name}:IProps) => {
         setSide(!side)
         // alert("open")
     }
-
     const router = useRouter()
 
     const {dialog, setDialog} = useDialog()
@@ -29,7 +29,7 @@ const Footer = ({side, setSide, name}:IProps) => {
     <div className={styles.footer}>
         {side && <div className={styles.footer_nav}>
             <div>
-                {/* <Logout/> */}
+                <Logout/>
                 <ThemeSwitcher/>
             </div>
             <ul>
@@ -56,19 +56,21 @@ const Footer = ({side, setSide, name}:IProps) => {
             <div onClick={handleSidebar}>
                 <HamburgerSvg/>
             </div>
-            
+            {router.pathname.includes("bookmarked")
+            || router.pathname.includes("category")
+            ||  router.pathname.includes("categories")?
+            <div 
+            onClick={() => router.push(`/v1/${name}`)} 
+            className={styles.cr8p}>
+                <PinSvg/>
+            </div>
+            :
             <div 
             onClick={() => setDialog(!dialog)} 
             className={styles.cr8m}>
-                {/* <Image 
-                    src='/add-circle-fill.svg'
-                    alt='add'
-                    width={60}
-                    height={60} 
-                    className = "svg_fill"
-                /> */}
                 <AddSvg/>
             </div>
+            }
 
             <div>
                 <MoreSvg/>

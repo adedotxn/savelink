@@ -12,6 +12,7 @@ import { authOptions } from '../../api/auth/[...nextauth]'
 import { useDialog } from '../../../utils/helper/context'
 import {Toaster, toast} from 'react-hot-toast'
 import AddSvg from '../../../components/svg/add'
+import { Close } from '../../../components/buttons/close_dialog'
 
 const Dashboard:NextPage = () => {
     const {dialog, setDialog, toggleDialog} = useDialog()
@@ -131,15 +132,18 @@ const Dashboard:NextPage = () => {
 
             <div>
                 <Dialog className={styles.dialog} open={dialog}>
+                    <div className={styles.close_btn}>
+                        <Close setDialog={setDialog}/>
+                    </div>
                     <form id = "input-form" onSubmit={onSubmit} action="">
                         <input name="title"  placeholder='Title'/>
                         <input name="link" placeholder='Link'/>
 
                         <section className={styles.category}>
-                            <p>Add new category or select from preexisting</p>
+                            <p>Type in a new category to save to or select from pre-existing</p>
 
                             <div className={styles.add_category} >
-                                <input onChange = {handleChange} type="text" placeholder='you can select from preexisting categories' />
+                                <input onChange = {handleChange} type="text" placeholder='Example : "Software Eng. Links"' />
                         
                                 <select value={selected} onChange = {handleChange} >
                                     {
@@ -151,7 +155,7 @@ const Dashboard:NextPage = () => {
                             </div>
                         </section>
 
-                        <button type="submit">Add</button>
+                        <button type="submit">Save</button>
                     </form>
                 </Dialog>
             </div>
@@ -160,12 +164,6 @@ const Dashboard:NextPage = () => {
                 <div className={styles.desktop_footer}>
                     <div  onClick={toggleDialog} className={styles.add} >
                         <div className={styles.cr8}>
-                            {/* <Image 
-                                src='/add-circle-fill.svg'
-                                alt='add'
-                                width={60}
-                                height={60} 
-                            /> */}
                             <AddSvg/>
                         </div>
                     </div>

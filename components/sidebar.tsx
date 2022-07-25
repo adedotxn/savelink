@@ -59,20 +59,11 @@ const Sidebar = ({name}:{name : string}) => {
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div >
                          {router.pathname.includes("categories") 
-                         ? <CategoriesSvg/> : <CategActive/>} 
+                         ? <CategActive/> : <CategoriesSvg/>} 
                         </div> 
                         <span className={hovering ? 'show' : 'hide'} >Categories</span>
                     </li>
                 </Link>
-
-                {/* <Link href={`/api/auth/signout`}
-                    className={styles.button}
-                    onClick={(e) => {
-                    e.preventDefault()
-                    signOut()
-                    }}>
-                <li>Logout</li>
-                </Link> */}
             </ul>
         </nav>
     )

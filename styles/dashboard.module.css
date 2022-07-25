@@ -141,6 +141,19 @@
     display: none;
 }
 
+.close_btn {
+    width: fit-content;
+    border-radius: .3rem;
+    background: var(--background);
+    cursor: pointer;
+
+}
+.close_btn div{
+    /* padding:.1rem .2rem; */
+    margin: 0;
+    padding: 0;
+}
+
 
 
 @media screen and (min-width: 768px) {
@@ -238,20 +251,21 @@
     .add {
         padding: 0;
         margin: 0;
-        transition: transform .5s ease-in-out;
+        transition: transform .2s ease-in-out;
         border-radius: 50%;
         display: flex;
         place-items: center;
     }
     
     .add:hover {
-        transform: rotate(360deg);
+        transform: scale(1.1);
+        
     }
 
     .cr8 {
         transform: scale(2.5);
         cursor: pointer;
-
+        width: fit-content;
     }
 
 }

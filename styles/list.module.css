@@ -5,6 +5,12 @@
     background-color: var(--accent-color);
     border-radius: .5rem;;
     width:80vw;
+    box-shadow: var(--background) 0px 1px 4px;
+    transition: all .2s ease-in-out;
+
+}
+.link_wrapper:hover {
+    margin-bottom: .5rem;
 }
 .link_list {
     /* padding: .5rem 1rem; */

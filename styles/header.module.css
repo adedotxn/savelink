@@ -65,6 +65,7 @@
 
     .hamburger {
         display: block;
+        transform: scale(2);
     }
 
     .searchbar input {

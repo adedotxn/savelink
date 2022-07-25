@@ -1,9 +1,6 @@
-import { useTheme } from 'next-themes'
-import { FC, useEffect,useState } from 'react'
 import styles from '../styles/header.module.css'
-import Logout from './Logout'
-import HamburgerSvg from './svg/hamburger'
-import { ThemeSwitcher } from './theme_switcher'
+import Logout from './buttons/Logout'
+import { ThemeSwitcher } from './buttons/theme_switcher'
 
 interface IProps {
     side : boolean;
@@ -21,7 +18,7 @@ const Header = ({side, setSide, name}:IProps) => {
         <header  className={styles.header}>
             <div className={styles.hamburger}
                 onClick={handleSidebar}>
-                <HamburgerSvg/>
+                📌
             </div>
 
             <div className={[styles.searchbar, 'searchbar'].join(" ")}>

@@ -1,7 +1,5 @@
-@media screen and (min-width: 768px) {
-    .box {
-        background-color: var(--accent-color);
-        border-radius: .4rem;
-        padding: .3rem .4rem;
-    }
+.box {
+    background-color: var(--accent-color);
+    border-radius: .4rem;
+    padding: .3rem .4rem;
 }
