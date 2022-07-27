@@ -21,11 +21,23 @@ export const themeContextDefaultValue: ThemeContextData = {
   theme : false,
   switchTheme : () => null
 }
+
+export interface SearchContextData {
+  search: string
+  setSearch : React.Dispatch<React.SetStateAction<string>>,
+
+}
+
+export const searchContextDefaultValue: SearchContextData = {
+  search : '',
+  setSearch : () => null,
+}
    
 
 
 export const DialogContext = createContext<DialogContextData>(dialogContextDefaultValue);
 export const ThemeContext = createContext<ThemeContextData>(themeContextDefaultValue)
+export const SearchContext = createContext<SearchContextData>(searchContextDefaultValue)
 
 export const useDialog = () => {
   return useContext(DialogContext)
@@ -33,6 +45,10 @@ export const useDialog = () => {
 
 export const useTheme = () => {
   return useContext(ThemeContext)
+}
+
+export const useSearch = () => {
+  return useContext(SearchContext)
 }
 
 
@@ -44,6 +60,7 @@ export const DialogProvider = ({children}:{children : React.ReactNode})  => {
   }
 
   const [theme, setTheme] = useState(false)
+
   function getCurrentTheme() {
     let theme:string = window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark' : 'light';
@@ -51,14 +68,17 @@ export const DialogProvider = ({children}:{children : React.ReactNode})  => {
     ? theme = `${localStorage.getItem('savelink-theme')}` : null;
 
     return theme;
-   }
+  }
+
   function loadTheme(theme : string) {
     const root = document.querySelector(':root');
     root?.setAttribute('color-scheme', `${theme}`)
   }
+
   useEffect(() => {
     loadTheme(getCurrentTheme())
   })
+
   const switchTheme = () => {
     let theme = getCurrentTheme()
     theme === 'dark' ? theme = 'light' : theme = 'dark';
@@ -69,11 +89,16 @@ export const DialogProvider = ({children}:{children : React.ReactNode})  => {
     root?.getAttribute('color-scheme') === 'dark' ? setTheme(true) : setTheme(false)
   }
 
+  const [search, setSearch] = useState<string>("")
+
+
 
   return (
     <ThemeContext.Provider value = {{theme, switchTheme}}>
       <DialogContext.Provider value = {{dialog, setDialog, toggleDialog}}>
-        {children}
+        <SearchContext.Provider value = {{search, setSearch}}>
+          {children}
+        </SearchContext.Provider>
       </DialogContext.Provider>
     </ThemeContext.Provider>
   )

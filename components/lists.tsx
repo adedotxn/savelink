@@ -5,6 +5,7 @@ import DeleteSvg from './svg/delete'
 import ShareSvg from './svg/share'
 import { useBookmark, useDelete } from '../utils/lib/api'
 import toast, { Toaster } from 'react-hot-toast'
+import { useSearch } from '../utils/helper/context'
 
 interface IProps {
     array : {
@@ -35,8 +36,17 @@ const handleShare = async  (title: string, url:string) => {
       } catch(err) {
        toast.error(`Error sharing :${err}`)
       }
-}
+    }
 
+    const {search} = useSearch()
+    array.filter((data) => {
+        if(search === '') {
+            return array;
+        } else if (data.title.toLowerCase().includes(search.toLowerCase())
+         || data.url.toLowerCase().includes(search.toLowerCase())) {
+            return array
+        }
+    })
 
   return (
     <>
@@ -45,7 +55,14 @@ const handleShare = async  (title: string, url:string) => {
         <h2>Wow, such nothing 👀</h2>
     </div>
     :
-    array?.map(data => (
+    array.filter((data) => {
+        if(search === '') {
+            return array;
+        } else if (data.title.toLowerCase().includes(search.toLowerCase())
+         || data.url.toLowerCase().includes(search.toLowerCase())) {
+            return array
+        }
+    })?.map(data => (
     <div key={data._id} className={styles.link_wrapper}>
         <div>
             <Toaster 

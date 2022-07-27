@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import styles from '../styles/header.module.css'
+import { useSearch } from '../utils/helper/context';
+import { useDataGetter } from '../utils/lib/api';
 import Logout from './buttons/Logout'
 import { ThemeSwitcher } from './buttons/theme_switcher'
+
 
 interface IProps {
     side : boolean;
@@ -13,6 +17,8 @@ const Header = ({side, setSide, name}:IProps) => {
         setSide(!side)
         // alert("open")
     }
+
+    const {search, setSearch} = useSearch()
     
     return (
         <header  className={styles.header}>
@@ -22,7 +28,12 @@ const Header = ({side, setSide, name}:IProps) => {
             </div>
 
             <div className={[styles.searchbar, 'searchbar'].join(" ")}>
-                <input type="text" placeholder='Search through links' />
+                <input 
+                    type="text" 
+                    placeholder='Search through links with Title/Urls' 
+                    value={search}
+                    onChange = {(e) => setSearch(e.target.value)}
+                />
             </div>
 
 

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import List from '../../../components/lists'
 import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useCallback, useEffect, useState } from 'react'
+import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
 import {userLinks,  useDataGetter, useCreate } from '../../../utils/lib/api'
@@ -16,6 +16,9 @@ import { Close } from '../../../components/buttons/close_dialog'
 
 const Dashboard:NextPage = () => {
     const {dialog, setDialog, toggleDialog} = useDialog()
+    const dref = useRef(null)
+    const bref = useRef(null)
+
 
     const { data: session, status } = useSession()
     const name:string = session?.user?.email!
@@ -108,6 +111,24 @@ const Dashboard:NextPage = () => {
             </div>
         </div>
     );
+    // const element = dref?.current;
+    // const dialogClass = element?.getAttribute('class')
+    // const btnRef = bref?.current;
+    // const btnClass = btnRef?.getAttribute('class')
+
+    // document.addEventListener('click',(e)=> {
+    //     console.log("yay")
+    //     console.log(dialogClass)
+    //     console.log(e.target.classList.contains(dialogClass))
+    //     console.log("cloosest",  !e.target.closest(dialogClass))
+
+    //     if(dialog && !e.target.closest(dialogClass)) {
+    //         setDialog(true)
+    //     } else {
+
+    //     }
+    // }, false)
+
 
 
     return (
@@ -131,7 +152,7 @@ const Dashboard:NextPage = () => {
             </main>}
 
             <div>
-                <Dialog className={styles.dialog} open={dialog}>
+                <Dialog ref = {dref} className={styles.dialog} open={dialog}>
                     <div className={styles.close_btn}>
                         <Close setDialog={setDialog}/>
                     </div>

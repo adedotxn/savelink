@@ -10,7 +10,8 @@
 
 }
 .link_wrapper:hover {
-    transform: scaleY(1.1);
+    transform:translateY(-10%) scaleY(.9);
+    /* transform: translateY(-10%); */
 }
 .link_list {
     /* padding: .5rem 1rem; */
