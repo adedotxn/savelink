@@ -66,17 +66,17 @@ const Dashboard:NextPage = () => {
     // console.log("isloading", isLoading)
     const createMutation = useCreate(setDialog)    
 
-    useEffect(() => {
-        if(createMutation.isLoading) {
-            toast("Saving link")
-        }
-        if(createMutation.isSuccess) {
-            toast.success(`Saved ${createMutation.variables?.title}`)
-        }
-        if(createMutation.isError) {
-            toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
-        }
-    }, [createMutation])
+    // useEffect(() => {
+    //     if(createMutation.isLoading) {
+    //         toast("Saving link")
+    //     }
+    //     if(createMutation.isSuccess) {
+    //         toast.success(`Saved ${createMutation.variables?.title}`)
+    //     }
+    //     if(createMutation.isError) {
+    //         toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
+    //     }
+    // }, [createMutation])
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()

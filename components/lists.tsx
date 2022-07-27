@@ -24,14 +24,14 @@ const List= ({array} : IProps) => {
     const deleteMutation = useDelete()
     const bookmarkMutation = useBookmark()
 
-const handleShare = async  (title: string, url:string) => {
+const handleShare =  (title: string, url:string) => {
     const shareOpts = {
         title: title,
         url: url
     };
 
     try {
-        await navigator.share(shareOpts)
+        navigator.share(shareOpts)
        toast.success(`Shared ${title}`)
       } catch(err) {
        toast.error(`Error sharing :${err}`)
@@ -76,11 +76,19 @@ const handleShare = async  (title: string, url:string) => {
                     <div className={styles.links}>
                         <h3>{data.title}</h3>
                         <p> 
-                            <Link href={data.url.includes('http') ? `${data.url}` : `https://${data.url}`}>
+                        {data.url.includes('http') || data.url.includes('https')  ?
+                            <Link href = {data.url}>
                                 <a target="_blank">
                                     {data.url}
                                 </a>
-                            </Link> 
+                            </Link>
+                            :
+                            <Link href = {`https://${data.url}`}>
+                                 <a target="_blank">
+                                    {`https://${data.url}`}
+                                </a>
+                            </Link>
+                        }
                         </p>
                     </div>
                 </a>
@@ -100,7 +108,9 @@ const handleShare = async  (title: string, url:string) => {
                         <SvgComponent starred = {data.bookmarked} />
                     </div>
 
-                    <div onClick={() => handleShare(data.title, `${data.url}`)} className={styles.link__image}>
+                    <div onClick={() =>  { data.url.includes('http') ?
+                        handleShare(data.title, `${data.url}`) : handleShare(data.title, `https://${data.url}`)
+                        }} className={styles.link__image}>
                         <ShareSvg/>
                     </div>
 
