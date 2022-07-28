@@ -175,7 +175,7 @@
     .sidebar {
         width:fit-content;
         display: block;
-        transition: all .15s linear 0s;
+        transition: all .15s  0s;
         z-index: 2;
         height: 100vh;
         background: var(--background);

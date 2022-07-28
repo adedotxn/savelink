@@ -66,6 +66,28 @@
     right:2rem;
 }
 
+.options {
+    border: 1px solid var(--text-color);
+    background-color: var(--background);
+    border-radius: .2rem;
+    width:fit-content;
+    position: absolute;
+    bottom:4rem;
+    right: .5rem;
+    z-index: 4;
+}
+.options ul {
+    list-style-type: none;
+    margin: 0;
+    padding: .3rem .7rem;
+}
+.options ul li {
+    padding:.5rem 0rem;
+}
+.options li:nth-child(1) {
+    border-bottom: 1px solid var(--text-color);
+}
+
 @media screen and (min-width: 768px) {
     .footer {
         display: none;

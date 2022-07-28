@@ -1,5 +1,3 @@
-import { signOut } from 'next-auth/react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
@@ -10,7 +8,6 @@ import CategActive from './svg/active/categ'
 import ArchiveSvg from './svg/archive'
 import BookmarkSvg from './svg/bookmark'
 import CategoriesSvg from './svg/categoriesvg'
-import LinkSvg from './svg/linksvg'
 
 const Sidebar = ({name}:{name : string}) => {
     const navRef = useRef<HTMLElement>(null)

@@ -1,9 +1,5 @@
-import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import apiClient from "../http-config";
-
-
-
+import apiClient from "./http-config";
 
 export interface LinkInterface {
     bookmarked?: boolean,
@@ -43,7 +39,7 @@ export const getCategories = (user: string | string[] | undefined, category: str
     return apiClient.get(`/${user}/category/${category}`)
 }
 
-export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolean>>) => {
+export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolean>>, toast : any) => {
     const queryClient = useQueryClient()
 
     return useMutation(addLink, {
@@ -51,8 +47,14 @@ export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolea
             queryClient.invalidateQueries(['links'])
         }
         ,
-        onSettled :() => {
+        onSettled :(error, variable,context) => {
             setDialog(false)
+            toast.success(`Saved ${context.title}`)
+
+        },
+        onError : (error) => {
+            toast.error("Error saving link", error)
+            console.log("Error saving link", error)
         }
     })
 }

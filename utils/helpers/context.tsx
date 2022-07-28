@@ -1,44 +1,42 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-export interface DialogContextData {
+interface DialogContextData {
   dialog : boolean,
   setDialog : React.Dispatch<React.SetStateAction<boolean>>,
   toggleDialog : () => void
 }
-   
-export const dialogContextDefaultValue: DialogContextData = {
+const dialogContextDefaultValue: DialogContextData = {
   dialog : false,
   setDialog : () => null,
   toggleDialog : () => null,
 }
 
-export interface ThemeContextData {
+interface ThemeContextData {
   theme : boolean,
   switchTheme : () => void
 }
-
-export const themeContextDefaultValue: ThemeContextData = {
+const themeContextDefaultValue: ThemeContextData = {
   theme : false,
   switchTheme : () => null
 }
 
-export interface SearchContextData {
+interface SearchContextData {
   search: string
   setSearch : React.Dispatch<React.SetStateAction<string>>,
 
 }
-
-export const searchContextDefaultValue: SearchContextData = {
+const searchContextDefaultValue: SearchContextData = {
   search : '',
   setSearch : () => null,
 }
    
 
-
+//Contexts
 export const DialogContext = createContext<DialogContextData>(dialogContextDefaultValue);
 export const ThemeContext = createContext<ThemeContextData>(themeContextDefaultValue)
 export const SearchContext = createContext<SearchContextData>(searchContextDefaultValue)
 
+//Custom hooks
 export const useDialog = () => {
   return useContext(DialogContext)
 }
@@ -51,16 +49,16 @@ export const useSearch = () => {
   return useContext(SearchContext)
 }
 
-
-export const DialogProvider = ({children}:{children : React.ReactNode})  => {
+//(daddy) Context Provider 
+export const UtilityProvider = ({children}:{children : React.ReactNode})  => {
+  //dialog logic
   const [dialog, setDialog] = useState<boolean>(false);
-
   const toggleDialog =() => {
     setDialog(!dialog)
   }
 
+  //theme logic
   const [theme, setTheme] = useState(false)
-
   function getCurrentTheme() {
     let theme:string = window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark' : 'light';
@@ -89,9 +87,8 @@ export const DialogProvider = ({children}:{children : React.ReactNode})  => {
     root?.getAttribute('color-scheme') === 'dark' ? setTheme(true) : setTheme(false)
   }
 
+  //search logic
   const [search, setSearch] = useState<string>("")
-
-
 
   return (
     <ThemeContext.Provider value = {{theme, switchTheme}}>

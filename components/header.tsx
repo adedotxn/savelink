@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import styles from '../styles/header.module.css'
-import { useSearch } from '../utils/helper/context';
-import { useDataGetter } from '../utils/lib/api';
+import { useSearch } from '../utils/helpers/context';
 import Logout from './buttons/Logout'
 import { ThemeSwitcher } from './buttons/theme_switcher'
 
@@ -13,17 +11,13 @@ interface IProps {
 }
 
 const Header = ({side, setSide, name}:IProps) => {
-    const handleSidebar =() => {
-        setSide(!side)
-        // alert("open")
-    }
 
     const {search, setSearch} = useSearch()
     
     return (
         <header  className={styles.header}>
             <div className={styles.hamburger}
-                onClick={handleSidebar}>
+                >
                 📌
             </div>
 

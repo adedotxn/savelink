@@ -1,15 +1,14 @@
-import Image from 'next/image'
 import List from '../../../components/lists'
 import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useCallback, useRef, useState } from 'react'
 import { Dialog } from 'react-dialog-polyfill'
-import { dehydrate, QueryClient, useMutation, useQuery, useQueryClient} from 'react-query'
-import {userLinks,  useDataGetter, useCreate } from '../../../utils/lib/api'
+import { dehydrate, QueryClient} from 'react-query'
+import {userLinks,  useDataGetter, useCreate } from '../../../utils/api/api'
 import {unstable_getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { authOptions } from '../../api/auth/[...nextauth]'
-import { useDialog } from '../../../utils/helper/context'
+import { useDialog } from '../../../utils/helpers/context'
 import {Toaster, toast} from 'react-hot-toast'
 import AddSvg from '../../../components/svg/add'
 import { Close } from '../../../components/buttons/close_dialog'
@@ -28,15 +27,13 @@ const Dashboard:NextPage = () => {
         return { data, error, isLoading }
     }
     const storedData = useData()
-    
-    // const { isLoading, error, data } = useQuery(['links', name], () => userLinks(name))
-    let returnedCategories:string[] = []
 
     const data = storedData?.data?.data;
     const isLoading = storedData.isLoading
     const error = storedData.error
-   
- 
+
+    let returnedCategories:string[] = []
+
     if(error) {
         if(error instanceof Error) {
             console.log("creation error", error.message)
@@ -47,13 +44,13 @@ const Dashboard:NextPage = () => {
 
     if(!isLoading) {
         for(let i:number = 0 ; i < data.length ; ++i) { 
-            // console.log(data[i].category)
             returnedCategories.push(data[i].category)
         }
     }
+    //categories to display in the select categories dropdown
     const categories = [...new Set(returnedCategories)]
-    // console.log("categories", categories)
 
+    //logic for selecting a category from the dropdown and setting it to a state to pass to out db
     const [selected, setSelected] = useState("")
     const handleChange = useCallback((e: { target: { value: React.SetStateAction<string> } }) => {
         setSelected(e.target.value)
@@ -61,22 +58,7 @@ const Dashboard:NextPage = () => {
     },[])
 
 
-
-    // if(data) console.log("data", data)
-    // console.log("isloading", isLoading)
-    const createMutation = useCreate(setDialog)    
-
-    // useEffect(() => {
-    //     if(createMutation.isLoading) {
-    //         toast("Saving link")
-    //     }
-    //     if(createMutation.isSuccess) {
-    //         toast.success(`Saved ${createMutation.variables?.title}`)
-    //     }
-    //     if(createMutation.isError) {
-    //         toast.error(`Error saving ${createMutation.variables?.title}. \n\n Try again`)
-    //     }
-    // }, [createMutation])
+    const createMutation = useCreate(setDialog, toast)    
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()

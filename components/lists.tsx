@@ -3,9 +3,9 @@ import styles from '../styles/list.module.css'
 import SvgComponent from './svg/starsvg'
 import DeleteSvg from './svg/delete'
 import ShareSvg from './svg/share'
-import { useBookmark, useDelete } from '../utils/lib/api'
+import { useBookmark, useDelete } from '../utils/api/api'
 import toast, { Toaster } from 'react-hot-toast'
-import { useSearch } from '../utils/helper/context'
+import { useSearch } from '../utils/helpers/context'
 
 interface IProps {
     array : {
@@ -24,17 +24,16 @@ const List= ({array} : IProps) => {
     const deleteMutation = useDelete()
     const bookmarkMutation = useBookmark()
 
-const handleShare =  (title: string, url:string) => {
+const handleShare = async  (title: string, url:string) => {
     const shareOpts = {
         title: title,
         url: url
     };
 
     try {
-        navigator.share(shareOpts)
-       toast.success(`Shared ${title}`)
+       await navigator.share(shareOpts)
       } catch(err) {
-       toast.error(`Error sharing :${err}`)
+        console.error("Error sharing", err)
       }
     }
 
@@ -76,7 +75,7 @@ const handleShare =  (title: string, url:string) => {
                     <div className={styles.links}>
                         <h3>{data.title}</h3>
                         <p> 
-                        {data.url.includes('http') || data.url.includes('https')  ?
+                        {data.url.includes('http') ?
                             <Link href = {data.url}>
                                 <a target="_blank">
                                     {data.url}

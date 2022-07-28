@@ -1,29 +1,49 @@
-import Image from 'next/image'
 import styles from '../styles/footer.module.css'
 import HamburgerSvg from './svg/hamburger'
 import MoreSvg from './svg/moresvg'
-import { useDialog } from '../utils/helper/context'
+import { useDialog } from '../utils/helpers/context'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ThemeSwitcher } from './buttons/theme_switcher'
 import AddSvg from './svg/add'
 import Logout from './buttons/Logout'
 import PinSvg from './svg/pin'
+import { useEffect, useState } from 'react'
+import { useDataGetter } from '../utils/api/api'
+import { generateCSV, header } from '../utils/helpers/downloadCsv'
+import { useSession } from 'next-auth/react'
 
 interface IProps {
     side : boolean;
     setSide : React.Dispatch<React.SetStateAction<boolean>>,
     name: string
 }
+let deferredPrompt: Event;  
 
 const Footer = ({side, setSide, name}:IProps) => {
+
+    function useData() {
+        const { isLoading, error, data } = useDataGetter(name)
+        return { data, error, isLoading }
+    }
+    const storedData = useData()
+    const data = storedData?.data?.data;
+    const {data : session} = useSession()
+
+    const download = () => {
+        generateCSV(header, data, `${session?.user?.name?.toLowerCase()}_savelink_data`)
+    }
+    
     const handleSidebar = () => {
         setSide(!side)
-        // alert("open")
     }
     const router = useRouter()
 
     const {dialog, setDialog} = useDialog()
+    const [options, setOptions] = useState(false)
+
+
+ 
 
     return (
     <div className={styles.footer}>
@@ -52,6 +72,15 @@ const Footer = ({side, setSide, name}:IProps) => {
                 </Link>
             </ul>
         </div>}
+
+        {options && 
+            <div className={styles.options}>
+                <ul>
+                    <li  onClick={download} > Export my savelink data</li>
+                    <li  >Install web app</li>
+                </ul>
+            </div>
+        }
         <div className={styles.mobile_footer}>
             <div onClick={handleSidebar}>
                 <HamburgerSvg/>
@@ -72,7 +101,7 @@ const Footer = ({side, setSide, name}:IProps) => {
             </div>
             }
 
-            <div>
+            <div  onClick={() => setOptions(!options)}>
                 <MoreSvg/>
             </div>
         </div>

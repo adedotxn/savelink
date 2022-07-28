@@ -1,4 +1,4 @@
-import { useTheme } from "../../utils/helper/context"
+import { useTheme } from "../../utils/helpers/context"
 import MoonSvg from "../svg/moon"
 import styles from '../../styles/header.module.css'
 import SunSvg from "../svg/sun"
