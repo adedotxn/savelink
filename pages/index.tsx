@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
+
 import styles from '../styles/Home.module.css'
 import { signIn, useSession} from 'next-auth/react'
 import { useEffect } from 'react'
@@ -27,7 +26,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>Welcome to save-links</h1>
+        <h1>Welcome to savelinks</h1>
 
         <p>Save and categorise your important links from all across the internet in one place.</p>
 

@@ -39,7 +39,11 @@ export const getCategories = (user: string | string[] | undefined, category: str
     return apiClient.get(`/${user}/category/${category}`)
 }
 
-export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolean>>, toast : any) => {
+export const useCreate = (
+    setDialog : React.Dispatch<React.SetStateAction<boolean>>, 
+    toast : any,
+    resetForm : () => void
+    ) => {
     const queryClient = useQueryClient()
 
     return useMutation(addLink, {
@@ -49,6 +53,7 @@ export const useCreate = (setDialog : React.Dispatch<React.SetStateAction<boolea
         ,
         onSettled :(error, variable,context) => {
             setDialog(false)
+            resetForm()
             toast.success(`Saved ${context.title}`)
 
         },

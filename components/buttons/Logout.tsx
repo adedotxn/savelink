@@ -5,10 +5,11 @@ import { useRouter } from "next/router"
 
 const Logout = () => {
     const router = useRouter()
-    const handleSignOut = (e: { preventDefault: () => void }) => {
+    const handleSignOut = async (e: { preventDefault: () => void }) => {
+        const data = await signOut({redirect: false, callbackUrl: "/"})
         e.preventDefault()
-        signOut()
-        router.push('/')
+        router.push(data.url)
+        // router.replace('/')
     }
     return (
         <div className={styles.box}>

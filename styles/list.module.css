@@ -10,7 +10,7 @@
 
 }
 .link_wrapper:hover {
-    transform:translateY(-10%) scaleY(.9);
+    transform:translateY(-5%) scaleY(.95);
     /* transform: translateY(-10%); */
 }
 .link_list {

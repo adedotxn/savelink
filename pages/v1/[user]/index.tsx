@@ -1,7 +1,7 @@
 import List from '../../../components/lists'
 import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, useCallback, useRef, useState } from 'react'
+import React, { FormEvent, MutableRefObject, useCallback, useRef, useState } from 'react'
 import { Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient} from 'react-query'
 import {userLinks,  useDataGetter, useCreate } from '../../../utils/api/api'
@@ -15,13 +15,15 @@ import { Close } from '../../../components/buttons/close_dialog'
 
 const Dashboard:NextPage = () => {
     const {dialog, setDialog, toggleDialog} = useDialog()
-    const dref = useRef(null)
-    const bref = useRef(null)
 
+    //keeping track of the input field and clearing onSettled
+    const urlField = useRef() as MutableRefObject<HTMLInputElement>;
+    const titleField = useRef() as MutableRefObject<HTMLInputElement>;
 
-    const { data: session, status } = useSession()
+    const { data: session } = useSession()
     const name:string = session?.user?.email!
 
+    //getting user's data from db
     function useData() {
         const { isLoading, error, data } = useDataGetter(name)
         return { data, error, isLoading }
@@ -58,7 +60,14 @@ const Dashboard:NextPage = () => {
     },[])
 
 
-    const createMutation = useCreate(setDialog, toast)    
+    const resetForm = () => {
+        urlField.current.value = "";
+        titleField.current.value = ""
+    }
+
+
+
+    const createMutation = useCreate(setDialog, toast, resetForm)    
 
     const onSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -67,15 +76,17 @@ const Dashboard:NextPage = () => {
         let inputedTitle :string = data.get("title")?.toString() || ''
         let inputedLink:string =  data.get("link")?.toString()!
 
+
         createMutation.mutate({
             identifier: name, 
             title:inputedTitle, 
             url : inputedLink,
-            category : selected,
+            category : selected === ''.trim() ? 'default' : selected,
         })
         // console.log("selected", selected)
     }
-
+    
+    //logging mutation error if any
     if(createMutation.error) {
         if(createMutation.error instanceof Error) {
             console.log("mutation error", createMutation.error)
@@ -93,24 +104,6 @@ const Dashboard:NextPage = () => {
             </div>
         </div>
     );
-    // const element = dref?.current;
-    // const dialogClass = element?.getAttribute('class')
-    // const btnRef = bref?.current;
-    // const btnClass = btnRef?.getAttribute('class')
-
-    // document.addEventListener('click',(e)=> {
-    //     console.log("yay")
-    //     console.log(dialogClass)
-    //     console.log(e.target.classList.contains(dialogClass))
-    //     console.log("cloosest",  !e.target.closest(dialogClass))
-
-    //     if(dialog && !e.target.closest(dialogClass)) {
-    //         setDialog(true)
-    //     } else {
-
-    //     }
-    // }, false)
-
 
 
     return (
@@ -134,13 +127,13 @@ const Dashboard:NextPage = () => {
             </main>}
 
             <div>
-                <Dialog ref = {dref} className={styles.dialog} open={dialog}>
+                <Dialog className={styles.dialog} open={dialog}>
                     <div className={styles.close_btn}>
                         <Close setDialog={setDialog}/>
                     </div>
                     <form id = "input-form" onSubmit={onSubmit} action="">
-                        <input name="title"  placeholder='Title'/>
-                        <input name="link" placeholder='Link'/>
+                        <input ref= {titleField} name="title"  placeholder='Title'/>
+                        <input ref= {urlField} name="link" placeholder='Link' required/>
 
                         <section className={styles.category}>
                             <p>Type in a new category to save to or select from pre-existing</p>
