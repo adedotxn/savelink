@@ -1,14 +1,15 @@
 .header {
     display: flex;
     justify-content: space-between;
-    background-color:var(--accent-color);
-    padding:2rem 1rem 1.3rem 0rem;
+    background-color:var(--background);
+    padding:1rem 1rem .5rem 0rem;
     margin: 0rem auto;
     /* border-radius: 1.3rem; */
     align-items: center;
     place-items: center;
     position:fixed;
     top: 0;
+    border: 1px solid var(--accent-color);
     width:100vw;
     left:0;
     z-index: 3;
@@ -28,9 +29,13 @@
     background-color: var(--accent-color);
     border: 0px solid;
     width:70vw;
-    padding: .5rem 1rem;
-    border-radius: .6rem;
-    border:2px solid white;
+    padding: .6rem 1rem;
+    border-radius: .4rem;
+    border:1px solid white;
+    margin-top: .5rem;;
+}
+.searchbar input:focus {
+    outline: none;
 }
 .searchbar input[type=text] {
     color: var(--text-color);

@@ -8,7 +8,7 @@ import { ThemeSwitcher } from './buttons/theme_switcher'
 import AddSvg from './svg/add'
 import Logout from './buttons/Logout'
 import PinSvg from './svg/pin'
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useRef, useState } from 'react'
 import { useDataGetter } from '../utils/api/api'
 import { generateCSV, header } from '../utils/helpers/downloadCsv'
 import { useSession } from 'next-auth/react'
@@ -21,6 +21,8 @@ interface IProps {
 let deferredPrompt: Event;  
 
 const Footer = ({side, setSide, name}:IProps) => {
+
+    const btnRef = useRef<HTMLButtonElement>(null)
 
     function useData() {
         const { isLoading, error, data } = useDataGetter(name)
@@ -43,7 +45,53 @@ const Footer = ({side, setSide, name}:IProps) => {
     const [options, setOptions] = useState(false)
 
 
- 
+    // useEffect(() => {
+    //     let downloadBtn = btnRef.current;
+    //     let deferredPrompt: Event | null;
+
+    //     window.addEventListener('beforeinstallprompt', (e) => {
+    //         deferredPrompt = e;
+    //     })
+
+    //     const downloadFn = async () => {
+    //         if (deferredPrompt !== null) {
+    //             deferredPrompt.prompt();
+    //             const { outcome } = await deferredPrompt.userChoice;
+    //             if (outcome === 'accepted') {
+    //                 deferredPrompt = null;
+    //             }
+    //         }
+    //     }
+
+    //     if(downloadBtn) {
+    //         downloadBtn.addEventListener('click', downloadFn)
+    //     }
+    // }, [options])
+
+
+    const [supportsPWA, setSupportsPWA] = useState(false);
+    const [promptInstall, setPromptInstall] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      console.log("we are being triggered :D");
+      setSupportsPWA(true);
+      setPromptInstall(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("transitionend", handler);
+  }, []);
+
+  const onClick = (evt: { preventDefault: () => void }) => {
+    evt.preventDefault();
+    if (!promptInstall && !supportsPWA) {
+      return;
+    }
+    promptInstall.prompt();
+  };
+
 
     return (
     <div className={styles.footer}>
@@ -77,7 +125,7 @@ const Footer = ({side, setSide, name}:IProps) => {
             <div className={styles.options}>
                 <ul>
                     <li  onClick={download} > Export my savelink data</li>
-                    <li  >Install web app</li>
+                    <li onClick = {onClick}>Install web app</li>
                 </ul>
             </div>
         }

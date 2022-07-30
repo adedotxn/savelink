@@ -11,17 +11,24 @@ I realised i send links to myself to save a lot for future reference but they ge
 - Search through links by title or url.
 - Delete link(s).
 - Light/Dark Theme.
+- Exporting your data (links) into a csv file to dowmload locally.
 
 # Technologies Used
 - [Next js](https://nextjs.org/) : Fullstack framework.
 - [Next-auth](https://next-auth.js.org/) : Authentication.
-- [React Query](https://react-query-v3.tanstack.com/) : Data-fetching and caching.
-- [Mongo DB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/) : Data storage, Database querying and connection with Mongoose.
+- [React Query](https://react-query-v3.tanstack.com/) : Async state management.
+- [Mongo DB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/) : Database, Database querying and connection with Mongoose.
 - TypeScript.
 - CSS
 
 ## Features I may add later
 - Backing up data in google drive and retrieving later.
-- Exporting all your data into a CSV, if you need it locally.
 
 ## Run locally
+```
+git clone
+cd savelink
+
+yarn install
+yarn run dev
+```
