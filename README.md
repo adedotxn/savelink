@@ -26,7 +26,7 @@ I realised i send links to myself to save a lot for future reference but they ge
 
 ## Run locally
 ```
-git clone
+git clone https://github.com/Phyf3/savelink.git
 cd savelink
 
 yarn install
