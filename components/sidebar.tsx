@@ -33,7 +33,7 @@ const Sidebar = ({name}:{name : string}) => {
                 <Link href={`/v1/${name}`} >
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div>
-                            {router.pathname.includes(`/v1/${name}`) ? 
+                            {!router.pathname.includes("categories") && !router.pathname.includes('bookmarked') && !router.pathname.includes("category") ? 
                             <ArchiveActive/> : <ArchiveSvg/>} 
                         </div>
                         <span className={hovering ? 'show' : 'hide'} >All links </span>
@@ -55,7 +55,7 @@ const Sidebar = ({name}:{name : string}) => {
                 <Link href={`/v1/${name}/categories`}>
                     <li className={hovering ? styles.sidebar__li : ''}>
                         <div >
-                         {router.pathname.includes("categories") 
+                         {router.pathname.includes("categories") || router.pathname.includes("category")
                          ? <CategActive/> : <CategoriesSvg/>} 
                         </div> 
                         <span className={hovering ? 'show' : 'hide'} >Categories</span>

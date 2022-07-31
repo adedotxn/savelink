@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import styles from '../styles/header.module.css'
 import { useSearch } from '../utils/helpers/context';
 import Logout from './buttons/Logout'
 import { ThemeSwitcher } from './buttons/theme_switcher'
+import Options from './options';
+import MoreSvg from './svg/moresvg';
 
 
 interface IProps {
@@ -13,6 +16,8 @@ interface IProps {
 const Header = ({side, setSide, name}:IProps) => {
 
     const {search, setSearch} = useSearch()
+    const [options, setOptions] = useState(false)
+
     
     return (
         <header  className={styles.header}>
@@ -35,7 +40,14 @@ const Header = ({side, setSide, name}:IProps) => {
                 <h2>{name}</h2>
                 <ThemeSwitcher/>
                 <Logout/>
+                <div 
+                    onClick={() => setOptions(!options)} 
+                    className={options ? [styles.active, styles.more].join(' ') : styles.more}
+                >
+                    <MoreSvg/>
+                </div>
             </div>
+            <Options options = {options} name={name}/>
         </header>
     ) 
 }

@@ -109,7 +109,7 @@
     .switch {
         border: 0px solid var(--text-color);
         padding: .3rem;
-        margin: 0 .5rem 0 auto;
+        margin: 0 1rem 0 auto;
         /* width: 3vw;
         height:6vh; */
         background-color: var(--accent-color);
@@ -117,5 +117,16 @@
         place-items: center;
         cursor: pointer;
         border-radius: .3rem;;
+    }
+    .more {
+        margin: 0 auto 0 .5rem;
+        display: grid;
+        place-items: center;
+        padding : .2rem 0rem;
+        cursor: pointer;
+    }
+    .active, .more:hover {
+        background-color: var(--accent-color);
+        border-radius:.3rem;
     }
 }
