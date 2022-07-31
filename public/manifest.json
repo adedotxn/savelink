@@ -7,7 +7,7 @@
     "name": "Savelink",
     "short_name": "Savelink",
     "share_target":{
-        "action":"v1",
+        "action":"v1/phyf3script@gmail.com",
         "enctype":"multipart/form-data",
         "method":"POST",
         "params":{

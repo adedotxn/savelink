@@ -1,7 +1,7 @@
 import List from '../../../components/lists'
 import styles from '../../../styles/dashboard.module.css'
 import { GetServerSidePropsContext, NextPage } from 'next'
-import React, { FormEvent, MutableRefObject, useCallback, useRef, useState } from 'react'
+import React, { FormEvent, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { Dialog } from 'react-dialog-polyfill'
 import { dehydrate, QueryClient} from 'react-query'
 import {userLinks,  useDataGetter, useCreate } from '../../../utils/api/api'
@@ -85,6 +85,46 @@ const Dashboard:NextPage = () => {
         })
         // console.log("selected", selected)
     }
+
+    self.addEventListener('fetch', (event : any) => {
+        const url : any = new URL(event.request.url);
+        // If this is an incoming POST request for the
+        // registered "action" URL, respond to it.
+        if (event.request.method === 'POST' &&
+            url.pathname === '/bookmark') {
+          event.respondWith((async () => {
+            const formData = await event.request.formData();
+            const link = formData.get('link') || '';
+            const responseUrl : any = createMutation.mutate({
+                identifier: name, 
+                title: "Test", 
+                url : link || 'trst link',
+                category : selected === ''.trim() ? 'default' : selected,
+            })
+            return Response.redirect(responseUrl, 303);
+          })());
+        }
+      });
+
+    // useEffect(() => {
+    //     window.addEventListener('DOMContentLoaded', () => {
+    //         const parsedUrl: any = new URL(window.location);
+    //         // searchParams.get() will properly handle decoding the values.
+    //         console.log('Title shared: ' + parsedUrl.searchParams.get('title'));
+    //         toast.success('Title shared: ' + parsedUrl.searchParams.get('title'));
+    //         console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
+    //         console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+    //         toast.success('URL shared: ' + parsedUrl.searchParams.get('url'));
+
+
+    //         createMutation.mutate({
+    //             identifier: name, 
+    //             title: parsedUrl.searchParams.get('title') || '', 
+    //             url : parsedUrl.searchParams.get('url') || '',
+    //             category : selected === ''.trim() ? 'default' : selected,
+    //         })
+    //     });
+    // })
     
     //logging mutation error if any
     if(createMutation.error) {
