@@ -64,6 +64,27 @@ export const useCreate = (
     })
 }
 
+export const useCreateOnly = (
+    toast : any,
+    ) => {
+    const queryClient = useQueryClient()
+
+    return useMutation(addLink, {
+        onSuccess : () => {
+            queryClient.invalidateQueries(['links'])
+        }
+        ,
+        onSettled :(error, variable,context) => {
+            toast.success(`Saved ${context.title}`)
+
+        },
+        onError : (error) => {
+            toast.error("Error saving link", error)
+            console.log("Error saving link", error)
+        }
+    })
+}
+
 export const useDelete = () => {
     const queryClient = useQueryClient()
     return useMutation(

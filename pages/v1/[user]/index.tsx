@@ -86,38 +86,6 @@ const Dashboard:NextPage = () => {
         // console.log("selected", selected)
     }
 
-
-    useEffect(() => {
-        window.addEventListener('DOMContentLoaded', () => {
-            const loc = window.location
-            const parsedUrl  = new URL(loc.href);
-            // searchParams.get() will properly handle decoding the values.
-            console.log('Title shared: ' + parsedUrl.searchParams.get('title'));
-            toast.success('Title shared: ' + parsedUrl.searchParams.get('title'));
-            console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
-            console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
-            toast.success('URL shared: ' + parsedUrl.searchParams.get('url'));
-
-
-            createMutation.mutate({
-                identifier: name, 
-                title: parsedUrl.searchParams.get('title') || '', 
-                url : parsedUrl.searchParams.get('url') || '',
-                category : selected === ''.trim() ? 'default' : selected,
-            })
-        });
-
-    })
-
-    // useEffect(() => {
-    //     console.log("location", typeof window.location)
-    //     console.log("location", window.location)
-
-
-    //     console.log("nuuuu location", typeof new URL(window.location.href))
-    //     console.log("nu location", new URL(window.location.href))
-
-    // })
     
     //logging mutation error if any
     if(createMutation.error) {
