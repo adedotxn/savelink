@@ -16,34 +16,33 @@ const ShareTarget = () => {
 
 
     useEffect(() => {
-        self.addEventListener('fetch', (event : any) => {
-            const url = new URL(event.request.url);
-            // If this is an incoming POST request for the
-            // registered "action" URL, respond to it.
-            if (event.request.method === 'POST' &&
-                url.pathname === '/v1/share_target') {
-            event.respondWith((async () => {
-                const formData = await event.request.formData();
-                const retTitle = formData.get('title') || '';
-                setTitle(retTitle || "no title boxx")
+        window.addEventListener('DOMContentLoaded', () => {
+            const loc : Location = window.location
+            const parsedUrl  = new URL(loc.href);
+            // searchParams.get() will properly handle decoding the values.
 
-                const retText = formData.get('text') || '';
-                setText(retText || "no text boxx")
+            const returnedTitle = parsedUrl.searchParams.get('title')
+            setTitle(returnedTitle || 'no title dommm')
+            toast.success('Title shared: ' + parsedUrl.searchParams.get('title'));
 
-                const retUrl = formData.get('url') || '';
-                setUrl(retUrl || "no url boxx")
+            const returnedText = parsedUrl.searchParams.get('text')
+            setText(returnedText || 'no text dommm')
+            // console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
 
-                createMutation.mutate({
-                    identifier: name, 
-                    title: retTitle, 
-                    url : retUrl,
-                    category : 'Shared',
-                })
-                return Response.redirect(`/v1/${name}/`);
-            })());
-            }
+            console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+            const returnedUrl = parsedUrl.searchParams.get('url')
+            setUrl(returnedUrl || "no url boxx dommmm")
+            // toast.success('URL shared: ' + parsedUrl.searchParams.get('url'));
+
+
+            // createMutation.mutate({
+            //     identifier: name, 
+            //     title: parsedUrl.searchParams.get('title') || '', 
+            //     url : parsedUrl.searchParams.get('url') || '',
+            //     category : 'Shared',
+            // })
         });
-    }, [])
+    })
 
     const saveLink = () => {
         createMutation.mutate({
