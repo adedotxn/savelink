@@ -1,9 +1,8 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useCreateOnly } from "../../utils/api/api";
-import styles from '../../styles/dashboard.module.css'
-
+import { useCreateOnly } from "../utils/api/api";
+import styles from '../styles/dashboard.module.css'
 
 const ShareTarget = () => {
     const { data: session } = useSession()

@@ -7,9 +7,8 @@
     "name": "Savelink",
     "short_name": "Savelink",
     "share_target":{
-        "action":"/v1/share_target/",
+        "action":"/share_target/",
         "method" :"GET",
-        "enctype":"multipart/form-data",
         "params":{
             "title":"title",
             "text":"text",
