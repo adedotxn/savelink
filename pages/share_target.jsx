@@ -3,15 +3,25 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useCreateOnly } from "../utils/api/api";
 import styles from '../styles/target.module.css'
+import { useRouter } from "next/router";
 
 const ShareTarget = () => {
     const { data: session } = useSession()
     const name= session?.user?.email
     const createMutation = useCreateOnly(toast)
 
-    const [title, setTitle] = useState("a");
-    const [url, setUrl] = useState("b");
-    const [text, setText] = useState("c")
+
+    const router = useRouter()
+    let path = router.pathname;
+    let query = router.query
+    let asPath = router.asPath
+
+    console.log("query", query)
+    console.log("path", path)
+
+    const [title, setTitle] = useState("");
+    const [url, setUrl] = useState("");
+    const [text, setText] = useState("")
 
     // useEffect(() => {
     //     self.addEventListener('fetch', event => {
@@ -43,33 +53,33 @@ const ShareTarget = () => {
     // },[])
 
 
-    useEffect(() => {
-        window.addEventListener('DOMContentLoaded', () => {
-            const parsedUrl  = new URL(window.location);
-            // searchParams.get() will properly handle decoding the values.
+    // useEffect(() => {
+    //     window.addEventListener('DOMContentLoaded', () => {
+    //         const parsedUrl  = new URL(window.location);
+    //         // searchParams.get() will properly handle decoding the values.
 
-            const returnedTitle = parsedUrl.searchParams.get('title')
-            setTitle(returnedTitle || 'no title dommm')
-            toast.success('Title shared: ' + parsedUrl.searchParams.get('title'));
+    //         const returnedTitle = parsedUrl.searchParams.get('title')
+    //         setTitle(returnedTitle || 'no title dommm')
+    //         toast.success('Title shared: ' + parsedUrl.searchParams.get('title'));
 
-            const returnedText = parsedUrl.searchParams.get('text')
-            setText(returnedText || 'no text dommm')
-            // console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
+    //         const returnedText = parsedUrl.searchParams.get('text')
+    //         setText(returnedText || 'no text dommm')
+    //         // console.log('Text shared: ' + parsedUrl.searchParams.get('text'));
 
-            console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
-            const returnedUrl = parsedUrl.searchParams.get('url')
-            setUrl(returnedUrl || "no url boxx dommmm")
-            // toast.success('URL shared: ' + parsedUrl.searchParams.get('url'));
+    //         console.log('URL shared: ' + parsedUrl.searchParams.get('url'));
+    //         const returnedUrl = parsedUrl.searchParams.get('url')
+    //         setUrl(returnedUrl || "no url boxx dommmm")
+    //         // toast.success('URL shared: ' + parsedUrl.searchParams.get('url'));
 
 
-            // createMutation.mutate({
-            //     identifier: name, 
-            //     title: parsedUrl.searchParams.get('title') || '', 
-            //     url : parsedUrl.searchParams.get('url') || '',
-            //     category : 'Shared',
-            // })
-        });
-    }, [])
+    //         // createMutation.mutate({
+    //         //     identifier: name, 
+    //         //     title: parsedUrl.searchParams.get('title') || '', 
+    //         //     url : parsedUrl.searchParams.get('url') || '',
+    //         //     category : 'Shared',
+    //         // })
+    //     });
+    // }, [])
 
     const saveLink = () => {
         createMutation.mutate({
@@ -86,6 +96,9 @@ const ShareTarget = () => {
                 <h3>Titlee : {title}</h3>
                 <h3>Text : {text}</h3>
                 <h3>Url : {url}</h3>
+
+                <p> {asPath} </p>
+                <p>{path}</p>
                 <button onClick={saveLink}> Save </button>
 
             </div>
