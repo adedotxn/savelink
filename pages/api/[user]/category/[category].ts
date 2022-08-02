@@ -14,7 +14,7 @@ export default async function handler(
         try {
             const {category} = req.query
             await connect();
-            const categories = await Link.find({category : `${category}` })
+            const categories = await Link.find({category : `${category}` }).sort({time: -1})
             res.json(categories)
             return
         } catch(error) {

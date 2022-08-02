@@ -15,7 +15,7 @@ export default async function handler(
         try {
             const {id} = req.query
             await connect();
-            const sl = await Link.findById(id)
+            const sl = await Link.findById(id).sort({time: -1})
             sl.bookmarked = !sl.bookmarked;
             sl.save()
             res.json(sl)

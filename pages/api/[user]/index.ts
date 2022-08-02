@@ -15,7 +15,7 @@ export default async function handler(
         try {
             const {user} = req.query
             await connect();
-            const specificLink = await Link.find({identifier: `${user}`})
+            const specificLink = await Link.find({identifier: `${user}`}).sort({time: -1})
             res.json(specificLink)
             return
         } catch(error) {
