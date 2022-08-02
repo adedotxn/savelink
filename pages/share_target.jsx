@@ -13,15 +13,15 @@ const ShareTarget = () => {
 
     const router = useRouter()
     let path = router.pathname;
-    let query = router.query
+    const {title , text} = router.query
     let asPath = router.asPath
 
-    console.log("query", query)
+
     console.log("path", path)
 
-    const [title, setTitle] = useState("");
+    const [title1, setTitle1] = useState("");
     const [url, setUrl] = useState("");
-    const [text, setText] = useState("")
+    const [text1, setText1] = useState("")
 
     // useEffect(() => {
     //     self.addEventListener('fetch', event => {
