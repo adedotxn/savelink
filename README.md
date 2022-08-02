@@ -11,6 +11,7 @@ I realised i send links to myself to save a lot for future reference but they ge
 - Search through links by title or url.
 - Copy link to clipboard.
 - Delete link(s).
+- Sharing directly to the installed PWA from other apps.
 - Light/Dark Theme.
 - Exporting your data (links) into a csv file to dowmload locally.
 
@@ -25,6 +26,5 @@ I realised i send links to myself to save a lot for future reference but they ge
 ## Features I may add later
 - Backing up data in google drive and retrieving later.
 - Chrome Extension to save links directly from other websites when using a browser
-- Use web share target to share links directly to the PWA
 
 
