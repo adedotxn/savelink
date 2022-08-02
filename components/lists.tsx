@@ -1,130 +1,175 @@
-import Link from 'next/link'
-import styles from '../styles/list.module.css'
-import SvgComponent from './svg/starsvg'
-import DeleteSvg from './svg/delete'
-import ShareSvg from './svg/share'
-import { useBookmark, useDelete } from '../utils/api/api'
-import toast, { Toaster } from 'react-hot-toast'
-import { useSearch } from '../utils/helpers/context'
-
+import Link from "next/link";
+import styles from "../styles/list.module.css";
+import SvgComponent from "./svg/starsvg";
+import DeleteSvg from "./svg/delete";
+import ShareSvg from "./svg/share";
+import { useBookmark, useDelete } from "../utils/api/api";
+import toast, { Toaster } from "react-hot-toast";
+import { useSearch } from "../utils/helpers/context";
+import { useCallback, useState } from "react";
+import { ObjectId } from "mongoose";
 interface IProps {
-    array : {
-    identifier : string,
-    bookmarked: boolean
-    _id : number;
-    title : string;
-    url : string;
-    category : string;
-    }[]
+  array: {
+    identifier: string;
+    bookmarked: boolean;
+    _id: number;
+    title: string;
+    url: string;
+    category: string;
+  }[];
 }
 
+const List = ({ array }: IProps) => {
+  const deleteMutation = useDelete();
+  const bookmarkMutation = useBookmark();
 
+  const [modal, setModal] = useState(0);
+  const [currentID, setCurrentId] = useState();
+  const [title, setTitle] = useState();
 
-const List= ({array} : IProps) => {
-    const deleteMutation = useDelete()
-    const bookmarkMutation = useBookmark()
+  // const handleModal = (id : number) => {
+  //     setModal(id)
+  // }
 
-const handleShare = async  (title: string, url:string) => {
+  const handleShare = async (title: string, url: string) => {
     const shareOpts = {
-        title: title,
-        url: url
+      title: title,
+      url: url,
     };
 
     try {
-       await navigator.share(shareOpts)
-      } catch(err) {
-        console.error("Error sharing", err)
-      }
+      await navigator.share(shareOpts);
+    } catch (err) {
+      console.error("Error sharing", err);
     }
+  };
 
-    const {search} = useSearch()
-    array.filter((data) => {
-        if(search === '') {
-            return array;
-        } else if (data.title.toLowerCase().includes(search.toLowerCase())
-         || data.url.toLowerCase().includes(search.toLowerCase())) {
-            return array
-        }
-    })
+  const { search } = useSearch();
+  array.filter((data) => {
+    if (search === "") {
+      return array;
+    } else if (
+      data.title.toLowerCase().includes(search.toLowerCase()) ||
+      data.url.toLowerCase().includes(search.toLowerCase())
+    ) {
+      return array;
+    }
+  });
 
   return (
     <>
-    {array.length === 0 ?   
-    <div>
-        <h2>Wow, such nothing 👀</h2>
-    </div>
-    :
-    array.filter((data) => {
-        if(search === '') {
-            return array;
-        } else if (data.title.toLowerCase().includes(search.toLowerCase())
-         || data.url.toLowerCase().includes(search.toLowerCase())) {
-            return array
-        }
-    })?.map(data => (
-    <div key={data._id} className={styles.link_wrapper}>
+      {array.length === 0 ? (
         <div>
-            <Toaster 
-            position="top-center"
-            reverseOrder={false}
-            />
+          <h2>Wow, such nothing 👀</h2>
         </div>
-        <div className={[styles.link_list, styles.dark_scheme, styles.light_scheme].join(" ")}>
-            <Link href={data.url.includes('http') ? `${data.url}` : `https://${data.url}`}>
-                <a target="_blank">
+      ) : (
+        array
+          .filter((data) => {
+            if (search === "") {
+              return array;
+            } else if (
+              data.title.toLowerCase().includes(search.toLowerCase()) ||
+              data.url.toLowerCase().includes(search.toLowerCase())
+            ) {
+              return array;
+            }
+          })
+          ?.map((data) => (
+            <div key={data._id} className={styles.link_wrapper}>
+              <div>
+                <Toaster position="top-center" reverseOrder={false} />
+              </div>
+
+              <div
+                className={[
+                  styles.link_list,
+                  styles.dark_scheme,
+                  styles.light_scheme,
+                ].join(" ")}
+              >
+                <Link
+                  href={
+                    data.url.includes("http")
+                      ? `${data.url}`
+                      : `https://${data.url}`
+                  }
+                >
+                  <a target="_blank">
                     <div className={styles.links}>
-                        <h3>{data.title}</h3>
-                        <p> 
-                        {data.url.includes('http') ?
-                            <Link href = {data.url}>
-                                <a target="_blank">
-                                    {data.url}
-                                </a>
-                            </Link>
-                            :
-                            <Link href = {`https://${data.url}`}>
-                                 <a target="_blank">
-                                    {`https://${data.url}`}
-                                </a>
-                            </Link>
-                        }
-                        </p>
+                      <h3>{data.title}</h3>
+                      <p>
+                        {data.url.includes("http") ? (
+                          <Link href={data.url}>
+                            <a target="_blank">{data.url}</a>
+                          </Link>
+                        ) : (
+                          <Link href={`https://${data.url}`}>
+                            <a target="_blank">{`https://${data.url}`}</a>
+                          </Link>
+                        )}
+                      </p>
                     </div>
-                </a>
-            </Link>
-            <div className={styles.link__footer} >
-                <div className={styles.link__category}>
-                    <Link href={ `/v1/${data.identifier}/category/${data.category}`}>
-                        <h3>{data.category}</h3>
+                  </a>
+                </Link>
+                <div className={styles.link__footer}>
+                  <div className={styles.link__category}>
+                    <Link
+                      href={`/v1/${data.identifier}/category/${data.category}`}
+                    >
+                      <h3>{data.category}</h3>
                     </Link>
+                  </div>
+
+                  <div className={styles.link__images}>
+                    <div
+                      className={styles.link__image}
+                      onClick={() => {
+                        bookmarkMutation.mutate(data._id);
+                      }}
+                    >
+                      <SvgComponent starred={data.bookmarked} />
+                    </div>
+
+                    <div
+                      onClick={() => {
+                        data.url.includes("http")
+                          ? handleShare(data.title, `${data.url}`)
+                          : handleShare(data.title, `https://${data.url}`);
+                      }}
+                      className={styles.link__image}
+                    >
+                      <ShareSvg />
+                    </div>
+
+                    <div
+                      onClick={() => setModal(data._id)}
+                      className={styles.link__image}
+                    >
+                      <DeleteSvg />
+                    </div>
+                  </div>
                 </div>
+              </div>
 
-                <div  className={styles.link__images}>
-                    <div className={styles.link__image}
-                    onClick = {()=> {
-                        bookmarkMutation.mutate( data._id)
-                    }} >
-                        <SvgComponent starred = {data.bookmarked} />
-                    </div>
+              {modal === data._id && (
+                <div className={styles.delete_modal}>
+                  <p>
+                    Are you sure you want to delete <u>{data.title}</u>?
+                  </p>
 
-                    <div onClick={() =>  { data.url.includes('http') ?
-                        handleShare(data.title, `${data.url}`) : handleShare(data.title, `https://${data.url}`)
-                        }} className={styles.link__image}>
-                        <ShareSvg/>
-                    </div>
-
-                    <div onClick={
-                        () => deleteMutation.mutate( data._id)
-                    } className={styles.link__image}>
-                        <DeleteSvg/>
-                    </div>
-                </div>    
+                  <div>
+                    <button onClick={() => deleteMutation.mutate(data._id)}>
+                      Yes
+                    </button>
+                    <button onClick={() => setModal(0)}>No </button>
+                  </div>
+                </div>
+              )}
             </div>
-        </div>
-    </div>
-     ))}
-     </>
-  )
-}
+          ))
+      )}
+    </>
+  );
+};
 
-export default List
+export default List;

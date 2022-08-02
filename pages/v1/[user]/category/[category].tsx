@@ -23,16 +23,6 @@ const Category = () => {
         ['perCategory', user, category], () => 
             getCategories(user, category)
     );
-
-    // function useLinks() {
-    //     const { isLoading, error, data } = useDataGetter(name)
-    //     return data;
-    // }
-
-
-    // console.log("all linkss hook", useLinks())
-
-    // if(data) console.log("dataa",data.data)
     
 
     if(!isLoading) {

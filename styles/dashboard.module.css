@@ -159,6 +159,7 @@
 @media screen and (min-width: 768px) {
     .container {
         margin-top: 5rem;;
+        position: relative;
     }
     .open_sidebar, .close_sidebar {
         display: none;
@@ -179,7 +180,7 @@
         z-index: 2;
         height: 100vh;
         background: var(--background);
-        border: 1px solid var(--accent-color);
+        border: 1.75px solid var(--accent-color);
         position: fixed;
     }
 

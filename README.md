@@ -23,12 +23,7 @@ I realised i send links to myself to save a lot for future reference but they ge
 
 ## Features I may add later
 - Backing up data in google drive and retrieving later.
+- Chrome Extension to save links directly from other websites when using a browser
+- Use web share target to share links directly to the PWA
 
-## Run locally
-```
-git clone https://github.com/Phyf3/savelink.git
-cd savelink
 
-yarn install
-yarn run dev
-```

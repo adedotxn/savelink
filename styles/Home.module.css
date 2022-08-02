@@ -32,6 +32,10 @@
   border-radius: .5rem;
 }
 
+.loading {
+  transform: scale(3);
+}
+
 
 @media screen and (min-width: 1024px) {
   .main p {

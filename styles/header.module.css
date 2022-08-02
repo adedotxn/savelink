@@ -61,7 +61,7 @@
     .header {
         background-color: var(--background);
         justify-content:space-between;
-        border-bottom: 1px solid var(--accent-color);
+        border-bottom: 1.6px solid var(--accent-color);
         border-radius: 0;
         padding: 1rem 3rem;
         width:100vw;
@@ -80,7 +80,7 @@
         padding:.5rem 3rem;
         font-size: 1.3rem;;
         color: var(--text-color);
-        border: 1.5px solid var(--text-color);
+        border: 1.2px solid var(--accent-color-opposite);
         transition: all .15s linear  0s;
     }
     .searchbar input::placeholder {
