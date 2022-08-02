@@ -4,10 +4,11 @@ import SvgComponent from "./svg/starsvg";
 import DeleteSvg from "./svg/delete";
 import ShareSvg from "./svg/share";
 import { useBookmark, useDelete } from "../utils/api/api";
-import toast, { Toaster } from "react-hot-toast";
+import  toast, { Toaster } from "react-hot-toast";
 import { useSearch } from "../utils/helpers/context";
-import { useCallback, useState } from "react";
-import { ObjectId } from "mongoose";
+import {useState } from "react";
+import CopiedSvg from "./svg/active/copied";
+import CopySvg from "./svg/copy";
 interface IProps {
   array: {
     identifier: string;
@@ -20,16 +21,11 @@ interface IProps {
 }
 
 const List = ({ array }: IProps) => {
-  const deleteMutation = useDelete();
+  const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark();
 
   const [modal, setModal] = useState(0);
-  const [currentID, setCurrentId] = useState();
-  const [title, setTitle] = useState();
-
-  // const handleModal = (id : number) => {
-  //     setModal(id)
-  // }
+  const [copied, setCopied] = useState(0);
 
   const handleShare = async (title: string, url: string) => {
     const shareOpts = {
@@ -42,6 +38,13 @@ const List = ({ array }: IProps) => {
     } catch (err) {
       console.error("Error sharing", err);
     }
+  };
+
+  const copyLink = (link: string, id: number) => {
+    setCopied(id);
+    navigator.clipboard.writeText(link).then(() => {
+      alert("Link copied to clipboard");
+    });
   };
 
   const { search } = useSearch();
@@ -121,8 +124,7 @@ const List = ({ array }: IProps) => {
                   </div>
 
                   <div className={styles.link__images}>
-                    <div
-                      className={styles.link__image}
+                    <div className={styles.link__image}
                       onClick={() => {
                         bookmarkMutation.mutate(data._id);
                       }}
@@ -141,30 +143,28 @@ const List = ({ array }: IProps) => {
                       <ShareSvg />
                     </div>
 
-                    <div
-                      onClick={() => setModal(data._id)}
-                      className={styles.link__image}
-                    >
-                      <DeleteSvg />
+                    <div  onClick={() => copyLink(data.url, data._id)}>
+                      {copied !== data._id ? <CopySvg /> : <CopiedSvg />}
                     </div>
+
+                    {modal === data._id ? (
+                      <div className={styles.confirm}>
+                        <button onClick={() => deleteMutation.mutate(data._id)}>
+                          Confirm
+                        </button>
+                        <span onClick={() => setModal(0)}>X</span>
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => setModal(data._id)}
+                        className={styles.link__image}
+                      >
+                        <DeleteSvg />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
-              {modal === data._id && (
-                <div className={styles.delete_modal}>
-                  <p>
-                    Are you sure you want to delete <u>{data.title}</u>?
-                  </p>
-
-                  <div>
-                    <button onClick={() => deleteMutation.mutate(data._id)}>
-                      Yes
-                    </button>
-                    <button onClick={() => setModal(0)}>No </button>
-                  </div>
-                </div>
-              )}
             </div>
           ))
       )}

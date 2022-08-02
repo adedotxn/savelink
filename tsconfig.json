@@ -16,6 +16,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "incremental": true,
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/helpers/downloadPwa.js", "backend/lib/connectdb.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/helpers/downloadPwa.js", "backend/lib/connectdb.ts", "pages/share_target.jsx"],
   "exclude": ["node_modules"]
 }

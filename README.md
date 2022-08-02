@@ -9,6 +9,7 @@ I realised i send links to myself to save a lot for future reference but they ge
 - Viewing links by categories.
 - Share links to other apps/contacts or copy to clipboard.
 - Search through links by title or url.
+- Copy link to clipboard.
 - Delete link(s).
 - Light/Dark Theme.
 - Exporting your data (links) into a csv file to dowmload locally.

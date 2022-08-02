@@ -2,7 +2,6 @@ import styles from "../styles/app.module.css";
 import Head from "next/head";
 import Header from "./header";
 import Sidebar from "./sidebar";
-import MobileSidebar from "./mobile_sidebar";
 import { ReactNode, useState } from "react";
 import { useSession } from "next-auth/react";
 import Footer from "./footer";
@@ -64,7 +63,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         <Header side={side} setSide={setSide} name={name} />
       </header>
 
-      {/* {side && <MobileSidebar name = {mail} side={side} setSide={setSide} />} */}
       <main className={styles.main}>
         <div className={styles.side}>
           <Sidebar name={mail} />

@@ -83,6 +83,10 @@
     padding:.2rem .5rem;
     margin-top: .5rem;
 }
+
+.dialog form>input:focus {
+    outline: 1px solid rgb(201, 255, 192);
+}
 .dialog p {
     color: var(--text-color);
 }
@@ -158,7 +162,7 @@
 
 @media screen and (min-width: 768px) {
     .container {
-        margin-top: 5rem;;
+        margin-top: 3rem;;
         position: relative;
     }
     .open_sidebar, .close_sidebar {
@@ -230,7 +234,7 @@
     .dialog {
         width:50vw;
         display: absolute;
-        top:0rem;
+        top:3rem;
     }
     .dialog section {
         padding: 0rem 2rem;

@@ -15,14 +15,6 @@ export const userLinks = async (user:string) => {
     return fetch.data
 }
 
-//hook to get all links relative to a user
-export const useDataGetter =  (user : string) => {
-    return useQuery(
-        ['links', user], 
-        () => apiClient.get(`/${user}`)
-    )
-}
-
 export const addLink = (newLink : LinkInterface) => {
     return apiClient.post(`/${newLink.identifier}/cr8`, newLink)
 }
@@ -37,6 +29,16 @@ export const bookmarkLink = ( id : string | number) => {
 
 export const getCategories = (user: string | string[] | undefined, category: string | string[] | undefined) => {
     return apiClient.get(`/${user}/category/${category}`)
+}
+
+
+
+//hook to get all links relative to a user
+export const useDataGetter =  (user : string) => {
+    return useQuery(
+        ['links', user], 
+        () => apiClient.get(`/${user}`)
+    )
 }
 
 export const useCreate = (
@@ -85,7 +87,7 @@ export const useCreateOnly = (
     })
 }
 
-export const useDelete = () => {
+export const useDelete = (toast : any) => {
     const queryClient = useQueryClient()
     return useMutation(
         deleteLink, 
@@ -93,6 +95,12 @@ export const useDelete = () => {
             onSuccess : () => {
                 queryClient.invalidateQueries(['links'])
                 queryClient.invalidateQueries(['bookmarks'])
+            },
+            onSettled :() => {
+                toast.success(`Deleted`)
+            },
+            onError :() => {
+                toast.error(`Error deleting. Retry`)
             }
         }
     )
