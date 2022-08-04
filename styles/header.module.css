@@ -40,6 +40,15 @@
 .searchbar input[type=text] {
     color: var(--text-color);
 }
+.searchbar input::-webkit-input-placeholder {
+    color: var(--text-color);
+}
+.searchbar input:-ms-input-placeholder {
+    color: var(--text-color);
+}
+.searchbar input::-ms-input-placeholder {
+    color: var(--text-color);
+}
 .searchbar input::placeholder {
     color: var(--text-color);
 }
@@ -70,7 +79,8 @@
 
     .hamburger {
         display: block;
-        transform: scale(2);
+        -webkit-transform: scale(2);
+                transform: scale(2);
     }
 
     .searchbar input {
@@ -82,6 +92,18 @@
         color: var(--text-color);
         border: 1.2px solid var(--accent-color-opposite);
         transition: all .15s linear  0s;
+    }
+    .searchbar input::-webkit-input-placeholder {
+        font-weight: 200;
+        font-size: 1rem;;
+    }
+    .searchbar input:-ms-input-placeholder {
+        font-weight: 200;
+        font-size: 1rem;;
+    }
+    .searchbar input::-ms-input-placeholder {
+        font-weight: 200;
+        font-size: 1rem;;
     }
     .searchbar input::placeholder {
         font-weight: 200;

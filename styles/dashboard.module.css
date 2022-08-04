@@ -46,6 +46,8 @@
     list-style-type: none;
     margin-top: 2rem;
     padding: 0rem 1rem 0rem 2rem;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
 }
 .mobile_sidebar ul li {
@@ -62,6 +64,8 @@
 }
 .mobile_active_route {
     background-color: var(--accent-color);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     padding: .2rem 1.2rem .2rem .5rem;
 
@@ -91,14 +95,30 @@
     color: var(--text-color);
 }
 .dialog select {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     height: 1.5rem;
     font-size: 1rem;
 }
-.dialog form button {
+.btn {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     margin: 0 auto;
     padding: .2rem .5rem;;
+    border: 0px solid;
+    background-color: var(--accent-color-opposite);
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+    border-radius: .3rem;
+    transition: all .10s linear 0s;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+.btn:active, .btn:hover {
+    background-color: var(--text-color);
+    transform: scale(1.05)
 }
 .dialog section {
     /* border: 1px solid white; */
@@ -146,6 +166,8 @@
 }
 
 .close_btn {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     border-radius: .3rem;
     background: var(--background);
@@ -178,6 +200,8 @@
         place-content: center;
     }
     .sidebar {
+        width:-webkit-fit-content;
+        width:-moz-fit-content;
         width:fit-content;
         display: block;
         transition: all .15s  0s;
@@ -227,7 +251,8 @@
         margin-left: 2rem;;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr ;
-        column-gap: 2rem;;
+        -webkit-column-gap: 2rem;
+                column-gap: 2rem;;
         /* margin-bottom: 2rem; */
 
     }
@@ -255,21 +280,31 @@
     .add {
         padding: 0;
         margin: 0;
+        transition: -webkit-transform .2s ease-in-out;
         transition: transform .2s ease-in-out;
+        transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out;
         border-radius: 50%;
         display: flex;
         place-items: center;
     }
     
     .add:hover {
-        transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
         
     }
 
     .cr8 {
-        transform: scale(2.5);
+        -webkit-transform: scale(2.5);
+                transform: scale(2.5);
         cursor: pointer;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
         width: fit-content;
+    }
+
+    .btn {
+        cursor: pointer;
     }
 
 }

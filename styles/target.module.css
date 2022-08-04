@@ -45,7 +45,37 @@
     padding: .5rem 3rem;
     border-radius: .3rem;
     margin: 6rem auto 0rem auto;
+    transition: all .10s linear 0s;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
 }
+
+.form button:active, .form button:hover {
+    background-color: rgb(47, 47, 47);
+    transform: translateY(-5%)
+}
+
+.form input {
+    margin-top: .5rem;
+    width:85vw;
+    padding:.3rem .5rem;
+    font-size: 1rem;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 0px solid;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.form input:focus {
+    outline : 2px solid var(--accent-color);
+    border-radius: .2rem;
+}
+
+.form select {
+    padding: .2rem;
+    font-size: 1rem;
+}
+
 
 @media screen and (min-width: 768px) {
     .container {
@@ -57,5 +87,9 @@
         margin: .5rem;
         width:50vw;
         padding:.4rem .5rem;
+    }
+
+    .form button {
+        cursor: pointer;
     }
 }

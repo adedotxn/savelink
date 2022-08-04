@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import TwitterProvider from "next-auth/providers/twitter"
 
 export const authOptions: NextAuthOptions = {
     // https://next-auth.js.org/configuration/providers/oauth

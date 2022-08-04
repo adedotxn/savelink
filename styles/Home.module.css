@@ -17,6 +17,8 @@
 }
 .main div button {
   margin-top:1rem;
+  width:-webkit-fit-content;
+  width:-moz-fit-content;
   width:fit-content;
   padding:.5rem;
   text-transform: uppercase;
@@ -28,12 +30,14 @@
 }
 .main div button:hover {
   border:0px solid;
-  transform: scale(.95);
+  -webkit-transform: scale(.95);
+          transform: scale(.95);
   border-radius: .5rem;
 }
 
 .loading {
-  transform: scale(3);
+  -webkit-transform: scale(3);
+          transform: scale(3);
 }
 
 
@@ -43,6 +47,8 @@
   }
   .main div button {
     margin-top:1rem;
+    width:-webkit-fit-content;
+    width:-moz-fit-content;
     width:fit-content;
     cursor: pointer;
 

@@ -113,17 +113,50 @@ a {
   place-items: center;
   width: 80px;
   height: 80px;
-  transform: scale(1.7);
+  -webkit-transform: scale(1.7);
+          transform: scale(1.7);
 }
 .lds_ripple div {
   position: absolute;
   border: 4px solid #fff;
   opacity: 1;
   border-radius: 50%;
-  animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  -webkit-animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+          animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 .lds_ripple div:nth-child(2) {
-  animation-delay: -0.5s;
+  -webkit-animation-delay: -0.5s;
+          animation-delay: -0.5s;
+}
+@-webkit-keyframes lds_ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
 }
 @keyframes lds_ripple {
   0% {
@@ -163,6 +196,7 @@ a {
     place-items: center;
     width: 80px;
     height: 80px;
-    transform: scale(2);
+    -webkit-transform: scale(2);
+            transform: scale(2);
   }
 }

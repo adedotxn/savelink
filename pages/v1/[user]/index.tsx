@@ -152,7 +152,7 @@ const Dashboard:NextPage = () => {
                             </div>
                         </section>
 
-                        <button type="submit">Save</button>
+                        <button className={styles.btn} type="submit">Save</button>
                     </form>
                 </Dialog>
             </div>

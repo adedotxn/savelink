@@ -60,7 +60,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </Head>
 
       <header className={styles.header}>
-        <Header side={side} setSide={setSide} name={name} />
+        <Header name={name} />
       </header>
 
       <main className={styles.main}>

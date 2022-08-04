@@ -9,18 +9,9 @@ import { useSearch } from "../utils/helpers/context";
 import {useState } from "react";
 import CopiedSvg from "./svg/active/copied";
 import CopySvg from "./svg/copy";
-interface IProps {
-  array: {
-    identifier: string;
-    bookmarked: boolean;
-    _id: number;
-    title: string;
-    url: string;
-    category: string;
-  }[];
-}
+import { SchemeInterface_Array } from "../utils/interface";
 
-const List = ({ array }: IProps) => {
+const List = ({ array }: SchemeInterface_Array) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark();
 

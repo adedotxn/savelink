@@ -1,30 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { DialogContextData, SearchContextData, ThemeContextData } from "./context.interface";
 
-interface DialogContextData {
-  dialog : boolean,
-  setDialog : React.Dispatch<React.SetStateAction<boolean>>,
-  toggleDialog : () => void
-}
+//defaukt values
 const dialogContextDefaultValue: DialogContextData = {
   dialog : false,
   setDialog : () => null,
   toggleDialog : () => null,
 }
 
-interface ThemeContextData {
-  theme : boolean,
-  switchTheme : () => void
-}
 const themeContextDefaultValue: ThemeContextData = {
   theme : false,
   switchTheme : () => null
 }
 
-interface SearchContextData {
-  search: string
-  setSearch : React.Dispatch<React.SetStateAction<string>>,
-
-}
 const searchContextDefaultValue: SearchContextData = {
   search : '',
   setSearch : () => null,

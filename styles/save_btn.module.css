@@ -1,0 +1,28 @@
+.btn button {
+    display: grid;
+    place-items: center;
+    border: 0px solid;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    padding: .5rem 3rem;
+    border-radius: .3rem;
+    margin: 6rem auto 0rem auto;
+    transition: all .10s linear 0s;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+}
+
+.btn button:active, .btn button:hover {
+    background-color: rgb(47, 47, 47);
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+    transform: translateY(-5%)
+}
+
+@media screen and (min-width: 768px) {
+    .btn button {
+        cursor: pointer;
+    }
+}

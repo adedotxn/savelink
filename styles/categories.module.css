@@ -14,6 +14,8 @@
 .category_cards {
     background-color: var(--accent-color);
     width:80vw;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     padding:.5rem 1rem;
     border-radius: .5rem;
@@ -36,18 +38,24 @@
     }
     .categories {
         grid-template-columns: repeat(3, 10rem);
-        column-gap: 8rem;
+        -webkit-column-gap: 8rem;
+                column-gap: 8rem;
         row-gap: 2rem;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
         width: fit-content;
     }
     .category_cards {
         max-width: 15rem;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
         height: fit-content;
         cursor: pointer;
         transition: all .15s linear 0s;
     }
 
     .category_cards:hover {
-        transform: translateY(-10%);
+        -webkit-transform: translateY(-10%);
+                transform: translateY(-10%);
     }
 }

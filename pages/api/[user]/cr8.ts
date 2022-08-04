@@ -18,7 +18,6 @@ export default async function handler(
       bookmarked : req.body.bookmarked,
       time : req.body.time
     })
-    // console.log(req.body)
     const savedCr8tn = cr8.save()
 
     res.json(savedCr8tn)

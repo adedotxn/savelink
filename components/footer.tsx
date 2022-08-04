@@ -10,14 +10,9 @@ import Logout from "./buttons/Logout";
 import PinSvg from "./svg/pin";
 import { useRef, useState } from "react";
 import Options from "./options";
+import {SidePropsInterface} from '../utils/interface'
 
-interface IProps {
-  side: boolean;
-  setSide: React.Dispatch<React.SetStateAction<boolean>>;
-  name: string;
-}
-
-const Footer = ({ side, setSide, name }: IProps) => {
+const Footer = ({ side, setSide, name }: SidePropsInterface) => {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const handleSidebar = () => {

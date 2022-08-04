@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import styles from '../styles/header.module.css'
 import { useSearch } from '../utils/helpers/context';
+import { SidePropsInterface } from '../utils/interface';
 import Logout from './buttons/Logout'
 import { ThemeSwitcher } from './buttons/theme_switcher'
 import Options from './options';
 import MoreSvg from './svg/moresvg';
 
 
-interface IProps {
-    side : boolean;
-    setSide : React.Dispatch<React.SetStateAction<boolean>>
-    name : string
-}
-
-const Header = ({side, setSide, name}:IProps) => {
+const Header = ({name} : {name : string}) => {
 
     const {search, setSearch} = useSearch()
     const [options, setOptions] = useState(false)
