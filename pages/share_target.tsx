@@ -11,16 +11,17 @@ const ShareTarget = () => {
   const createMutation = useCreateOnly(toast);
 
   const { title, text } = router.query;
+  // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
+  // let title = "Best Practices to Increase the speed of nextjs apps"
 
   const name: string = session?.user?.email!;
   let linkTitle: string = title ? title.toString() : "";
-  let linkText: string = text?.toString()!;
+  let linkText: string = text ? text?.toString() : 'Link not returned';
 
   const [selected, setSelected] = useState("");
   const [retTitle, setRetTitle] = useState(linkTitle);
   const [retText, setRetText] = useState(linkText);
-  // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
-  // let title = "Best Practices to Increase the speed of nextjs apps"
+ 
 
   function useData() {
     const { data, isLoading } = useDataGetter(name);
@@ -55,7 +56,7 @@ const ShareTarget = () => {
       category: selected === " ".trim() ? "Shared" : selected,
     });
 
-    router.replace(`/v1/${name}/`);
+    router.push(`/v1/${name}/`);
   };
 
   return (
