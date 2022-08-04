@@ -10,13 +10,13 @@ const ShareTarget = () => {
   const router = useRouter();
   const createMutation = useCreateOnly(toast);
 
-  const { title, text } = router.query;
-  // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
-  // let title = "Best Practices to Increase the speed of nextjs apps"
+  // const { title, text } = router.query;
+  let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
+  let title = "Best Practices to Increase the speed of nextjs apps"
 
   const name: string = session?.user?.email!;
   let linkTitle: string = title ? title.toString() : "";
-  let linkText: string = text ? text?.toString() : 'Link not returned';
+  let linkText: string = text?.toString()!
 
   const [selected, setSelected] = useState("");
   const [retTitle, setRetTitle] = useState(linkTitle);
@@ -48,11 +48,12 @@ const ShareTarget = () => {
 
   const saveLink = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    linkTitle = retTitle
 
     createMutation.mutate({
       identifier: name,
       title: retTitle,
-      url: retText,
+      url: linkText,
       category: selected === " ".trim() ? "Shared" : selected,
     });
 
@@ -68,16 +69,16 @@ const ShareTarget = () => {
             <input
               onBlur={(e) => setRetTitle(e.target.value)}
               type="text"
-              defaultValue={linkTitle}
+              defaultValue={retTitle}
             />
           </div>
 
           <div>
             <h3>Link</h3>
             <input
-              onBlur={(e) => setRetText(e.target.value)}
+              // onBlur={(e) => setRetText(e.target.value)}
               type="text"
-              defaultValue={linkText}
+              value={linkText}
             />
           </div>
 
