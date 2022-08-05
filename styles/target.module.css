@@ -76,6 +76,14 @@
     font-size: 1rem;
 }
 
+.form span{
+    margin-top:.5rem;
+    background-color: var(--accent-color);
+    padding: .2rem .3rem;
+    font-weight: 500;
+    border-radius: .3rem;
+}
+
 
 @media screen and (min-width: 768px) {
     .container {

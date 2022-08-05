@@ -10,7 +10,7 @@ const ShareTarget = () => {
   const router = useRouter();
   const createMutation = useCreateOnly(toast);
 
-  const { title, text } = router.query;
+  const {title, text } = router.query;
   // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
   // let title = "Best Practices to Increase the speed of nextjs apps"
 
@@ -48,12 +48,11 @@ const ShareTarget = () => {
 
   const saveLink = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    linkTitle = retTitle
 
     createMutation.mutate({
       identifier: name,
       title: retTitle,
-      url: linkText,
+      url: retText,
       category: selected === " ".trim() ? "Shared" : selected,
     });
 
@@ -67,18 +66,18 @@ const ShareTarget = () => {
           <div>
             <h3>Title</h3>
             <input
-              onBlur={(e) => setRetTitle(e.target.value)}
+              onChange={(e) => setRetTitle(e.target.value)}
               type="text"
-              defaultValue={retTitle}
+              value={retTitle}
             />
           </div>
 
           <div>
             <h3>Link</h3>
             <input
-              // onBlur={(e) => setRetText(e.target.value)}
+              onChange={(e) => setRetText(e.target.value)}
               type="text"
-              value={linkText}
+              value={retTitle}
             />
           </div>
 
