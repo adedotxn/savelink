@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useCreateOnly, useDataGetter } from "../utils/api/api";
 import styles from "../styles/target.module.css";
@@ -19,8 +19,13 @@ const ShareTarget = () => {
   let linkText: string = text?.toString()!
 
   const [selected, setSelected] = useState("");
-  const [retTitle, setRetTitle] = useState(linkTitle);
-  const [retText, setRetText] = useState(linkText);
+  const [retTitle, setRetTitle] = useState('');
+  const [retText, setRetText] = useState('');
+
+  useEffect(() => {
+    setRetTitle(title?.toString()!)
+    setRetText(text?.toString()!)
+  },[title, text])
  
 
   function useData() {
@@ -77,7 +82,7 @@ const ShareTarget = () => {
             <input
               onChange={(e) => setRetText(e.target.value)}
               type="text"
-              value={retTitle}
+              value={retText}
             />
           </div>
 
@@ -86,7 +91,6 @@ const ShareTarget = () => {
             <input
               onChange={handleChange}
               type="text"
-              multiple
               placeholder='Example : "Software Eng. Links"'
             />
             <select value={selected} onChange={handleChange}>
