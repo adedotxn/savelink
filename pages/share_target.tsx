@@ -15,7 +15,7 @@ const ShareTarget = () => {
   // let title = "Best Practices to Increase the speed of nextjs apps"
 
   const name: string = session?.user?.email!;
-  let linkTitle: string = title ? title.toString() : "";
+  let linkTitle: string = title?.toString()!
   let linkText: string = text?.toString()!
 
   const [selected, setSelected] = useState("");
@@ -87,6 +87,7 @@ const ShareTarget = () => {
             <input
               onChange={handleChange}
               type="text"
+              multiple
               placeholder='Example : "Software Eng. Links"'
             />
             <select value={selected} onChange={handleChange}>
@@ -96,6 +97,7 @@ const ShareTarget = () => {
                 </option>
               ))}
             </select>
+            <span>{selected}</span> 
           </div>
           <button onClick={saveLink}> Save </button>
         </form>
