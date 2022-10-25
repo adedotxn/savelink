@@ -1,13 +1,15 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;500;600;700&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Rubik', sans-serif;
+  font-family: 'DM Sans';
   /* font-family: 'Barlow Condensed', sans-serif; */
   background-color: var(--background);
-  color:var(--text-color);
+  color: var(--text-color);
 }
 
 a {
@@ -18,6 +20,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
 :root {
   --background-dark: #212125;
   --accent-color-dark: #3b3b40;
@@ -36,6 +39,7 @@ a {
 .hide {
   display: none;
 }
+
 .show {
   display: block;
   transition: all .15s linear 0s;
@@ -48,10 +52,10 @@ a {
 
 @media(prefers-color-scheme: dark) {
   :root {
-    --background : var(--background-dark);
+    --background: var(--background-dark);
     --accent-color: var(--accent-color-dark);
     --text-color: var(--text-color-dark);
-    --accent-color-opposite : var(--accent-color-d-opposite)
+    --accent-color-opposite: var(--accent-color-d-opposite)
   }
 }
 
@@ -59,25 +63,25 @@ a {
 
 @media(prefers-color-scheme: light) {
   :root {
-    --background : var(--background-light);
+    --background: var(--background-light);
     --accent-color: var(--accent-color-light);
     --text-color: var(--text-color-light);
-    --accent-color-opposite : var(--accent-color-l-opposite)
+    --accent-color-opposite: var(--accent-color-l-opposite)
   }
 }
 
-[color-scheme = "dark"] {
-  --background : var(--background-dark);
+[color-scheme="dark"] {
+  --background: var(--background-dark);
   --accent-color: var(--accent-color-dark);
   --text-color: var(--text-color-dark);
-  --accent-color-opposite : var(--accent-color-d-opposite)
+  --accent-color-opposite: var(--accent-color-d-opposite)
 }
 
-[color-scheme = "light"] {
-  --background : var(--background-light);
+[color-scheme="light"] {
+  --background: var(--background-light);
   --accent-color: var(--accent-color-light);
   --text-color: var(--text-color-light);
-  --accent-color-opposite : var(--accent-color-l-opposite)
+  --accent-color-opposite: var(--accent-color-l-opposite)
 }
 
 .theme {
@@ -89,10 +93,12 @@ a {
   place-items: center;
   cursor: pointer;
 }
+
 .theme:is(:hover, :focus) {
   background-color: var(--accent-color);
   opacity: .8;
 }
+
 .svg_fill {
   color: var(--text-color);
   fill: var(--text-color);
@@ -107,6 +113,7 @@ a {
   display: grid;
   place-items: center;
 }
+
 .lds_ripple {
   position: relative;
   display: grid;
@@ -114,20 +121,23 @@ a {
   width: 80px;
   height: 80px;
   -webkit-transform: scale(1.7);
-          transform: scale(1.7);
+  transform: scale(1.7);
 }
+
 .lds_ripple div {
   position: absolute;
   border: 4px solid #fff;
   opacity: 1;
   border-radius: 50%;
   -webkit-animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-          animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation: lds_ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
+
 .lds_ripple div:nth-child(2) {
   -webkit-animation-delay: -0.5s;
-          animation-delay: -0.5s;
+  animation-delay: -0.5s;
 }
+
 @-webkit-keyframes lds_ripple {
   0% {
     top: 36px;
@@ -136,6 +146,7 @@ a {
     height: 0;
     opacity: 0;
   }
+
   4.9% {
     top: 36px;
     left: 36px;
@@ -143,6 +154,7 @@ a {
     height: 0;
     opacity: 0;
   }
+
   5% {
     top: 36px;
     left: 36px;
@@ -150,6 +162,7 @@ a {
     height: 0;
     opacity: 1;
   }
+
   100% {
     top: 0px;
     left: 0px;
@@ -158,6 +171,7 @@ a {
     opacity: 0;
   }
 }
+
 @keyframes lds_ripple {
   0% {
     top: 36px;
@@ -166,6 +180,7 @@ a {
     height: 0;
     opacity: 0;
   }
+
   4.9% {
     top: 36px;
     left: 36px;
@@ -173,6 +188,7 @@ a {
     height: 0;
     opacity: 0;
   }
+
   5% {
     top: 36px;
     left: 36px;
@@ -180,6 +196,7 @@ a {
     height: 0;
     opacity: 1;
   }
+
   100% {
     top: 0px;
     left: 0px;
@@ -197,6 +214,104 @@ a {
     width: 80px;
     height: 80px;
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
   }
+}
+
+
+.burger {
+  height: 3em;
+  width: 3em;
+  position: relative;
+  font-size: 12px;
+  cursor: pointer;
+  transition: .2s all;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.burger .burger-lines:after {
+  left: 0;
+  top: -1em;
+}
+
+.burger .burger-lines:before {
+  left: 1em;
+  top: 1em;
+}
+
+.burger:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 150%;
+  width: 150%;
+  top: -25%;
+  left: -25%;
+}
+
+.burger .burger-lines {
+  top: 50%;
+  margin-top: -0.125em;
+}
+
+.burger .burger-lines,
+.burger .burger-lines:after,
+.burger .burger-lines:before {
+  pointer-events: none;
+  display: block;
+  content: '';
+  width: 100%;
+  border-radius: 0.25em;
+  background-color: white;
+  height: 0.25em;
+  position: absolute;
+  -webkit-transform: rotate(0);
+  transform: rotate(0);
+}
+
+.burger .burger-lines:after {
+  left: 0;
+  top: -.6em;
+}
+
+.burger .burger-lines:before {
+  left: 1em;
+  top: .6em;
+}
+
+.burger.burger-squeeze .burger-lines,
+.burger.burger-squeeze .burger-lines:after,
+.burger.burger-squeeze .burger-lines:before {
+  transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
+}
+
+.burger.burger-squeeze .burger-lines:after,
+.burger.burger-squeeze .burger-lines:before {
+  width: 1.5em;
+}
+
+.burger.burger-squeeze.open .burger-lines,
+.burger.burger-squeeze.open .burger-lines:after,
+.burger.burger-squeeze.open .burger-lines:before {
+  transition: .2s background-color, .2s top, .2s left, .2s transform .15s;
+}
+
+.burger.burger-squeeze.open .burger-lines {
+  background-color: transparent;
+}
+
+.burger.burger-squeeze.open .burger-lines:before,
+.burger.burger-squeeze.open .burger-lines:after {
+  left: 0.5em;
+  top: 0px;
+}
+
+.burger.burger-squeeze.open .burger-lines:before {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.burger.burger-squeeze.open .burger-lines:after {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

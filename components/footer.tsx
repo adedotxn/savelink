@@ -10,7 +10,7 @@ import Logout from "./buttons/Logout";
 import PinSvg from "./svg/pin";
 import { useRef, useState } from "react";
 import Options from "./options";
-import {SidePropsInterface} from '../utils/interface'
+import { SidePropsInterface } from "../utils/interface";
 
 const Footer = ({ side, setSide, name }: SidePropsInterface) => {
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -72,7 +72,15 @@ const Footer = ({ side, setSide, name }: SidePropsInterface) => {
       <Options options={options} name={name} />
       <div className={styles.mobile_footer}>
         <div onClick={handleSidebar}>
-          <HamburgerSvg />
+          <div className={styles.burger}>
+            <div
+              className={
+                side ? "burger burger-squeeze open" : "burger burger-squeeze"
+              }
+            >
+              <div className="burger-lines"></div>
+            </div>
+          </div>
         </div>
         {router.pathname.includes("bookmarked") ||
         router.pathname.includes("category") ||

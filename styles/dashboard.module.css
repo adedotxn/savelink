@@ -73,7 +73,7 @@
 }
 
 .dialog {
-    width:80vw;
+    width:87vw;
     position: fixed;
     top:9rem;
     background-color: var(--accent-color);
@@ -89,7 +89,7 @@
 }
 
 .dialog form>input:focus {
-    outline: 1px solid rgb(201, 255, 192);
+    outline: 1px solid rgb(68, 68, 68);
 }
 .dialog p {
     color: var(--text-color);

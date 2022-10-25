@@ -1,63 +1,133 @@
 .container {
-  padding: 1rem 2rem;
+  /* padding: 1rem 2rem; */
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background-color: #212125;
+  background-image: url("../public/bg-img.png");
+  object-fit: contain;
 }
+
+.main {
+  margin-bottom: 20vh;
+  max-width: 90vw;
+  padding: 0rem;
+}
+
 .main h1 {
   font-weight: 800;
-  text-transform: uppercase;
-  font-size: 4rem;
+  font-size: 4.2rem;
+  text-align: center;
 }
 
 .main p {
-  font-size: 2rem;;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 600;
+  color: rgb(255, 239, 239)
 }
 
 .main div {
-  margin-top: 5rem;;
+  margin-top: 5rem;
   display: grid;
+  place-items: center;
 }
+
 .main div button {
-  margin-top:1rem;
-  width:-webkit-fit-content;
-  width:-moz-fit-content;
-  width:fit-content;
-  padding:.5rem;
+  margin-top: 1rem;
+  width: 80vw;
+
+  padding: 1rem 1rem;
   text-transform: uppercase;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   transition: all .2s ease-in-out;
   border: 0px solid;
-  border-radius: .2rem;
+  border-radius: 2rem;
+  border: 2px solid rgba(244, 225, 225, 0.954);
+  background-color: rgba(244, 225, 225, 0.954);
 }
-.main div button:hover {
-  border:0px solid;
-  -webkit-transform: scale(.95);
-          transform: scale(.95);
-  border-radius: .5rem;
+
+.main div button:hover,
+.main div button:active {
+  /* -webkit-transform: scale(.95);
+  transform: scale(.95); */
+  background-color: transparent;
+  color: rgba(244, 225, 225, 0.954);
+  -webkit-transform: translateY(10%);
+  transform: translateY(10%);
 }
 
 .loading {
   -webkit-transform: scale(3);
-          transform: scale(3);
+  transform: scale(3);
+}
+
+.shimmer {
+  text-align: center;
+  color: rgba(247, 229, 229, 0.425);
+  background: -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  background: -moz-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff));
+  background-size: 250px 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-animation-name: shimmer;
+  animation-name: shimmer;
+  -webkit-animation-duration: 2.8s;
+  animation-duration: 2.8s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-color: #222;
+}
+
+@-webkit-keyframes shimmer {
+  from {
+    background-position: top left;
+  }
+
+  to {
+    background-position: top right;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: top left;
+  }
+
+  to {
+    background-position: top right;
+  }
 }
 
 
 @media screen and (min-width: 1024px) {
   .main p {
-    width:60vw
+    width: 60vw
   }
+
   .main div button {
-    margin-top:1rem;
-    width:-webkit-fit-content;
-    width:-moz-fit-content;
-    width:fit-content;
+    padding: .7rem 5rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
     cursor: pointer;
 
   }
+
+  /* 
   .main div button:nth-child(2) {
     margin-left: 3rem;
   }
+
   .main div button:nth-child(3) {
     margin-left: 6rem;
-  }
+  } */
 
 }
