@@ -4,29 +4,30 @@ import toast from "react-hot-toast";
 import { useCreateOnly, useDataGetter } from "../utils/api/api";
 import styles from "../styles/target.module.css";
 import { useRouter } from "next/router";
+import Button from "../components/buttons/Button";
+import CategoryList from "../components/categories/CategoryList";
 
 const ShareTarget = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const createMutation = useCreateOnly(toast);
 
-  const {title, text } = router.query;
+  const { title, text } = router.query;
   // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
   // let title = "Best Practices to Increase the speed of nextjs apps"
 
   const name: string = session?.user?.email!;
-  let linkTitle: string = title?.toString()!
-  let linkText: string = text?.toString()!
+  let linkTitle: string = title?.toString()!;
+  let linkText: string = text?.toString()!;
 
   const [selected, setSelected] = useState("");
-  const [retTitle, setRetTitle] = useState('');
-  const [retText, setRetText] = useState('');
+  const [retTitle, setRetTitle] = useState("");
+  const [retText, setRetText] = useState("");
 
   useEffect(() => {
-    setRetTitle(title?.toString()!)
-    setRetText(text?.toString()!)
-  },[title, text])
- 
+    setRetTitle(title?.toString()!);
+    setRetText(text?.toString()!);
+  }, [title, text]);
 
   function useData() {
     const { data, isLoading } = useDataGetter(name);
@@ -64,6 +65,12 @@ const ShareTarget = () => {
     router.push(`/v1/${name}/`);
   };
 
+  const [showList, setShowList] = useState<boolean>(false);
+  const showCategoriesList = (e: any) => {
+    e.preventDefault();
+    setShowList(!showList);
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -93,14 +100,22 @@ const ShareTarget = () => {
               type="text"
               placeholder='Example : "Software Eng. Links"'
             />
-            <select value={selected} onChange={handleChange}>
-              {categories.map((data) => (
-                <option key={data} value={data}>
-                  {data}
-                </option>
-              ))}
-            </select>
-            <span>{selected}</span> 
+            {!isLoading ? (
+              <>
+                <Button options action={showCategoriesList}>
+                  {selected === "" ? "Pick a tag" : `${selected}`}
+                </Button>
+
+                <CategoryList
+                  TAGS={categories}
+                  setShowList={setShowList}
+                  showList={showList}
+                  setSelected={setSelected}
+                />
+              </>
+            ) : (
+              <p>loading..</p>
+            )}
           </div>
           <button onClick={saveLink}> Save </button>
         </form>

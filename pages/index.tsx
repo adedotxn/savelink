@@ -5,7 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Home = () => {
+const Home  = () : JSX.Element => {
   const { data: session, status } = useSession();
 
   const handleSignIn = () => {
@@ -29,8 +29,6 @@ const Home = () => {
       </div>
     );
   }
-
-  if (!session) {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
@@ -47,7 +45,7 @@ const Home = () => {
         </main>
       </div>
     );
-  }
+  
 };
 
 export default Home;
