@@ -10,6 +10,8 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.2",
+    "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-scroll-area": "1.0.2",
     "axios": "^0.27.2",
     "mongoose": "^6.4.4",

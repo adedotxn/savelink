@@ -1,54 +1,66 @@
 .header {
     display: flex;
     justify-content: space-between;
-    background-color:var(--background);
-    padding:1rem 1rem .5rem 0rem;
+    background-color: var(--background);
+    padding: 1rem 1rem .5rem 0rem;
     margin: 0rem auto;
     /* border-radius: 1.3rem; */
     align-items: center;
     place-items: center;
-    position:fixed;
+    position: fixed;
     top: 0;
     border: 1px solid var(--accent-color);
-    width:100vw;
-    left:0;
+    width: 100vw;
+    left: 0;
     z-index: 3;
     /* border: 1px solid red; */
 }
+
 .header h1 {
-    font-size: 1.5rem;;
+    font-size: 1.5rem;
+    ;
     text-transform: uppercase;
 }
+
 .searchbar {
     /* display: grid;
     place-items: center;
     border-radius: 1.3rem; */
-    margin: 0 auto;;
+    margin: 0 auto;
+    ;
 }
+
 .searchbar input {
     background-color: var(--accent-color);
     border: 0px solid;
-    width:70vw;
+    width: 70vw;
     padding: .6rem 1rem;
     border-radius: .4rem;
-    border:1px solid white;
-    margin-top: .5rem;;
+    border: 1px solid white;
+    margin-top: .5rem;
+    ;
 }
+
 .searchbar input:focus {
     outline: none;
 }
+
 .searchbar input[type=text] {
     color: var(--text-color);
 }
+
 .searchbar input::-webkit-input-placeholder {
     color: var(--text-color);
 }
+
 .searchbar input:-ms-input-placeholder {
     color: var(--text-color);
 }
+
 .searchbar input::-ms-input-placeholder {
     color: var(--text-color);
 }
+
 .searchbar input::placeholder {
     color: var(--text-color);
 }
@@ -60,6 +72,7 @@
 .svg_fill {
     color: var(--text-color)
 }
+
 .hamburger {
     display: none;
 }
@@ -69,50 +82,61 @@
 
     .header {
         background-color: var(--background);
-        justify-content:space-between;
-        border-bottom: 1.6px solid var(--accent-color);
+        justify-content: space-between;
+        border-bottom: 1.2px solid var(--border-line);
         border-radius: 0;
         padding: 1rem 3rem;
-        width:100vw;
+        width: 100vw;
         margin: 0rem;
     }
 
     .hamburger {
         display: block;
         -webkit-transform: scale(2);
-                transform: scale(2);
+        transform: scale(2);
     }
 
     .searchbar input {
         background-color: var(--accent-color);
-        width:30vw;
+        width: 30vw;
         border-radius: .5rem;
-        padding:.5rem 3rem;
-        font-size: 1.3rem;;
+        padding: .5rem 3rem;
+        font-size: 1.3rem;
+        ;
         color: var(--text-color);
         border: 1.2px solid var(--accent-color-opposite);
-        transition: all .15s linear  0s;
+        transition: all .15s linear 0s;
     }
+
     .searchbar input::-webkit-input-placeholder {
         font-weight: 200;
-        font-size: 1rem;;
+        font-size: 1rem;
+        ;
     }
+
     .searchbar input:-ms-input-placeholder {
         font-weight: 200;
-        font-size: 1rem;;
+        font-size: 1rem;
+        ;
     }
+
     .searchbar input::-ms-input-placeholder {
         font-weight: 200;
-        font-size: 1rem;;
+        font-size: 1rem;
+        ;
     }
+
     .searchbar input::placeholder {
         font-weight: 200;
-        font-size: 1rem;;
+        font-size: 1rem;
+        ;
     }
+
     .searchbar input:focus {
-        border:1px solid var(--text-color);
+        border: 1px solid var(--text-color);
         border-radius: 1rem;
     }
+
     .header>div:nth-child(3) {
         display: flex;
         place-items: center;
@@ -120,10 +144,10 @@
     }
 
     .header>div:nth-child(3) h2 {
-        margin:0;
+        margin: 0;
         font-weight: 400;
         margin-right: 1rem;
-        padding:.2rem .4rem;
+        padding: .2rem .4rem;
         border-radius: .4rem;
         background-color: var(--accent-color);
     }
@@ -138,17 +162,21 @@
         display: grid;
         place-items: center;
         cursor: pointer;
-        border-radius: .3rem;;
+        border-radius: .3rem;
+        ;
     }
+
     .more {
         margin: 0 auto 0 .5rem;
         display: grid;
         place-items: center;
-        padding : .2rem 0rem;
+        padding: .2rem 0rem;
         cursor: pointer;
     }
-    .active, .more:hover {
+
+    .active,
+    .more:hover {
         background-color: var(--accent-color);
-        border-radius:.3rem;
+        border-radius: .3rem;
     }
 }

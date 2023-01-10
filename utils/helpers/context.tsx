@@ -1,90 +1,113 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { DialogContextData, SearchContextData, ThemeContextData } from "./context.interface";
+import {
+  DialogContextData,
+  SearchContextData,
+  ThemeContextData,
+} from "./context.interface";
 
 //defaukt values
 const dialogContextDefaultValue: DialogContextData = {
-  dialog : false,
-  setDialog : () => null,
-  toggleDialog : () => null,
-}
+  dialog: false,
+  setDialog: () => null,
+  toggleDialog: () => null,
+};
 
 const themeContextDefaultValue: ThemeContextData = {
-  theme : false,
-  switchTheme : () => null
-}
+  theme: false,
+  switchTheme: () => null,
+};
 
 const searchContextDefaultValue: SearchContextData = {
-  search : '',
-  setSearch : () => null,
-}
-   
+  search: "",
+  setSearch: () => null,
+};
 
 //Contexts
-export const DialogContext = createContext<DialogContextData>(dialogContextDefaultValue);
-export const ThemeContext = createContext<ThemeContextData>(themeContextDefaultValue)
-export const SearchContext = createContext<SearchContextData>(searchContextDefaultValue)
+export const DialogContext = createContext<DialogContextData>(
+  dialogContextDefaultValue
+);
+export const ThemeContext = createContext<ThemeContextData>(
+  themeContextDefaultValue
+);
+export const SearchContext = createContext<SearchContextData>(
+  searchContextDefaultValue
+);
 
 //Custom hooks
 export const useDialog = () => {
-  return useContext(DialogContext)
-}
+  return useContext(DialogContext);
+};
 
 export const useTheme = () => {
-  return useContext(ThemeContext)
-}
+  return useContext(ThemeContext);
+};
 
 export const useSearch = () => {
-  return useContext(SearchContext)
-}
+  return useContext(SearchContext);
+};
 
-//(daddy) Context Provider 
-export const UtilityProvider = ({children}:{children : React.ReactNode})  => {
+//(daddy) Context Provider
+export const UtilityProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   //dialog logic
   const [dialog, setDialog] = useState<boolean>(false);
-  const toggleDialog =() => {
-    setDialog(!dialog)
-  }
+  const toggleDialog = () => {
+    setDialog(!dialog);
+  };
 
   //theme logic
-  const [theme, setTheme] = useState(false)
+  const [theme, setTheme] = useState(false);
   function getCurrentTheme() {
-    let theme:string = window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark' : 'light';
-    localStorage.getItem('savelink-theme') 
-    ? theme = `${localStorage.getItem('savelink-theme')}` : null;
+    let theme;
+
+    if (
+      localStorage.getItem("savelink-theme") === null ||
+      localStorage.getItem("savelink-theme") === undefined
+    ) {
+      theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    } else {
+      theme = `${localStorage.getItem("savelink-theme")}`;
+    }
 
     return theme;
   }
 
-  function loadTheme(theme : string) {
-    const root = document.querySelector(':root');
-    root?.setAttribute('color-scheme', `${theme}`)
+  function loadTheme(theme: string) {
+    const root = document.querySelector(":root");
+    root?.setAttribute("color-scheme", `${theme}`);
   }
 
   useEffect(() => {
-    loadTheme(getCurrentTheme())
-  })
+    loadTheme(getCurrentTheme());
+  }, [theme]);
 
   const switchTheme = () => {
-    let theme = getCurrentTheme()
-    theme === 'dark' ? theme = 'light' : theme = 'dark';
-    localStorage.setItem('savelink-theme', `${theme}`)
-    loadTheme(theme)  
-    const root = document.querySelector(':root');
+    let theme = getCurrentTheme();
+    theme === "dark" ? (theme = "light") : (theme = "dark");
+    localStorage.setItem("savelink-theme", `${theme}`);
+    loadTheme(theme);
+    const root = document.querySelector(":root");
 
-    root?.getAttribute('color-scheme') === 'dark' ? setTheme(true) : setTheme(false)
-  }
+    root?.getAttribute("color-scheme") === "dark"
+      ? setTheme(true)
+      : setTheme(false);
+  };
 
   //search logic
-  const [search, setSearch] = useState<string>("")
+  const [search, setSearch] = useState<string>("");
 
   return (
-    <ThemeContext.Provider value = {{theme, switchTheme}}>
-      <DialogContext.Provider value = {{dialog, setDialog, toggleDialog}}>
-        <SearchContext.Provider value = {{search, setSearch}}>
+    <ThemeContext.Provider value={{ theme, switchTheme }}>
+      <DialogContext.Provider value={{ dialog, setDialog, toggleDialog }}>
+        <SearchContext.Provider value={{ search, setSearch }}>
           {children}
         </SearchContext.Provider>
       </DialogContext.Provider>
     </ThemeContext.Provider>
-  )
-}
+  );
+};

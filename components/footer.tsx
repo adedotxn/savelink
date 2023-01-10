@@ -11,6 +11,13 @@ import PinSvg from "./svg/pin";
 import { useRef, useState } from "react";
 import Options from "./options";
 import { SidePropsInterface } from "../utils/interface";
+import {
+  HamburgerMenuIcon,
+  CardStackPlusIcon,
+  DotsVerticalIcon,
+  MagnifyingGlassIcon,
+} from "@radix-ui/react-icons";
+import Image from "next/image";
 
 const Footer = ({ side, setSide, name }: SidePropsInterface) => {
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -69,41 +76,28 @@ const Footer = ({ side, setSide, name }: SidePropsInterface) => {
         </div>
       )}
 
-      <Options options={options} name={name} />
-      <div className={styles.mobile_footer}>
-        <div onClick={handleSidebar}>
-          <div className={styles.burger}>
-            <div
-              className={
-                side ? "burger burger-squeeze open" : "burger burger-squeeze"
-              }
-            >
-              <div className="burger-lines"></div>
-            </div>
+      <div className={styles.new_footer}>
+        <div>
+          <div onClick={handleSidebar}>
+            <HamburgerMenuIcon />
+            {/* <HamburgerSvg /> */}
           </div>
-        </div>
-        {router.pathname.includes("bookmarked") ||
-        router.pathname.includes("category") ||
-        router.pathname.includes("categories") ? (
-          <div
-            onClick={() => router.push(`/v1/${name}`)}
-            className={styles.cr8p}
-          >
-            <PinSvg />
-          </div>
-        ) : (
-          <div onClick={() => setDialog(!dialog)} className={styles.cr8m}>
-            <AddSvg />
-          </div>
-        )}
 
-        <div
-          className={options ? styles.more_active : ""}
-          onClick={() => setOptions(!options)}
-        >
-          <MoreSvg />
+          <div onClick={() => setDialog(!dialog)}>
+            <CardStackPlusIcon />
+          </div>
+
+          <div>
+            <MagnifyingGlassIcon />
+          </div>
+
+          <div onClick={() => setOptions(!options)}>
+            <DotsVerticalIcon />
+          </div>
         </div>
       </div>
+
+      <Options options={options} name={name} />
     </div>
   );
 };

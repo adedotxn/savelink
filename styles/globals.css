@@ -22,13 +22,16 @@ a {
 }
 
 :root {
-  --background-dark: #212125;
-  --accent-color-dark: #3b3b40;
+  --background-dark: #161616;
+  --accent-color-dark: #232323;
+  --border-line-dark: #8d8b8b;
+
   --text-color-dark: white;
   --accent-color-d-opposite: #f1f3f4;
 
 
-  --background-light: #fefffe;
+  --background-light: #EDEDED;
+  --border-line-light: #747575;
   --accent-color-light: #f1f3f4;
   --text-color-light: rgb(0, 0, 0);
   --accent-color-l-opposite: #3b3b40;
@@ -55,7 +58,8 @@ a {
     --background: var(--background-dark);
     --accent-color: var(--accent-color-dark);
     --text-color: var(--text-color-dark);
-    --accent-color-opposite: var(--accent-color-d-opposite)
+    --accent-color-opposite: var(--accent-color-d-opposite);
+    --border-line: var(--border-line-dark)
   }
 }
 
@@ -66,7 +70,8 @@ a {
     --background: var(--background-light);
     --accent-color: var(--accent-color-light);
     --text-color: var(--text-color-light);
-    --accent-color-opposite: var(--accent-color-l-opposite)
+    --accent-color-opposite: var(--accent-color-l-opposite), ;
+    --border-line: var(--border-line-light)
   }
 }
 

@@ -4,41 +4,21 @@ import SvgComponent from "./svg/starsvg";
 import DeleteSvg from "./svg/delete";
 import ShareSvg from "./svg/share";
 import { useBookmark, useDelete } from "../utils/api/api";
-import  toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useSearch } from "../utils/helpers/context";
-import {useState } from "react";
-import CopiedSvg from "./svg/active/copied";
+import { useState } from "react";
 import CopySvg from "./svg/copy";
 import { SchemeInterface_Array } from "../utils/interface";
+import { copyToClipboard, webShare } from "../utils/helpers/toolbox";
 
 const List = ({ array }: SchemeInterface_Array) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark();
 
   const [modal, setModal] = useState(0);
-  const [copied, setCopied] = useState(0);
-
-  const handleShare = async (title: string, url: string) => {
-    const shareOpts = {
-      title: title,
-      url: url,
-    };
-
-    try {
-      await navigator.share(shareOpts);
-    } catch (err) {
-      console.error("Error sharing", err);
-    }
-  };
-
-  const copyLink = (link: string, id: number) => {
-    setCopied(id);
-    navigator.clipboard.writeText(link).then(() => {
-      alert("Link copied to clipboard");
-    });
-  };
 
   const { search } = useSearch();
+
   array.filter((data) => {
     if (search === "") {
       return array;
@@ -115,7 +95,8 @@ const List = ({ array }: SchemeInterface_Array) => {
                   </div>
 
                   <div className={styles.link__images}>
-                    <div className={styles.link__image}
+                    <div
+                      className={styles.link__image}
                       onClick={() => {
                         bookmarkMutation.mutate(data._id);
                       }}
@@ -126,16 +107,16 @@ const List = ({ array }: SchemeInterface_Array) => {
                     <div
                       onClick={() => {
                         data.url.includes("http")
-                          ? handleShare(data.title, `${data.url}`)
-                          : handleShare(data.title, `https://${data.url}`);
+                          ? webShare(data.title, `${data.url}`)
+                          : webShare(data.title, `https://${data.url}`);
                       }}
                       className={styles.link__image}
                     >
                       <ShareSvg />
                     </div>
 
-                    <div  onClick={() => copyLink(data.url, data._id)}>
-                      {copied !== data._id ? <CopySvg /> : <CopiedSvg />}
+                    <div onClick={() => copyToClipboard(data.url, data._id)}>
+                      <CopySvg />
                     </div>
 
                     {modal === data._id ? (
