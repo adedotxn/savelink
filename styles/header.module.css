@@ -156,9 +156,10 @@
         border: 0px solid var(--text-color);
         padding: .3rem;
         margin: 0 1rem 0 auto;
+
         /* width: 3vw;
         height:6vh; */
-        background-color: var(--accent-color);
+        background-color: var(--background);
         display: grid;
         place-items: center;
         cursor: pointer;

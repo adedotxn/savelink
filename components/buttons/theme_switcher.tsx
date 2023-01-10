@@ -1,19 +1,16 @@
-import { useTheme } from "../../utils/helpers/context"
-import MoonSvg from "../svg/moon"
-import styles from '../../styles/header.module.css'
-import SunSvg from "../svg/sun"
-
+import { useTheme } from "../../utils/helpers/context";
+import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 
 export const ThemeSwitcher = () => {
-    const {theme, switchTheme} = useTheme()
+  const { theme, switchTheme } = useTheme();
 
-    return (
-        <button onClick={switchTheme} className={styles.switch}  aria-label="light/dark mode">
-            {theme ? 
-                <SunSvg/>
-                :
-                <MoonSvg/>
-            }
-        </button>
-    )
-}
+  return (
+    <button onClick={switchTheme}>
+      {theme ? (
+        <SunIcon width={20} height={20} color="white" />
+      ) : (
+        <MoonIcon width={20} height={20} />
+      )}
+    </button>
+  );
+};

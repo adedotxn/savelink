@@ -1,5 +1,5 @@
 .box {
-    background-color: var(--accent-color);
+    background-color: var(--background);
     border-radius: .4rem;
     padding: .3rem .4rem;
     cursor: pointer;
