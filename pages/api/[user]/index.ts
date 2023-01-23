@@ -13,18 +13,18 @@ export default async function handler(
     await connect();
     const session = await unstable_getServerSession(req, res, authOptions);
 
-    // if (session) {
-    try {
-      const { user } = req.query;
-      const specificLink = await Link.find({ identifier: `${user}` }).sort({
-        time: -1,
-      });
-      res.json(specificLink);
-      return;
-    } catch (error) {
-      res.json(error);
+    if (session) {
+      try {
+        const { user } = req.query;
+        const specificLink = await Link.find({ identifier: `${user}` }).sort({
+          time: -1,
+        });
+        res.json(specificLink);
+        return;
+      } catch (error) {
+        res.json(error);
+      }
     }
-    // }
 
     res.status(404).send({
       error:
