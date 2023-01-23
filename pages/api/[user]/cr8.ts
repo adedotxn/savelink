@@ -28,22 +28,33 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await runMiddleware(req, res, cors);
+  if (req.method === "POST") {
+    await runMiddleware(req, res, cors);
+    const { identifier, title, url, categories, bookmarked, time } = req.body;
 
-  try {
-    await connect();
-    const cr8 = new Link({
-      identifier: req.body.identifier,
-      title: req.body.title,
-      url: req.body.url,
-      category: req.body.category,
-      bookmarked: req.body.bookmarked,
-      time: req.body.time,
+    try {
+      await connect();
+      const cr8 = new Link({
+        identifier,
+        title,
+        url,
+        categories,
+        bookmarked,
+        time,
+      });
+      const savedCr8tn = cr8.save();
+      console.log("Cte", categories);
+
+      res.status(200).json({
+        status: "Saved",
+        data: savedCr8tn,
+      });
+    } catch (error) {
+      res.status(400).json({ error });
+    }
+  } else {
+    res.status(400).send({
+      error: "Wrong request method",
     });
-    const savedCr8tn = cr8.save();
-
-    res.json(savedCr8tn);
-  } catch (error) {
-    res.json(error);
   }
 }

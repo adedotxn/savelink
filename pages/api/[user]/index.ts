@@ -9,10 +9,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await connect();
-  const session = await unstable_getServerSession(req, res, authOptions);
+  if (req.method === "GET") {
+    await connect();
+    const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (session) {
+    // if (session) {
     try {
       const { user } = req.query;
       const specificLink = await Link.find({ identifier: `${user}` }).sort({
@@ -23,9 +24,15 @@ export default async function handler(
     } catch (error) {
       res.json(error);
     }
-  }
+    // }
 
-  res.send({
-    error: "You must be signed in to view the protected content on this page.",
-  });
+    res.status(404).send({
+      error:
+        "You must be signed in to view the protected content of this route.",
+    });
+  } else {
+    res.status(400).send({
+      error: "Wrong request method",
+    });
+  }
 }
