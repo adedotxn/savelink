@@ -1,5 +1,5 @@
 .container {
-    padding: 1rem;
+    padding: 1rem 0rem;
     height: 100vh;
     position: relative;
     margin-top: 2rem;
@@ -10,19 +10,14 @@
     place-items: center;
 }
 
-
-
-
 .main {
     margin-top: 1rem;
     padding-bottom: 8rem;
-    ;
 }
 
 .main>section {
     display: grid;
     row-gap: 1.5rem;
-    ;
     place-items: center;
 }
 
@@ -89,9 +84,18 @@
     border-radius: .5rem;
 }
 
+.dialog_container {
+    background-color: rgba(0, 0, 0, 0.433);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    overflow: hidden;
+}
+
 .dialog {
     width: 87vw;
-    position: fixed;
     top: 9rem;
     background-color: var(--accent-color);
     border: 1px solid white;
@@ -197,7 +201,7 @@
 }
 
 .category_area {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -265,9 +269,9 @@
         list-style-type: none;
         /* border-right: 1px solid white; */
         height: 80vh;
-        padding: 0 .5rem;
+        padding: 0rem .5rem;
         margin-top: 6rem;
-        ;
+
     }
 
     .sidebar ul li {
@@ -276,49 +280,43 @@
         margin-top: 1rem;
         font-size: 1.2rem;
         cursor: pointer;
-        padding: .5rem 1rem;
+        padding: .5rem .8rem;
         border-radius: .5rem;
         transition: all .15s linear 0s;
     }
 
     .sidebar ul li span {
         margin-left: 1rem;
-        ;
     }
+
 
     .sidebar__li:hover {
         background-color: var(--accent-color);
     }
 
 
-
-    .li_hover {
-        background-color: var(--accent-color);
-        color: black
-    }
-
     .main {
         display: flex;
-        margin-top: 0;
+        padding: 0;
+        margin: 0;
     }
 
     .main>section {
         margin-top: 2rem;
-        ;
-        margin-left: 2rem;
-        ;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         -webkit-column-gap: 2rem;
         column-gap: 2rem;
-        ;
-        /* margin-bottom: 2rem; */
-
     }
 
     .dialog {
         width: 50vw;
         top: 8rem;
+    }
+
+    .dialog_container {
+        background-color: transparent;
+
     }
 
     .dialog section {

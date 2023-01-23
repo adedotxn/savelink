@@ -1,17 +1,5 @@
 import mongoose from "mongoose";
 
-// const connect = () => {
-//     mongoose.connect(
-//         process.env.MONGODB_URI!, 
-//         (err) => {
-//             if(err) console.log("Error connecting to DB", err);
-//             else console.log("Connected to DB")
-//         }
-//     )
-// }
-
-// export default connect;
-
 const MONGODB_URI =  process.env.MONGODB_URI!
 
 if(!MONGODB_URI) {
@@ -41,7 +29,13 @@ async function connect() {
         })
     }
 
-    cached.conn = await cached.promise
+    try{
+        cached.conn = await cached.promise
+    } catch(e) {
+        cached.promise = null
+        throw e
+    }
+    
     return cached.conn
 }
 

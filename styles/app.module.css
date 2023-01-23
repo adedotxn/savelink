@@ -1,6 +1,7 @@
 .header {
-    padding:1rem 1.4rem
+    padding: 1rem 1.4rem
 }
+
 @media screen and (min-width: 768px) {
     .main {
         display: grid;
@@ -8,12 +9,18 @@
         padding: 0;
         margin: 0;
     }
+
+    .pages {
+        padding-right: 0rem;
+    }
+
     .side {
-        width:10vw;
+        width: 10vw;
         z-index: 2;
     }
+
     .header {
-        padding:0rem;
+        padding: 0rem;
     }
-    
+
 }

@@ -100,42 +100,44 @@ const CustomDialog = ({
   };
 
   return (
-    <Dialog className={styles.dialog} open={dialog}>
-      <div className={styles.close_btn}>
-        <Close setDialog={setDialog} />
-      </div>
-      <form id="input-form" onSubmit={onSubmit} action="">
-        <input ref={titleField} name="title" placeholder="Title" />
-        <input ref={urlField} name="link" placeholder="Link" required />
+    <div className={dialog ? styles.dialog_container : ""}>
+      <Dialog className={styles.dialog} open={dialog}>
+        <div className={styles.close_btn}>
+          <Close setDialog={setDialog} />
+        </div>
+        <form id="input-form" onSubmit={onSubmit} action="">
+          <input ref={titleField} name="title" placeholder="Title" />
+          <input ref={urlField} name="link" placeholder="Link" required />
 
-        <section className={styles.category}>
-          <p>Type in a new category to save to or select from pre-existing</p>
+          <section className={styles.category}>
+            <p>Type in a new category to save to or select from pre-existing</p>
 
-          <div className={styles.add_category}>
-            <input
-              onChange={handleChange}
-              type="text"
-              placeholder='Example : "Software Eng. Links"'
-            />
+            <div className={styles.add_category}>
+              <input
+                onChange={handleChange}
+                type="text"
+                placeholder='Example : "Software Eng. Links"'
+              />
 
-            <Button options action={showCategoriesList}>
-              {selected === "" ? "Pick a tag" : `${selected}`}
-            </Button>
+              <Button options action={showCategoriesList}>
+                {selected === "" ? "Pick a tag" : `${selected}`}
+              </Button>
 
-            <CategoryList
-              TAGS={categories}
-              setShowList={setShowList}
-              showList={showList}
-              setSelected={setSelected}
-            />
-          </div>
-        </section>
+              <CategoryList
+                TAGS={categories}
+                setShowList={setShowList}
+                showList={showList}
+                setSelected={setSelected}
+              />
+            </div>
+          </section>
 
-        <button className={styles.btn} type="submit">
-          Save
-        </button>
-      </form>
-    </Dialog>
+          <button className={styles.btn} type="submit">
+            Save
+          </button>
+        </form>
+      </Dialog>
+    </div>
   );
 };
 

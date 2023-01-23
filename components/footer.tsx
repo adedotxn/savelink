@@ -1,10 +1,8 @@
 import styles from "../styles/footer.module.css";
-
 import { useDialog } from "../utils/helpers/context";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ThemeSwitcher } from "./buttons/theme_switcher";
-
 import { useRef, useState } from "react";
 import Options from "./options";
 import { SidePropsInterface } from "../utils/interface";
@@ -15,7 +13,6 @@ import {
   MagnifyingGlassIcon,
   Cross2Icon,
 } from "@radix-ui/react-icons";
-import * as Popover from "@radix-ui/react-popover";
 import Hamburger from "./hamburger";
 
 const Footer = ({ side, setSide, name }: SidePropsInterface) => {
@@ -31,50 +28,7 @@ const Footer = ({ side, setSide, name }: SidePropsInterface) => {
 
   return (
     <div className={styles.footer}>
-      {side && (
-        <div></div>
-        // <div className={styles.footer_nav}>
-        //   <div>
-        //     <Logout />
-        //     <ThemeSwitcher />
-        //   </div>
-        //   <ul>
-        //     <Link href={`/v1/${name}`}>
-        //       <li
-        //         className={
-        //           !router.pathname.includes("categories") &&
-        //           !router.pathname.includes("bookmarked") &&
-        //           !router.pathname.includes("category")
-        //             ? styles.active
-        //             : ""
-        //         }
-        //       >
-        //         All Links
-        //       </li>
-        //     </Link>
-
-        //     <Link href={`/v1/${name}/bookmarked`}>
-        //       <li
-        //         className={
-        //           router.pathname.includes(`/bookmarked`) ? styles.active : ""
-        //         }
-        //       >
-        //         Starred
-        //       </li>
-        //     </Link>
-
-        //     <Link href={`/v1/${name}/categories`}>
-        //       <li
-        //         className={
-        //           router.pathname.includes(`/categories`) ? styles.active : ""
-        //         }
-        //       >
-        //         Categories
-        //       </li>
-        //     </Link>
-        //   </ul>
-        // </div>
-      )}
+      {/* {side && <div></div>} */}
 
       <div className={styles.new_footer}>
         <div>
@@ -85,10 +39,10 @@ const Footer = ({ side, setSide, name }: SidePropsInterface) => {
           <div onClick={() => setDialog(!dialog)}>
             <CardStackPlusIcon width="23" height="23" />
           </div>
-
+          {/* 
           <div>
             <MagnifyingGlassIcon width="23" height="23" />
-          </div>
+          </div> */}
 
           <div onClick={() => setOptions(!options)}>
             <DotsVerticalIcon width="23" height="23" />

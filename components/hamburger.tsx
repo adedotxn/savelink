@@ -7,11 +7,13 @@ import * as Popover from "@radix-ui/react-popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "../styles/hamburger.module.css";
+import { useTheme } from "../utils/helpers/context";
 import Logout from "./buttons/Logout";
 import { ThemeSwitcher } from "./buttons/theme_switcher";
 
 const Hamburger = ({ name }: { name: string }) => {
   const router = useRouter();
+  const { theme } = useTheme();
 
   return (
     <Popover.Root>
@@ -21,13 +23,7 @@ const Hamburger = ({ name }: { name: string }) => {
 
       <Popover.Portal>
         <Popover.Content className={styles.PopoverContent} sideOffset={5}>
-          <div
-          // style={{
-          //   display: "flex",
-          //   flexDirection: "column",
-          //   gap: 10,
-          // }}
-          >
+          <div>
             <ul>
               <Link href={`/v1/${name}`}>
                 <li
@@ -80,7 +76,7 @@ const Hamburger = ({ name }: { name: string }) => {
           </div>
 
           <Popover.Close className={styles.PopoverClose} aria-label="Close">
-            <Cross2Icon />
+            <Cross2Icon color={theme ? "black" : "black"} />
           </Popover.Close>
         </Popover.Content>
       </Popover.Portal>
