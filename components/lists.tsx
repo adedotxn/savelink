@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../styles/list.module.css";
+import styles from "./list.module.css";
 import SvgComponent from "./svg/starsvg";
 import DeleteSvg from "./svg/delete";
 import ShareSvg from "./svg/share";
@@ -10,6 +10,7 @@ import { useState } from "react";
 import CopySvg from "./svg/copy";
 import { SchemeInterface_Array } from "../utils/interface";
 import { copyToClipboard, webShare } from "../utils/helpers/toolbox";
+import { spawn } from "child_process";
 
 const List = ({ array }: SchemeInterface_Array) => {
   const deleteMutation = useDelete(toast);
@@ -90,7 +91,21 @@ const List = ({ array }: SchemeInterface_Array) => {
                     <Link
                       href={`/v1/${data.identifier}/category/${data.category}`}
                     >
-                      <h3>{data.category}</h3>
+                      <div>
+                        {data.categories.length === 0 && data.category ? (
+                          <span>{data.category}</span>
+                        ) : data.category === undefined && data.categories ? (
+                          <>
+                            <span>
+                              {data.categories[0]}
+                              {/* <span> +{data.categories.length - 1}</span> */}
+                            </span>
+                            <span className={styles.categ2}>
+                              {data.categories[1]}
+                            </span>
+                          </>
+                        ) : null}
+                      </div>
                     </Link>
                   </div>
 
