@@ -1,16 +1,17 @@
 export interface SchemeInterface_Array {
-    array: {
-      identifier: string;
-      bookmarked: boolean;
-      _id: number;
-      title: string;
-      url: string;
-      category: string;
-    }[];
+  array: {
+    identifier: string;
+    bookmarked: boolean;
+    _id: number;
+    title: string;
+    url: string;
+    category: string;
+    categories: string[];
+  }[];
 }
 
 export interface SidePropsInterface {
-    side: boolean;
-    setSide: React.Dispatch<React.SetStateAction<boolean>>;
-    name: string;
+  side: boolean;
+  setSide: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
 }

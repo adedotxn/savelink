@@ -28,6 +28,7 @@ const Category = () => {
       <div className={styles.container}>
         <main className={styles.main}>
           <section>
+            <h1>hey</h1>
             <List array={array} />
           </section>
         </main>
