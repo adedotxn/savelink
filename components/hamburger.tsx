@@ -76,7 +76,7 @@ const Hamburger = ({ name }: { name: string }) => {
           </div>
 
           <Popover.Close className={styles.PopoverClose} aria-label="Close">
-            <Cross2Icon color={theme ? "black" : "black"} />
+            <Cross2Icon color="var(--text-color)" />
           </Popover.Close>
         </Popover.Content>
       </Popover.Portal>
