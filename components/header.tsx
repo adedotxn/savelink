@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "../styles/header.module.css";
 import { useSearch } from "../utils/helpers/context";
 import { SidePropsInterface } from "../utils/interface";
-import Logout from "./buttons/logout";
+import Logout from "./buttons/logoutBtn";
 import ThemeSwitcher from "./buttons/themeSwitcher";
 import Options from "./options";
 import MoreSvg from "./svg/moresvg";

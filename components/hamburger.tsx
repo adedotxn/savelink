@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "../styles/hamburger.module.css";
 import { useTheme } from "../utils/helpers/context";
-import Logout from "./buttons/logout";
+import Logout from "./buttons/logoutBtn";
 import ThemeSwitcher from "./buttons/themeSwitcher";
 
 const Hamburger = ({ name }: { name: string }) => {
