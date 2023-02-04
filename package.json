@@ -10,11 +10,13 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.0.2",
     "@radix-ui/react-collapsible": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-scroll-area": "1.0.2",
+    "@radix-ui/react-tooltip": "^1.0.3",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "mongoose": "^6.4.4",
@@ -22,10 +24,10 @@
     "next-auth": "^4.10.3",
     "next-pwa": "^5.5.4",
     "react": "18.2.0",
-    "react-dialog-polyfill": "^1.1.4",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0",
-    "react-query": "^3.39.1"
+    "react-query": "^3.39.1",
+    "zustand": "^4.3.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

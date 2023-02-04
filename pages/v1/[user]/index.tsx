@@ -1,20 +1,20 @@
 import List from "../../../components/lists";
+import Dialog from "../../../components/dialog";
+
 import styles from "../../../styles/dashboard.module.css";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { userLinks, useDataGetter, useCreate } from "../../../utils/api/api";
+import { userLinks, useDataGetter } from "../../../utils/api/api";
 import { unstable_getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { authOptions } from "../../api/auth/[...nextauth]";
-import { useDialog } from "../../../utils/helpers/context";
 import { Toaster } from "react-hot-toast";
-import AddSvg from "../../../components/svg/add";
+import { useDialogStore } from "../../../utils/zustand/store";
 
-import CustomDialog from "../../../components/dialog";
 const Dashboard: NextPage = () => {
-  const { toggleDialog } = useDialog();
   const { data: session } = useSession();
   const name: string = session?.user?.email!;
+  const setDialog = useDialogStore((state) => state.setDialog);
 
   //getting user's data from db
   const { isLoading, error, data } = useDataGetter(name);
@@ -48,20 +48,16 @@ const Dashboard: NextPage = () => {
         </main>
       )}
 
-      <div>
-        <CustomDialog
-          name={name}
-          isLoading={isLoading}
-          error={error}
-          storedData={stored_data}
-        />
-      </div>
-
       <footer className={styles.footer}>
         <div className={styles.desktop_footer}>
-          <div onClick={toggleDialog} className={styles.add}>
+          <div className={styles.add}>
             <div className={styles.cr8}>
-              <AddSvg />
+              <Dialog
+                name={name}
+                isLoading={isLoading}
+                error={error}
+                storedData={stored_data}
+              />
             </div>
           </div>
         </div>

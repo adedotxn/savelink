@@ -1,21 +1,23 @@
-import styles from "../styles/dashboard.module.css";
-import { useDialog } from "../utils/helpers/context";
 import {
   FormEvent,
   MutableRefObject,
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from "react";
-import { Dialog } from "react-dialog-polyfill";
-import { Close } from "./buttons/close_dialog";
-import { useCreate, useDataGetter } from "../utils/api/api";
-import { Toaster, toast } from "react-hot-toast";
+import * as RadixDialog from "@radix-ui/react-dialog";
+
 import Button from "./buttons/Button";
 import CategoryList from "./categories/CategoryList";
+import { toast } from "react-hot-toast";
 
-const CustomDialog = ({
+import styles from "./dialog.module.css";
+
+import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { useCreate } from "../utils/api/api";
+import { useDialogStore } from "../utils/zustand/store";
+
+const Dialog = ({
   name,
   isLoading,
   error,
@@ -26,14 +28,14 @@ const CustomDialog = ({
   error: unknown;
   storedData: any;
 }) => {
-  const { dialog, setDialog, toggleDialog } = useDialog();
+  const dialog = useDialogStore((state) => state.dialog);
+  const setDialog = useDialogStore((state) => state.setDialog);
+  const closeDialog = useDialogStore((state) => state.closeDialog);
 
   //keeping track of the input field and clearing onSettled
   const urlField = useRef() as MutableRefObject<HTMLInputElement>;
   const titleField = useRef() as MutableRefObject<HTMLInputElement>;
 
-  // const { isLoading, error, data } = useDataGetter(name);
-  // const storedData = data?.data;
   let returnedCategories: string[] = [];
 
   if (error) {
@@ -63,11 +65,11 @@ const CustomDialog = ({
   );
 
   const resetForm = () => {
-    urlField.current.value = "";
-    titleField.current.value = "";
+    // urlField.current.value = "";
+    // titleField.current.value = "";
   };
 
-  const createMutation = useCreate(setDialog, toast, resetForm);
+  const createMutation = useCreate(toast, resetForm);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,17 +77,19 @@ const CustomDialog = ({
     const data = new FormData(event.target as HTMLFormElement);
     let inputedTitle: string = data.get("title")?.toString() || "";
     let inputedLink: string = data.get("link")?.toString()!;
-
+    const categories = selected === "".trim() ? ["default"] : [selected];
     createMutation.mutate({
       identifier: name,
       title: inputedTitle,
       url: inputedLink,
-      category: selected === "".trim() ? "default" : selected,
+      categories,
     });
-    // console.log("selected", selected)
+
+    console.log({ categories });
+    closeDialog();
   };
 
-  //logging mutation error if any
+  // logging mutation error if any
   if (createMutation.error) {
     if (createMutation.error instanceof Error) {
       console.log("mutation error", createMutation.error);
@@ -100,45 +104,79 @@ const CustomDialog = ({
   };
 
   return (
-    <div className={dialog ? styles.dialog_container : ""}>
-      <Dialog className={styles.dialog} open={dialog}>
-        <div className={styles.close_btn}>
-          <Close setDialog={setDialog} />
+    <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
+      <RadixDialog.Trigger asChild>
+        <div className={styles.cardStack}>
+          <CardStackPlusIcon width="20" height="20" color="black" />
         </div>
-        <form id="input-form" onSubmit={onSubmit} action="">
-          <input ref={titleField} name="title" placeholder="Title" />
-          <input ref={urlField} name="link" placeholder="Link" required />
+      </RadixDialog.Trigger>
+      <RadixDialog.Portal>
+        <RadixDialog.Overlay className={styles.RadixDialogOverlay} />
+        <RadixDialog.Content className={styles.RadixDialogContent}>
+          <RadixDialog.Title className={styles.RadixDialogTitle}>
+            Save URL
+          </RadixDialog.Title>
+          <RadixDialog.Description className={styles.RadixDialogDescription}>
+            Type in a URL and select or type in category(ies) to save the URL
+            in.
+          </RadixDialog.Description>
 
-          <section className={styles.category}>
-            <p>Type in a new category to save to or select from pre-existing</p>
+          <form
+            className={styles.form}
+            id="input-form"
+            onSubmit={onSubmit}
+            action=""
+          >
+            <input ref={titleField} name="title" placeholder="Title" />
+            <input ref={urlField} name="link" placeholder="Link" required />
 
-            <div className={styles.add_category}>
-              <input
-                onChange={handleChange}
-                type="text"
-                placeholder='Example : "Software Eng. Links"'
-              />
+            <section className={styles.category}>
+              <p>
+                Type in a new category to save to or select from pre-existing
+              </p>
 
-              <Button options action={showCategoriesList}>
-                {selected === "" ? "Pick a tag" : `${selected}`}
-              </Button>
+              <div className={styles.add_category}>
+                <input
+                  onChange={handleChange}
+                  type="text"
+                  placeholder='Example : "Software Eng. Links"'
+                />
 
-              <CategoryList
-                TAGS={categories}
-                setShowList={setShowList}
-                showList={showList}
-                setSelected={setSelected}
-              />
+                <Button options action={showCategoriesList}>
+                  {selected === "" ? "Pick a tag" : `${selected}`}
+                </Button>
+
+                <CategoryList
+                  TAGS={categories}
+                  setShowList={setShowList}
+                  showList={showList}
+                  setSelected={setSelected}
+                />
+              </div>
+            </section>
+
+            <div className={styles.submit}>
+              <button className={styles.submit__button} type="submit">
+                Save Link
+              </button>
             </div>
-          </section>
+          </form>
 
-          <button className={styles.btn} type="submit">
-            Save
-          </button>
-        </form>
-      </Dialog>
-    </div>
+          <div style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}>
+            <RadixDialog.Close asChild>
+              <button
+                type="button"
+                className={styles.IconButton}
+                aria-label="Close"
+              >
+                <Cross2Icon width="29" height="29" />
+              </button>
+            </RadixDialog.Close>
+          </div>
+        </RadixDialog.Content>
+      </RadixDialog.Portal>
+    </RadixDialog.Root>
   );
 };
 
-export default CustomDialog;
+export default Dialog;

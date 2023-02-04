@@ -3,7 +3,7 @@ import styles from "./list.module.css";
 import SvgComponent from "./svg/starsvg";
 import DeleteSvg from "./svg/delete";
 import ShareSvg from "./svg/share";
-import { useBookmark, useDelete } from "../utils/api/api";
+import { deleteLink, useBookmark, useDelete } from "../utils/api/api";
 import toast, { Toaster } from "react-hot-toast";
 import { useSearch } from "../utils/helpers/context";
 import { useState } from "react";
@@ -11,14 +11,33 @@ import CopySvg from "./svg/copy";
 import { SchemeInterface_Array } from "../utils/interface";
 import { copyToClipboard, webShare } from "../utils/helpers/toolbox";
 import { spawn } from "child_process";
+import DeleteDialogDemo from "./deleteDialog";
+import DeleteOption from "./deleteDialog";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 const List = ({ array }: SchemeInterface_Array) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark();
 
-  const [modal, setModal] = useState(0);
+  const [modal, setModal] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
 
   const { search } = useSearch();
+
+  const triggerDeleteDialog = (id: number): void => {
+    if (modal === id) {
+      setOpen(true);
+    }
+  };
+
+  const closeDeleteDialog = (): void => {
+    setModal(0);
+  };
+
+  const deleteLink = (id: number): void => {
+    deleteMutation.mutate(id);
+    closeDeleteDialog();
+  };
 
   array.filter((data) => {
     if (search === "") {
@@ -96,13 +115,20 @@ const List = ({ array }: SchemeInterface_Array) => {
                           <span className={styles.categ}>{data.category}</span>
                         ) : data.category === undefined && data.categories ? (
                           <>
-                            <span className={styles.categ}>
-                              {data.categories[0]}
-                              {/* <span> +{data.categories.length - 1}</span> */}
-                            </span>
-                            <span className={styles.categ}>
-                              {data.categories[1]}
-                            </span>
+                            {data.categories.length === 0 && <></>}
+
+                            {data.categories.length === 1 && (
+                              <span className={styles.categ}>
+                                {data.categories[0]}
+                                {/* <span> +{data.categories.length - 1}</span> */}
+                              </span>
+                            )}
+
+                            {data.categories.length > 1 && (
+                              <span className={styles.categ}>
+                                {data.categories[1]}
+                              </span>
+                            )}
                           </>
                         ) : null}
                       </div>
@@ -134,21 +160,27 @@ const List = ({ array }: SchemeInterface_Array) => {
                       <CopySvg />
                     </div>
 
-                    {modal === data._id ? (
-                      <div className={styles.confirm}>
-                        <button onClick={() => deleteMutation.mutate(data._id)}>
-                          Confirm
-                        </button>
-                        <span onClick={() => setModal(0)}>X</span>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => setModal(data._id)}
-                        className={styles.link__image}
-                      >
-                        <DeleteSvg />
-                      </div>
+                    {modal === data._id && (
+                      <DeleteOption
+                        id={data._id}
+                        title={data.title}
+                        deleteLink={deleteLink}
+                        closeDeleteDialog={closeDeleteDialog}
+                      />
                     )}
+
+                    <div
+                      onClick={() => setModal(data._id)}
+                      className={styles.link__image}
+                    >
+                      {/* <DeleteOption
+                          deleteLink={() => deleteLink(data._id)}
+                          title={data.title}
+                          open={open}
+                          setOpen={setOpen}
+                        /> */}
+                      <TrashIcon width="26" height="26" />
+                    </div>
                   </div>
                 </div>
               </div>

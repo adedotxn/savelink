@@ -2,8 +2,8 @@ import { useState } from "react";
 import styles from "../styles/header.module.css";
 import { useSearch } from "../utils/helpers/context";
 import { SidePropsInterface } from "../utils/interface";
-import Logout from "./buttons/Logout";
-import { ThemeSwitcher } from "./buttons/theme_switcher";
+import Logout from "./buttons/logout";
+import ThemeSwitcher from "./buttons/themeSwitcher";
 import Options from "./options";
 import MoreSvg from "./svg/moresvg";
 
@@ -26,6 +26,7 @@ const Header = ({ name }: { name: string }) => {
 
       <div>
         <h2>{name}</h2>
+        {/* <ThemeSwitcher /> */}
         <ThemeSwitcher />
         <Logout />
 

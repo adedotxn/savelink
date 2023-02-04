@@ -59,7 +59,7 @@ const ShareTarget = () => {
       identifier: name,
       title: retTitle,
       url: retText,
-      category: selected === " ".trim() ? "Shared" : selected,
+      categories: selected === " ".trim() ? ["Shared"] : [selected],
     });
 
     router.push(`/v1/${name}/`);

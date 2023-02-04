@@ -7,7 +7,7 @@ export interface LinkInterface {
   time?: string;
   title: string;
   url: string;
-  category?: string;
+  categories?: string[];
 }
 
 export const userLinks = async (user: string) => {
@@ -39,11 +39,7 @@ export const useDataGetter = (user: string) => {
   return useQuery(["links", user], () => apiClient.get(`/${user}`));
 };
 
-export const useCreate = (
-  setDialog: React.Dispatch<React.SetStateAction<boolean>>,
-  toast: any,
-  resetForm: () => void
-) => {
+export const useCreate = (toast: any, resetForm: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation(addLink, {
@@ -51,7 +47,6 @@ export const useCreate = (
       queryClient.invalidateQueries(["links"]);
     },
     onSettled: (error, variable, context) => {
-      setDialog(false);
       resetForm();
       toast.success(`Saved ${context.title}`);
     },

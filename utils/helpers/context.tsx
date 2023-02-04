@@ -1,17 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  DialogContextData,
-  SearchContextData,
-  ThemeContextData,
-} from "./context.interface";
+import { SearchContextData, ThemeContextData } from "./context.interface";
 
 //defaukt values
-const dialogContextDefaultValue: DialogContextData = {
-  dialog: false,
-  setDialog: () => null,
-  toggleDialog: () => null,
-};
-
 const themeContextDefaultValue: ThemeContextData = {
   theme: false,
   switchTheme: () => null,
@@ -23,9 +13,7 @@ const searchContextDefaultValue: SearchContextData = {
 };
 
 //Contexts
-export const DialogContext = createContext<DialogContextData>(
-  dialogContextDefaultValue
-);
+
 export const ThemeContext = createContext<ThemeContextData>(
   themeContextDefaultValue
 );
@@ -34,9 +22,6 @@ export const SearchContext = createContext<SearchContextData>(
 );
 
 //Custom hooks
-export const useDialog = () => {
-  return useContext(DialogContext);
-};
 
 export const useTheme = () => {
   return useContext(ThemeContext);
@@ -52,12 +37,6 @@ export const UtilityProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  //dialog logic
-  const [dialog, setDialog] = useState<boolean>(false);
-  const toggleDialog = () => {
-    setDialog(!dialog);
-  };
-
   //theme logic
   const [theme, setTheme] = useState(false);
   function getCurrentTheme() {
@@ -103,11 +82,9 @@ export const UtilityProvider = ({
 
   return (
     <ThemeContext.Provider value={{ theme, switchTheme }}>
-      <DialogContext.Provider value={{ dialog, setDialog, toggleDialog }}>
-        <SearchContext.Provider value={{ search, setSearch }}>
-          {children}
-        </SearchContext.Provider>
-      </DialogContext.Provider>
+      <SearchContext.Provider value={{ search, setSearch }}>
+        {children}
+      </SearchContext.Provider>
     </ThemeContext.Provider>
   );
 };
