@@ -6,6 +6,7 @@ import styles from "../styles/target.module.css";
 import { useRouter } from "next/router";
 import Button from "../components/buttons/Button";
 import CategoryList from "../components/categories/CategoryList";
+import Multiselect from "../components/multiselect";
 
 const ShareTarget = () => {
   const { data: session } = useSession();
@@ -20,7 +21,6 @@ const ShareTarget = () => {
   let linkTitle: string = title?.toString()!;
   let linkText: string = text?.toString()!;
 
-  const [selected, setSelected] = useState("");
   const [retTitle, setRetTitle] = useState("");
   const [retText, setRetText] = useState("");
 
@@ -33,6 +33,7 @@ const ShareTarget = () => {
     const { data, isLoading } = useDataGetter(name);
     return { data, isLoading };
   }
+
   const storedData = useData();
   const data = storedData?.data?.data;
   const isLoading = storedData.isLoading;
@@ -44,10 +45,29 @@ const ShareTarget = () => {
     }
   }
   const categories = [...new Set(returnedCategories)];
+
+  const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});
+  const toggleOption = (category: string) => {
+    if (selectedStore[category]) {
+      setStore({
+        ...selectedStore,
+        [category]: false,
+      });
+    } else {
+      setStore({
+        ...selectedStore,
+        [category]: true,
+      });
+    }
+  };
+  const allSelected = Object.keys(selectedStore).filter(
+    (key) => selectedStore[key] === true
+  );
+
+  const [typedCateg, setTypedCateg] = useState("");
   const handleChange = useCallback(
     (e: { target: { value: React.SetStateAction<string> } }) => {
-      setSelected(e.target.value);
-      console.log("selected handlechange", e.target.value);
+      setTypedCateg(e.target.value);
     },
     []
   );
@@ -55,20 +75,25 @@ const ShareTarget = () => {
   const saveLink = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
+    let categories;
+    if (typedCateg.length === 0 && allSelected.length > 0) {
+      categories = allSelected;
+    } else if (typedCateg.length > 0 && allSelected.length === 0) {
+      categories = [typedCateg];
+    } else if (typedCateg.length === 0 && allSelected.length === 0) {
+      categories = ["default"];
+    } else if (typedCateg.length > 0 && allSelected.length > 0) {
+      categories = allSelected;
+    }
+
     createMutation.mutate({
       identifier: name,
       title: retTitle,
       url: retText,
-      categories: selected === " ".trim() ? ["Shared"] : [selected],
+      categories,
     });
 
     router.push(`/v1/${name}/`);
-  };
-
-  const [showList, setShowList] = useState<boolean>(false);
-  const showCategoriesList = (e: any) => {
-    e.preventDefault();
-    setShowList(!showList);
   };
 
   return (
@@ -102,15 +127,10 @@ const ShareTarget = () => {
             />
             {!isLoading ? (
               <>
-                <Button options action={showCategoriesList}>
-                  {selected === "" ? "Pick a tag" : `${selected}`}
-                </Button>
-
-                <CategoryList
-                  TAGS={categories}
-                  setShowList={setShowList}
-                  showList={showList}
-                  setSelected={setSelected}
+                <Multiselect
+                  options={categories}
+                  toggleOption={toggleOption}
+                  selected={selectedStore}
                 />
               </>
             ) : (

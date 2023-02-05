@@ -4,6 +4,7 @@ import {
   useCallback,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 
@@ -16,6 +17,7 @@ import styles from "./dialog.module.css";
 import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { useCreate } from "../utils/api/api";
 import { useDialogStore } from "../utils/zustand/store";
+import Multiselect from "./multiselect";
 
 const Dialog = ({
   name,
@@ -54,12 +56,33 @@ const Dialog = ({
 
   const categories = [...new Set(returnedCategories)];
 
-  //logic for selecting a category from the dropdown and setting it to a state to pass to out db
-  const [selected, setSelected] = useState("");
+  //State for handling typed category
+  const [typedCateg, setTypedCateg] = useState("");
+
+  // Multiselect Logic
+  const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});
+
+  const toggleOption = (category: string) => {
+    if (selectedStore[category]) {
+      setStore({
+        ...selectedStore,
+        [category]: false,
+      });
+    } else {
+      setStore({
+        ...selectedStore,
+        [category]: true,
+      });
+    }
+  };
+
+  const allSelected = Object.keys(selectedStore).filter(
+    (key) => selectedStore[key] === true
+  );
+
   const handleChange = useCallback(
     (e: { target: { value: React.SetStateAction<string> } }) => {
-      setSelected(e.target.value);
-      console.log("selected handlechange", e.target.value);
+      setTypedCateg(e.target.value);
     },
     []
   );
@@ -77,7 +100,18 @@ const Dialog = ({
     const data = new FormData(event.target as HTMLFormElement);
     let inputedTitle: string = data.get("title")?.toString() || "";
     let inputedLink: string = data.get("link")?.toString()!;
-    const categories = selected === "".trim() ? ["default"] : [selected];
+
+    let categories;
+    if (typedCateg.length === 0 && allSelected.length > 0) {
+      categories = allSelected;
+    } else if (typedCateg.length > 0 && allSelected.length === 0) {
+      categories = [typedCateg];
+    } else if (typedCateg.length === 0 && allSelected.length === 0) {
+      categories = ["default"];
+    } else if (typedCateg.length > 0 && allSelected.length > 0) {
+      categories = allSelected;
+    }
+
     createMutation.mutate({
       identifier: name,
       title: inputedTitle,
@@ -85,7 +119,9 @@ const Dialog = ({
       categories,
     });
 
-    console.log({ categories });
+    setTypedCateg("");
+    setStore({});
+
     closeDialog();
   };
 
@@ -97,11 +133,6 @@ const Dialog = ({
       console.log(`Unexpected error in mutation: ${createMutation.error}`);
     }
   }
-
-  const [showList, setShowList] = useState<boolean>(false);
-  const showCategoriesList = () => {
-    setShowList(!showList);
-  };
 
   return (
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
@@ -142,20 +173,18 @@ const Dialog = ({
                   placeholder='Example : "Software Eng. Links"'
                 />
 
-                <Button options action={showCategoriesList}>
-                  {selected === "" ? "Pick a tag" : `${selected}`}
-                </Button>
-
-                <CategoryList
-                  TAGS={categories}
-                  setShowList={setShowList}
-                  showList={showList}
-                  setSelected={setSelected}
+                <Multiselect
+                  options={categories}
+                  toggleOption={toggleOption}
+                  selected={selectedStore}
                 />
               </div>
             </section>
 
-            <div className={styles.submit}>
+            <div
+              style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}
+              className={styles.submit}
+            >
               <button className={styles.submit__button} type="submit">
                 Save Link
               </button>

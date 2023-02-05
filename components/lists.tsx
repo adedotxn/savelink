@@ -10,8 +10,6 @@ import { useState } from "react";
 import CopySvg from "./svg/copy";
 import { SchemeInterface_Array } from "../utils/interface";
 import { copyToClipboard, webShare } from "../utils/helpers/toolbox";
-import { spawn } from "child_process";
-import DeleteDialogDemo from "./deleteDialog";
 import DeleteOption from "./deleteDialog";
 import { TrashIcon } from "@radix-ui/react-icons";
 
@@ -129,13 +127,23 @@ const List = ({ array }: SchemeInterface_Array) => {
                           )}
 
                           {data.categories.length > 1 && (
-                            <Link
-                              href={`/v1/${data.identifier}/category/${data.categories[1]}`}
-                            >
-                              <span className={styles.categ}>
-                                {data.categories[1]}
-                              </span>
-                            </Link>
+                            <>
+                              <Link
+                                href={`/v1/${data.identifier}/category/${data.categories[0]}`}
+                              >
+                                <span className={styles.categ}>
+                                  {data.categories[0]}
+                                </span>
+                              </Link>
+
+                              <Link
+                                href={`/v1/${data.identifier}/category/${data.categories[1]}`}
+                              >
+                                <span className={styles.categ}>
+                                  {data.categories[1]}
+                                </span>
+                              </Link>
+                            </>
                           )}
                         </>
                       ) : null}
