@@ -12,12 +12,22 @@ export default async function handler(
   const session = await unstable_getServerSession(req, res, authOptions);
   if (session) {
     try {
-      const { category } = req.query;
+      const { category: query } = req.query;
       await connect();
-      const categories = await Link.find({ category: `${category}` }).sort({
+
+      //getting for links stored only under "category" before the categories update
+      const category = await Link.find({ category: `${query}` }).sort({
         time: -1,
       });
-      res.json(categories);
+
+      //getting links added after the multi-category update. There's probably a better way to do this hmph
+      const categories = await Link.find({ categories: `${query}` }).sort({
+        time: -1,
+      });
+
+      const allCategories = [...categories, ...category];
+
+      res.json(allCategories);
       return;
     } catch (error) {
       res.json(error);

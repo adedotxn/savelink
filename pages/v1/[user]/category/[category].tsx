@@ -22,16 +22,45 @@ const Category = () => {
     () => getCategories(user, category)
   );
 
+  if (isLoading)
+    return (
+      <div className="loading_container">
+        <div className="lds_ripple">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+
   if (!isLoading) {
     const array = data?.data;
     return (
       <div className={styles.container}>
         <main className={styles.main}>
           <section>
-            <h1>hey</h1>
             <List array={array} />
           </section>
         </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div
+        style={{
+          display: "grid",
+          placeItems: "center",
+          padding: ".5rem 1rem",
+          background: "var(--accent-color)",
+          color: "var(--text-color)",
+          borderRadius: ".3rem",
+        }}
+      >
+        <p>
+          An error seems to have occured, please make sure you&apos;re serching
+          through a correct category and refresh
+        </p>
       </div>
     );
   }

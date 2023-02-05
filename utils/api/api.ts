@@ -31,6 +31,7 @@ export const getCategories = (
   user: string | string[] | undefined,
   category: string | string[] | undefined
 ) => {
+  console.log(`/${user}/category/${category}`);
   return apiClient.get(`/${user}/category/${category}`);
 };
 

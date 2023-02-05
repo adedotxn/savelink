@@ -107,32 +107,39 @@ const List = ({ array }: SchemeInterface_Array) => {
                 </Link>
                 <div className={styles.link__footer}>
                   <div className={styles.link__category}>
-                    <Link
-                      href={`/v1/${data.identifier}/category/${data.category}`}
-                    >
-                      <div>
-                        {data.categories.length === 0 && data.category ? (
+                    <div>
+                      {data.categories.length === 0 && data.category ? (
+                        <Link
+                          href={`/v1/${data.identifier}/category/${data.category}`}
+                        >
                           <span className={styles.categ}>{data.category}</span>
-                        ) : data.category === undefined && data.categories ? (
-                          <>
-                            {data.categories.length === 0 && <></>}
+                        </Link>
+                      ) : data.category === undefined && data.categories ? (
+                        <>
+                          {data.categories.length === 0 && <></>}
 
-                            {data.categories.length === 1 && (
+                          {data.categories.length === 1 && (
+                            <Link
+                              href={`/v1/${data.identifier}/category/${data.categories[0]}`}
+                            >
                               <span className={styles.categ}>
                                 {data.categories[0]}
-                                {/* <span> +{data.categories.length - 1}</span> */}
                               </span>
-                            )}
+                            </Link>
+                          )}
 
-                            {data.categories.length > 1 && (
+                          {data.categories.length > 1 && (
+                            <Link
+                              href={`/v1/${data.identifier}/category/${data.categories[1]}`}
+                            >
                               <span className={styles.categ}>
                                 {data.categories[1]}
                               </span>
-                            )}
-                          </>
-                        ) : null}
-                      </div>
-                    </Link>
+                            </Link>
+                          )}
+                        </>
+                      ) : null}
+                    </div>
                   </div>
 
                   <div className={styles.link__images}>
