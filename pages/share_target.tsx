@@ -4,8 +4,6 @@ import toast from "react-hot-toast";
 import { useCreateOnly, useDataGetter } from "../utils/api/api";
 import styles from "../styles/target.module.css";
 import { useRouter } from "next/router";
-import Button from "../components/buttons/Button";
-import CategoryList from "../components/categories/CategoryList";
 import Multiselect from "../components/multiselect";
 
 const ShareTarget = () => {

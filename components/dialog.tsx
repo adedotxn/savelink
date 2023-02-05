@@ -8,8 +8,6 @@ import {
 } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 
-import Button from "./buttons/Button";
-import CategoryList from "./categories/CategoryList";
 import { toast } from "react-hot-toast";
 
 import styles from "./dialog.module.css";
