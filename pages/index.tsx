@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 
-import styles from "../styles/Home.module.css";
+import styles from "@styles/Home.module.css";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Home  = () : JSX.Element => {
+const Home = (): JSX.Element => {
   const { data: session, status } = useSession();
 
   const handleSignIn = () => {
@@ -29,23 +29,22 @@ const Home  = () : JSX.Element => {
       </div>
     );
   }
-    return (
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <h1 className={styles.shimmer}>Savelink</h1>
+  return (
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <h1 className={styles.shimmer}>Savelink</h1>
 
-          <p>
-            Save and categorise your important links from all across the web in
-            one place.
-          </p>
+        <p>
+          Save and categorise your important links from all across the web in
+          one place.
+        </p>
 
-          <div>
-            <button onClick={handleSignIn}> Sign in with google </button>
-          </div>
-        </main>
-      </div>
-    );
-  
+        <div>
+          <button onClick={handleSignIn}> Sign in with google </button>
+        </div>
+      </main>
+    </div>
+  );
 };
 
 export default Home;

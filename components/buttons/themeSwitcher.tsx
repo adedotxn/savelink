@@ -1,7 +1,6 @@
 import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { PlusIcon } from "@radix-ui/react-icons";
-import { useTheme } from "../../utils/helpers/context";
+import { useTheme } from "@utils/context";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import styles from "./tooltip.module.css";
 

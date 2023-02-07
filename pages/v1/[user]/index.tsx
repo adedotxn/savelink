@@ -1,20 +1,18 @@
-import List from "../../../components/lists";
-import Dialog from "../../../components/dialog";
+import List from "@components/lists";
+import Dialog from "@components/dialog";
 
-import styles from "../../../styles/dashboard.module.css";
+import styles from "@styles/dashboard.module.css";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import { userLinks, useDataGetter } from "../../../utils/api/api";
 import { unstable_getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
-import { authOptions } from "../../api/auth/[...nextauth]";
 import { Toaster } from "react-hot-toast";
-import { useDialogStore } from "../../../utils/zustand/store";
+import { useDataGetter, userLinks } from "@utils/api";
+import { authOptions } from "@api/auth/[...nextauth]";
 
 const Dashboard: NextPage = () => {
   const { data: session } = useSession();
   const name: string = session?.user?.email!;
-  const setDialog = useDialogStore((state) => state.setDialog);
 
   //getting user's data from db
   const { isLoading, error, data } = useDataGetter(name);

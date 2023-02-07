@@ -15,6 +15,14 @@
     "jsx": "preserve",
     "suppressImplicitAnyIndexErrors": true,
     "incremental": true,
+    "baseUrl": ".",
+    "paths" : {
+      "@components/*" : ["components/*"],
+      "@utils/*" : ["utils/*"],
+      "@api/*" : ["pages/api/*"],
+      "@styles/*" : ["styles/*"],
+      "@test/*" : ["tests/"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/helpers/downloadPwa.js", "backend/lib/connectdb.ts", "pages/share_target.tsx"],
   "exclude": ["node_modules"]

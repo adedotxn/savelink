@@ -6,10 +6,10 @@ import {
 import * as Popover from "@radix-ui/react-popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "../styles/hamburger.module.css";
-import { useTheme } from "../utils/helpers/context";
+import styles from "./hamburger.module.css";
 import Logout from "./buttons/logoutBtn";
 import ThemeSwitcher from "./buttons/themeSwitcher";
+import { useTheme } from "@utils/context";
 
 const Hamburger = ({ name }: { name: string }) => {
   const router = useRouter();

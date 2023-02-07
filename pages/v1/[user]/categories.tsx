@@ -3,9 +3,9 @@ import { unstable_getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { dehydrate, QueryClient } from "react-query";
-import styles from "../../../styles/categories.module.css";
-import { useDataGetter, userLinks } from "../../../utils/api/api";
-import { authOptions } from "../../api/auth/[...nextauth]";
+import styles from "@styles/categories.module.css";
+import { useDataGetter, userLinks } from "@utils/api";
+import { authOptions } from "@api/auth/[...nextauth]";
 
 const Categories = () => {
   const { data: session, status } = useSession();

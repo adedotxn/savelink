@@ -1,18 +1,17 @@
-import styles from "../../../../styles/dashboard.module.css";
+import styles from "@styles/dashboard.module.css";
 import { GetServerSidePropsContext } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import { getCategories, useDataGetter } from "../../../../utils/api/api";
+import { getCategories } from "@utils/api";
 import { unstable_getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
-import { authOptions } from "../../../api/auth/[...nextauth]";
 import { useRouter } from "next/router";
-import List from "../../../../components/lists";
+import List from "@components/lists";
+import { authOptions } from "@api/auth/[...nextauth]";
 
 const Category = () => {
   const router = useRouter();
-  const { user, category } = router.query;
-  // console.log("user", user)
-  // console.log('user/category', category)
+  const user = router.query.user as string;
+  const category = router.query.category as string;
 
   const { data: session, status } = useSession();
   const name: string = session?.user?.email!;

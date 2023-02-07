@@ -1,19 +1,24 @@
 import Link from "next/link";
 import styles from "./list.module.css";
 import SvgComponent from "./svg/starsvg";
-import DeleteSvg from "./svg/delete";
 import ShareSvg from "./svg/share";
-import { deleteLink, useBookmark, useDelete } from "../utils/api/api";
 import toast, { Toaster } from "react-hot-toast";
-import { useSearch } from "../utils/helpers/context";
 import { useState } from "react";
 import CopySvg from "./svg/copy";
-import { SchemeInterface_Array } from "../utils/interface";
-import { copyToClipboard, webShare } from "../utils/helpers/toolbox";
 import DeleteOption from "./deleteDialog";
 import { TrashIcon } from "@radix-ui/react-icons";
 
-const List = ({ array }: SchemeInterface_Array) => {
+import { useBookmark, useDelete } from "@utils/api";
+import { useSearch } from "@utils/context";
+// import { SchemeInterface_Array } from "@utils/interface";
+import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
+import { LinksInterface, LinkInterface } from "@utils/interface";
+
+interface arrayInterface {
+  array: LinkInterface[];
+}
+
+const List = ({ array }: arrayInterface) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark();
 

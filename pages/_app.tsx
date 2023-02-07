@@ -1,9 +1,9 @@
-import "../styles/globals.css";
+import "@styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../components/layout";
 import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider, Hydrate } from "react-query";
-import { UtilityProvider } from "../utils/helpers/context";
+import { UtilityProvider } from "@utils/context";
+import Layout from "@components/layout";
 
 const queryClient = new QueryClient();
 

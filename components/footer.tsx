@@ -1,10 +1,10 @@
-import styles from "../styles/footer.module.css";
+import styles from "./footer.module.css";
 import { useState } from "react";
 import Options from "./options";
-import { SidePropsInterface } from "../utils/interface";
 import { CardStackPlusIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
 import Hamburger from "./hamburger";
-import { useDialogStore } from "../utils/zustand/store";
+import { SidePropsInterface } from "@utils/interface";
+import { useDialogStore } from "@utils/zustand/store";
 
 const Footer = ({ side, setSide, name }: SidePropsInterface) => {
   const setDialog = useDialogStore((state) => state.setDialog);

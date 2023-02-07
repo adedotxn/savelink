@@ -1,4 +1,4 @@
-import styles from "../styles/app.module.css";
+import styles from "@styles/app.module.css";
 import Head from "next/head";
 import Header from "./header";
 import Sidebar from "./sidebar";

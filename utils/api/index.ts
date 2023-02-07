@@ -1,21 +1,13 @@
+import { addLinkInterface, LinkInterface } from "@utils/interface";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import apiClient from "./http-config";
-
-export interface LinkInterface {
-  bookmarked?: boolean;
-  identifier?: string;
-  time?: string;
-  title: string;
-  url: string;
-  categories?: string[];
-}
 
 export const userLinks = async (user: string) => {
   const fetch = await apiClient.get(`/${user}`);
   return fetch.data;
 };
 
-export const addLink = (newLink: LinkInterface) => {
+export const addLink = (newLink: addLinkInterface) => {
   return apiClient.post(`/${newLink.identifier}/cr8`, newLink);
 };
 
@@ -28,8 +20,8 @@ export const bookmarkLink = (id: string | number) => {
 };
 
 export const getCategories = (
-  user: string | string[] | undefined,
-  category: string | string[] | undefined
+  user: string | string[],
+  category: string | string[]
 ) => {
   console.log(`/${user}/category/${category}`);
   return apiClient.get(`/${user}/category/${category}`);

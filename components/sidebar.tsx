@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import styles from "../styles/dashboard.module.css";
+import styles from "@styles/dashboard.module.css";
 import ArchiveActive from "./svg/active/archive";
 import BookmarkActive from "./svg/active/bookmarked";
 import CategActive from "./svg/active/categ";

@@ -1,15 +1,15 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
-import List from "../../../components/lists";
-import styles from "../../../styles/dashboard.module.css";
+import styles from "@styles/dashboard.module.css";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { useSession } from "next-auth/react";
-import { userLinks } from "../../../utils/api/api";
-import { authOptions } from "../../api/auth/[...nextauth]";
+import { userLinks } from "@utils/api";
 import { unstable_getServerSession } from "next-auth";
-import React from "react";
+
+import List from "@components/lists";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 const Bookmark: NextPage = () => {
-  const { data: session} = useSession();
+  const { data: session } = useSession();
   const name: string = session?.user?.email!;
 
   const { isLoading, error, data } = useQuery(["bookmarks", name], () =>

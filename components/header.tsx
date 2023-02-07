@@ -1,11 +1,10 @@
 import { useState } from "react";
-import styles from "../styles/header.module.css";
-import { useSearch } from "../utils/helpers/context";
-import { SidePropsInterface } from "../utils/interface";
+import styles from "./header.module.css";
 import Logout from "./buttons/logoutBtn";
 import ThemeSwitcher from "./buttons/themeSwitcher";
 import Options from "./options";
 import MoreSvg from "./svg/moresvg";
+import { useSearch } from "@utils/context";
 
 const Header = ({ name }: { name: string }) => {
   const { search, setSearch } = useSearch();

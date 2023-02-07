@@ -7,10 +7,8 @@ import { ExitIcon } from "@radix-ui/react-icons";
 
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
-import { useTheme } from "../../utils/helpers/context";
 
 const Logout = () => {
-  const { theme } = useTheme();
   const router = useRouter();
 
   const handleSignOut = async (e: { preventDefault: () => void }) => {

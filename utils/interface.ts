@@ -1,14 +1,27 @@
-export interface SchemeInterface_Array {
-  array: {
-    identifier: string;
-    bookmarked: boolean;
-    _id: number;
-    title: string;
-    url: string;
-    category: string;
-    categories: string[];
-  }[];
+export interface LinkInterface {
+  bookmarked: boolean;
+  identifier: string;
+  time?: string;
+  title: string;
+  url: string;
+  categories: string[];
+  category: string;
+  _id: number;
 }
+
+type Modify<T, R> = Omit<T, keyof R> & R;
+export interface addLinkInterface
+  extends Modify<
+    LinkInterface,
+    {
+      bookmarked?: boolean;
+      title?: string;
+      _id?: number;
+      category?: string;
+    }
+  > {}
+
+export interface LinksInterface extends Array<LinkInterface> {}
 
 export interface SidePropsInterface {
   side: boolean;

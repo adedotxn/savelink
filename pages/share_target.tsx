@@ -1,10 +1,11 @@
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useCreateOnly, useDataGetter } from "../utils/api/api";
-import styles from "../styles/target.module.css";
+import { useCreateOnly, useDataGetter } from "@utils/api";
+import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
-import Multiselect from "../components/multiselect";
+import Multiselect from "@components/multiselect";
+import { AxiosResponse } from "axios";
 
 const ShareTarget = () => {
   const { data: session } = useSession();
@@ -12,12 +13,8 @@ const ShareTarget = () => {
   const createMutation = useCreateOnly(toast);
 
   const { title, text } = router.query;
-  // let text = "https://stackoverflow.blog/2022/03/30/best-practices-to-increase-the-speed-for-next-js-apps/"
-  // let title = "Best Practices to Increase the speed of nextjs apps"
 
   const name: string = session?.user?.email!;
-  let linkTitle: string = title?.toString()!;
-  let linkText: string = text?.toString()!;
 
   const [retTitle, setRetTitle] = useState("");
   const [retText, setRetText] = useState("");
@@ -28,7 +25,9 @@ const ShareTarget = () => {
   }, [title, text]);
 
   function useData() {
-    const { data, isLoading } = useDataGetter(name);
+    const result = useDataGetter(name);
+    const data = result.data as AxiosResponse<any, any>;
+    const isLoading: boolean = result.isLoading;
     return { data, isLoading };
   }
 
@@ -84,12 +83,14 @@ const ShareTarget = () => {
       categories = allSelected;
     }
 
-    createMutation.mutate({
-      identifier: name,
-      title: retTitle,
-      url: retText,
-      categories,
-    });
+    if (categories !== undefined) {
+      createMutation.mutate({
+        identifier: name,
+        title: retTitle,
+        url: retText,
+        categories,
+      });
+    }
 
     router.push(`/v1/${name}/`);
   };

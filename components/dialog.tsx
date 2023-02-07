@@ -13,9 +13,9 @@ import { toast } from "react-hot-toast";
 import styles from "./dialog.module.css";
 
 import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useCreate } from "../utils/api/api";
-import { useDialogStore } from "../utils/zustand/store";
 import Multiselect from "./multiselect";
+import { useDialogStore } from "@utils/zustand/store";
+import { useCreate } from "@utils/api";
 
 const Dialog = ({
   name,
@@ -110,12 +110,14 @@ const Dialog = ({
       categories = allSelected;
     }
 
-    createMutation.mutate({
-      identifier: name,
-      title: inputedTitle,
-      url: inputedLink,
-      categories,
-    });
+    if (categories !== undefined) {
+      createMutation.mutate({
+        identifier: name,
+        title: inputedTitle,
+        url: inputedLink,
+        categories,
+      });
+    }
 
     setTypedCateg("");
     setStore({});
