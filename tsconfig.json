@@ -17,11 +17,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths" : {
-      "@components/*" : ["components/*"],
-      "@utils/*" : ["utils/*"],
-      "@api/*" : ["pages/api/*"],
-      "@styles/*" : ["styles/*"],
-      "@test/*" : ["tests/"]
+      "@components/*" : ["src/components/*"],
+      "@utils/*" : ["src/utils/*"],
+      "@api/*" : ["src/pages/api/*"],
+      "@styles/*" : ["src/styles/*"],
+      "@test/*" : ["src/tests/*"],
+      "@db/*" : ["src/db/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/helpers/downloadPwa.js", "backend/lib/connectdb.ts", "pages/share_target.tsx"],
