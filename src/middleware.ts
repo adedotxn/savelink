@@ -9,19 +9,29 @@ export default async function middleware(request: NextRequest) {
   const token = secure_token || local_token;
   const pathName = request.nextUrl.pathname;
 
+  if (pathName === "/" && token) {
+    const boardPage = new URL("/board", request.url);
+    return NextResponse.redirect(boardPage);
+  }
+
+  if (pathName === "/" && !token) {
+    const signIn = new URL("/signin", request.url);
+    return NextResponse.redirect(signIn);
+  }
+
   if (pathName === "/board" && !token) {
-    const linksPage = new URL("/signin", request.url);
-    return NextResponse.redirect(linksPage);
+    const signIn = new URL("/signin", request.url);
+    return NextResponse.redirect(signIn);
   }
 
   if (pathName === "/signin" && token) {
-    const signInPage = new URL("/board", request.url);
-    return NextResponse.redirect(signInPage);
+    const boardPage = new URL("/board", request.url);
+    return NextResponse.redirect(boardPage);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/signin", "/board"],
+  matcher: ["/", "/signin", "/board"],
 };
