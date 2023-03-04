@@ -5,24 +5,19 @@ export default async function middleware(request: NextRequest) {
   const token = await request.cookies.has("next-auth.session-token");
   const pathName = request.nextUrl.pathname;
 
-  if (pathName !== "/" && !token) {
-    const signInPage = new URL("/signin", request.url);
-    return NextResponse.redirect(signInPage);
-  }
-
-  if (pathName === "/" && !token) {
-    const signInPage = new URL("/signin", request.url);
-    return NextResponse.redirect(signInPage);
-  }
-
-  if (pathName === "/" && token) {
+  if (token) {
     const linksPage = new URL("/board", request.url);
     return NextResponse.redirect(linksPage);
+  }
+
+  if (!token) {
+    const signInPage = new URL("/signin", request.url);
+    return NextResponse.redirect(signInPage);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/board"],
+  matcher: ["/signin", "/board", "/v1/:path*"],
 };
