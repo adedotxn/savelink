@@ -2,6 +2,7 @@ import List from "@components/lists";
 import Dialog from "@components/dialog";
 
 import styles from "@styles/dashboard.module.css";
+import { useEffect } from "react";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { unstable_getServerSession } from "next-auth";
@@ -9,14 +10,22 @@ import { useSession } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
+import { useRouter } from "next/router";
 
 const Dashboard: NextPage = () => {
   const { data: session } = useSession();
   const name: string = session?.user?.email!;
+  const { push } = useRouter();
 
   //getting user's data from db
   const { isLoading, error, data } = useDataGetter(name);
   const stored_data = data?.data;
+
+  useEffect(() => {
+    if (!session) {
+      push(`/signin`);
+    }
+  }, []);
 
   if (isLoading)
     return (
