@@ -34,7 +34,7 @@ export default async function handler(
 
     try {
       await connect();
-      const cr8 = new Link({
+      const save = new Link({
         identifier,
         title,
         url,
@@ -42,11 +42,11 @@ export default async function handler(
         bookmarked,
         time,
       });
-      const savedCr8tn = cr8.save();
+      const saved = save.save();
 
       res.status(200).json({
-        status: "Saved",
-        data: savedCr8tn,
+        status: "success",
+        data: saved,
       });
     } catch (error) {
       res.status(400).json({ error });

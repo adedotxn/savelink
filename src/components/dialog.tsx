@@ -15,7 +15,9 @@ import styles from "./dialog.module.css";
 import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
 import Multiselect from "./multiselect";
 import { useDialogStore } from "@utils/zustand/store";
-import { useCreate } from "@utils/api";
+import { useCreate, useLinkTitle } from "@utils/api";
+import { useQuery } from "react-query";
+import apiClient from "@utils/api/http-config";
 
 const Dialog = ({
   name,
@@ -92,6 +94,15 @@ const Dialog = ({
 
   const createMutation = useCreate(toast, resetForm);
 
+  const [url, setUrl] = useState("");
+
+  const linkTitle = useQuery({
+    queryKey: ["link"],
+    queryFn: () => {
+      apiClient.get(`link/${url}`);
+    },
+  });
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user: string = name;
@@ -109,6 +120,19 @@ const Dialog = ({
     } else if (typedCateg.length > 0 && allSelected.length > 0) {
       categories = allSelected;
     }
+
+    // // fetch the webpage using the Open Graph protocol
+    // fetch(
+    //   `https://opengraph.io/api/1.1/site/${encodeURIComponent(
+    //     inputedLink
+    //   )}?app_id=2742fa23-519f-4dc7-a50e-7b499e82e16c`
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // set the title of the webpage as the input field value
+    //     console.log("title", data.hybridGraph.title);
+    //   })
+    //   .catch((error) => console.error(error));
 
     if (categories !== undefined) {
       createMutation.mutate({
@@ -134,6 +158,10 @@ const Dialog = ({
     }
   }
 
+  const [gettingLinkInfo, setGettingLinkInfo] = useState({
+    manually: false,
+    opengraph: false,
+  });
   return (
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
       <RadixDialog.Trigger asChild>
@@ -158,8 +186,32 @@ const Dialog = ({
             onSubmit={onSubmit}
             action=""
           >
-            <input ref={titleField} name="title" placeholder="Title" />
             <input ref={urlField} name="link" placeholder="Link" required />
+            <input ref={titleField} name="title" placeholder="Title" />
+
+            {/* <div className="styles.link_info__btns">
+              <button
+                type="button"
+                onClick={() =>
+                  setGettingLinkInfo({ manually: false, opengraph: true })
+                }
+              >
+                Generate Link Info
+              </button>
+              haha
+              <button
+                type="button"
+                onClick={() =>
+                  setGettingLinkInfo({ manually: true, opengraph: false })
+                }
+              >
+                Type it in manually
+              </button>
+            </div> */}
+
+            {/* {gettingLinkInfo.manually ? (
+              <input ref={titleField} name="title" placeholder="Title" />
+            ) : null} */}
 
             <section className={styles.category}>
               <p>

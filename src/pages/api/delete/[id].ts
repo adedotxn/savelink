@@ -10,15 +10,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  if (session) {
+  if (session && req.method === "DELETE") {
     try {
       const { id } = req.query;
       await connect();
-      const deleteLink = await Link.findByIdAndDelete(id);
-      res.json(deleteLink);
-      return;
+      await Link.findByIdAndDelete(id);
+      return res.status(204).json({ status: "success" });
     } catch (error) {
-      res.json(error);
+      res.status(404).json({ status: "error", error });
     }
   }
 

@@ -8,7 +8,7 @@ export const userLinks = async (user: string) => {
 };
 
 export const addLink = (newLink: addLinkInterface) => {
-  return apiClient.post(`/${newLink.identifier}/cr8`, newLink);
+  return apiClient.post(`/${newLink.identifier}/save`, newLink);
 };
 
 export const deleteLink = (id: string | number) => {
@@ -16,7 +16,7 @@ export const deleteLink = (id: string | number) => {
 };
 
 export const bookmarkLink = (id: string | number) => {
-  return apiClient.post(`/bookmark/${id}`);
+  return apiClient.put(`/bookmark/${id}`);
 };
 
 export const getCategories = (
@@ -30,6 +30,15 @@ export const getCategories = (
 //hook to get all links relative to a user
 export const useDataGetter = (user: string) => {
   return useQuery(["links", user], () => apiClient.get(`/${user}`));
+};
+
+export const useLinkTitle = (url: string) => {
+  return useQuery({
+    queryKey: ["link"],
+    queryFn: () => {
+      apiClient.get(`link/${url}`);
+    },
+  });
 };
 
 export const useCreate = (toast: any, resetForm: () => void) => {
@@ -74,8 +83,10 @@ export const useDelete = (toast: any) => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);
     },
-    onSettled: () => {
-      toast.success(`Deleted`);
+    onSettled: (data) => {
+      if (data !== undefined && data.status === 204) {
+        return toast.success(`Deleted`);
+      }
     },
     onError: () => {
       toast.error(`Error deleting. Retry`);
@@ -83,12 +94,17 @@ export const useDelete = (toast: any) => {
   });
 };
 
-export const useBookmark = () => {
+export const useBookmark = (toast: any) => {
   const queryClient = useQueryClient();
   return useMutation(bookmarkLink, {
     onSuccess: () => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);
+    },
+    onSettled: (data) => {
+      if (data !== undefined && data.status === 200) {
+        return toast(`${data.data.message}`);
+      }
     },
     onError: (error) => {
       console.log("Mutation error", error);

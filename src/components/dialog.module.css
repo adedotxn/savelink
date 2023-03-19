@@ -187,6 +187,19 @@
 }
 
 
+
+.form .link_info__btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  border: 0px solid red;
+}
+
+.link_info__btns>button {
+  border: 0px solid;
+  background-color: red;
+}
+
 @media screen and (min-width: 768px) {
   .submit {}
 }

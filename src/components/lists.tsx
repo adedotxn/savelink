@@ -6,7 +6,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import CopySvg from "./svg/copy";
 import DeleteOption from "./deleteDialog";
-import { TrashIcon } from "@radix-ui/react-icons";
+import {
+  BookmarkFilledIcon,
+  BookmarkIcon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 
 import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
@@ -20,7 +24,7 @@ interface arrayInterface {
 
 const List = ({ array }: arrayInterface) => {
   const deleteMutation = useDelete(toast);
-  const bookmarkMutation = useBookmark();
+  const bookmarkMutation = useBookmark(toast);
 
   const [modal, setModal] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -150,7 +154,12 @@ const List = ({ array }: arrayInterface) => {
                         bookmarkMutation.mutate(data._id);
                       }}
                     >
-                      <SvgComponent starred={data.bookmarked} />
+                      {data.bookmarked ? (
+                        <BookmarkFilledIcon width={25} height={25} />
+                      ) : (
+                        <BookmarkIcon width={25} height={25} />
+                      )}
+                      {/* <SvgComponent starred={data.bookmarked} /> */}
                     </div>
 
                     <div
