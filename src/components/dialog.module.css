@@ -91,11 +91,14 @@
   padding: .25rem .5rem;
   margin-top: .5rem;
   width: 80%;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: .25rem;
 }
 
 .form>input:focus {
-  outline: 2px solid white;
-  border-radius: inherit;
+  border: 1px solid red;
+  outline: none;
 }
 
 .form p {
@@ -117,6 +120,7 @@
 
 .IconButton {
   font-family: inherit;
+  border: 0px solid;
   border-radius: 100%;
   height: 25px;
   width: 25px;
@@ -127,6 +131,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
 }
 
 .IconButton:hover {
@@ -192,14 +197,12 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
-  border: 0px solid red;
+
 }
 
 .link_info__btns>button {
   border: 0px solid;
-  background-color: red;
-}
-
-@media screen and (min-width: 768px) {
-  .submit {}
+  padding: .2rem .6rem;
+  border-radius: .25rem;
+  cursor: pointer;
 }

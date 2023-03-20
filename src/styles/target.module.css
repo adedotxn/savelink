@@ -92,6 +92,21 @@
 }
 
 
+
+.form .link_info__btns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+
+}
+
+.link_info__btns>button {
+    border: 0px solid;
+    padding: .2rem .6rem;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
     .container {
         margin-top: 5rem;

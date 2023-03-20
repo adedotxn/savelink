@@ -8,7 +8,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
   ],
-  secret: process.env.SECRET || "123",
+  secret: process.env.NEXTAUTH_SECRET!,
 };
 
 export default NextAuth(authOptions);

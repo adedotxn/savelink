@@ -22,10 +22,8 @@ const Logout = () => {
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          <button>
-            <a onClick={handleSignOut}>
-              <ExitIcon width={20} height={20} color="var(--text-color)" />
-            </a>
+          <button onClick={handleSignOut}>
+            <ExitIcon width={20} height={20} color="var(--text-color)" />
           </button>
         </Tooltip.Trigger>
         <Tooltip.Portal>

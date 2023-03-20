@@ -20,9 +20,6 @@ const Multiselect = ({
       <div className={styles.dropdown__container}>
         <div className={styles.dropdown}>
           <div
-            onMouseEnter={() => {
-              setShowOptions(true);
-            }}
             onMouseLeave={() => {
               setShowOptions(false);
             }}

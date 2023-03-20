@@ -18,6 +18,7 @@ import { useDialogStore } from "@utils/zustand/store";
 import { useCreate, useLinkTitle } from "@utils/api";
 import { useQuery } from "react-query";
 import apiClient from "@utils/api/http-config";
+import { useLinkInfo, useMultiSelect } from "@utils/api/hooks";
 
 const Dialog = ({
   name,
@@ -34,9 +35,8 @@ const Dialog = ({
   const setDialog = useDialogStore((state) => state.setDialog);
   const closeDialog = useDialogStore((state) => state.closeDialog);
 
-  //keeping track of the input field and clearing onSettled
-  const urlField = useRef() as MutableRefObject<HTMLInputElement>;
-  const titleField = useRef() as MutableRefObject<HTMLInputElement>;
+  const [link, setLink] = useState("");
+  const [title, setTitle] = useState("");
 
   let returnedCategories: string[] = [];
 
@@ -59,26 +59,8 @@ const Dialog = ({
   //State for handling typed category
   const [typedCateg, setTypedCateg] = useState("");
 
-  // Multiselect Logic
-  const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});
-
-  const toggleOption = (category: string) => {
-    if (selectedStore[category]) {
-      setStore({
-        ...selectedStore,
-        [category]: false,
-      });
-    } else {
-      setStore({
-        ...selectedStore,
-        [category]: true,
-      });
-    }
-  };
-
-  const allSelected = Object.keys(selectedStore).filter(
-    (key) => selectedStore[key] === true
-  );
+  const { allSelected, selectedStore, setStore, toggleOption } =
+    useMultiSelect();
 
   const handleChange = useCallback(
     (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -87,28 +69,22 @@ const Dialog = ({
     []
   );
 
-  const resetForm = () => {
-    // urlField.current.value = "";
-    // titleField.current.value = "";
+  const reset = () => {
+    setTitle("");
+    setLink("");
+    setTypedCateg("");
+    setStore({});
   };
 
-  const createMutation = useCreate(toast, resetForm);
+  const createMutation = useCreate(toast, reset);
 
-  const [url, setUrl] = useState("");
-
-  const linkTitle = useQuery({
-    queryKey: ["link"],
-    queryFn: () => {
-      apiClient.get(`link/${url}`);
-    },
-  });
+  const { generateLinkInfo, gettingLinkInfo, setGettingLinkInfo, infoLoading } =
+    useLinkInfo(link, setTitle);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user: string = name;
-    const data = new FormData(event.target as HTMLFormElement);
-    let inputedTitle: string = data.get("title")?.toString() || "";
-    let inputedLink: string = data.get("link")?.toString()!;
+    if (title.trim().length === 0 || link.trim().length === 0) return;
 
     let categories;
     if (typedCateg.length === 0 && allSelected.length > 0) {
@@ -121,30 +97,14 @@ const Dialog = ({
       categories = allSelected;
     }
 
-    // // fetch the webpage using the Open Graph protocol
-    // fetch(
-    //   `https://opengraph.io/api/1.1/site/${encodeURIComponent(
-    //     inputedLink
-    //   )}?app_id=2742fa23-519f-4dc7-a50e-7b499e82e16c`
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     // set the title of the webpage as the input field value
-    //     console.log("title", data.hybridGraph.title);
-    //   })
-    //   .catch((error) => console.error(error));
-
     if (categories !== undefined) {
       createMutation.mutate({
         identifier: name,
-        title: inputedTitle,
-        url: inputedLink,
+        title,
+        url: link,
         categories,
       });
     }
-
-    setTypedCateg("");
-    setStore({});
 
     closeDialog();
   };
@@ -158,10 +118,6 @@ const Dialog = ({
     }
   }
 
-  const [gettingLinkInfo, setGettingLinkInfo] = useState({
-    manually: false,
-    opengraph: false,
-  });
   return (
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
       <RadixDialog.Trigger asChild>
@@ -186,19 +142,20 @@ const Dialog = ({
             onSubmit={onSubmit}
             action=""
           >
-            <input ref={urlField} name="link" placeholder="Link" required />
-            <input ref={titleField} name="title" placeholder="Title" />
+            <input
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              name="link"
+              placeholder="Link"
+              required
+            />
+            {/* <input ref={titleField} name="title" placeholder="Title" /> */}
 
-            {/* <div className="styles.link_info__btns">
-              <button
-                type="button"
-                onClick={() =>
-                  setGettingLinkInfo({ manually: false, opengraph: true })
-                }
-              >
+            <div className={styles.link_info__btns}>
+              <button type="button" onClick={() => generateLinkInfo()}>
                 Generate Link Info
               </button>
-              haha
+
               <button
                 type="button"
                 onClick={() =>
@@ -207,11 +164,20 @@ const Dialog = ({
               >
                 Type it in manually
               </button>
-            </div> */}
+            </div>
 
-            {/* {gettingLinkInfo.manually ? (
-              <input ref={titleField} name="title" placeholder="Title" />
-            ) : null} */}
+            {infoLoading ? (
+              <span style={{ margin: ".8rem 0rem" }}>Getting...</span>
+            ) : (
+              <input
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                name="title"
+                placeholder="Title"
+              />
+            )}
 
             <section className={styles.category}>
               <p>

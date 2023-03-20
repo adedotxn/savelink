@@ -20,9 +20,10 @@ import { LinksInterface, LinkInterface } from "@utils/interface";
 
 interface arrayInterface {
   array: LinkInterface[];
+  name: string;
 }
 
-const List = ({ array }: arrayInterface) => {
+const List = ({ name, array }: arrayInterface) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark(toast);
 
@@ -42,7 +43,7 @@ const List = ({ array }: arrayInterface) => {
   };
 
   const deleteLink = (id: number): void => {
-    deleteMutation.mutate(id);
+    deleteMutation.mutate({ identifier: name, id });
     closeDeleteDialog();
   };
 
@@ -155,9 +156,9 @@ const List = ({ array }: arrayInterface) => {
                       }}
                     >
                       {data.bookmarked ? (
-                        <BookmarkFilledIcon width={25} height={25} />
+                        <BookmarkFilledIcon width={24} height={24} />
                       ) : (
-                        <BookmarkIcon width={25} height={25} />
+                        <BookmarkIcon width={24} height={24} />
                       )}
                       {/* <SvgComponent starred={data.bookmarked} /> */}
                     </div>

@@ -6,23 +6,17 @@ import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
 import Multiselect from "@components/multiselect";
 import { AxiosResponse } from "axios";
+import { useLinkInfo, useMultiSelect } from "@utils/api/hooks";
 
 const ShareTarget = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const createMutation = useCreateOnly(toast);
 
-  const { title, text } = router.query;
-
   const name: string = session?.user?.email!;
 
-  const [retTitle, setRetTitle] = useState("");
-  const [retText, setRetText] = useState("");
-
-  useEffect(() => {
-    setRetTitle(title?.toString()!);
-    setRetText(text?.toString()!);
-  }, [title, text]);
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
 
   function useData() {
     const result = useDataGetter(name);
@@ -43,23 +37,7 @@ const ShareTarget = () => {
   }
   const categories = [...new Set(returnedCategories)];
 
-  const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});
-  const toggleOption = (category: string) => {
-    if (selectedStore[category]) {
-      setStore({
-        ...selectedStore,
-        [category]: false,
-      });
-    } else {
-      setStore({
-        ...selectedStore,
-        [category]: true,
-      });
-    }
-  };
-  const allSelected = Object.keys(selectedStore).filter(
-    (key) => selectedStore[key] === true
-  );
+  const { allSelected, selectedStore, toggleOption } = useMultiSelect();
 
   const [typedCateg, setTypedCateg] = useState("");
   const handleChange = useCallback(
@@ -69,6 +47,8 @@ const ShareTarget = () => {
     []
   );
 
+  const { generateLinkInfo, gettingLinkInfo, setGettingLinkInfo, infoLoading } =
+    useLinkInfo(link, setTitle);
   const saveLink = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -86,8 +66,8 @@ const ShareTarget = () => {
     if (categories !== undefined) {
       createMutation.mutate({
         identifier: name,
-        title: retTitle,
-        url: retText,
+        title,
+        url: link,
         categories,
       });
     }
@@ -99,23 +79,42 @@ const ShareTarget = () => {
     <>
       <div className={styles.container}>
         <form className={styles.form} action="">
-          <div>
-            <h3>Title</h3>
-            <input
-              onChange={(e) => setRetTitle(e.target.value)}
-              type="text"
-              value={retTitle}
-            />
-          </div>
-
-          <div>
+          <label>
             <h3>Link</h3>
             <input
-              onChange={(e) => setRetText(e.target.value)}
+              onChange={(e) => setLink(e.target.value)}
               type="text"
-              value={retText}
+              value={link}
             />
+          </label>
+
+          <div className={styles.link_info__btns}>
+            <button type="button" onClick={() => generateLinkInfo()}>
+              Generate Link Info
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                setGettingLinkInfo({ manually: true, opengraph: false })
+              }
+            >
+              Type it in manually
+            </button>
           </div>
+
+          {infoLoading ? (
+            <span style={{ margin: ".8rem 0rem" }}>Getting...</span>
+          ) : (
+            <input
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              name="title"
+              placeholder="Title"
+            />
+          )}
 
           <div>
             <h3>Select or Add new category</h3>

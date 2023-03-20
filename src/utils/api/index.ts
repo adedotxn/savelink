@@ -7,12 +7,15 @@ export const userLinks = async (user: string) => {
   return fetch.data;
 };
 
-export const addLink = (newLink: addLinkInterface) => {
-  return apiClient.post(`/${newLink.identifier}/save`, newLink);
+export const addLink = (details: addLinkInterface) => {
+  return apiClient.post(`/${details.identifier}/save`, details);
 };
 
-export const deleteLink = (id: string | number) => {
-  return apiClient.delete(`/delete/${id}`);
+export const deleteLink = (details: {
+  identifier: string;
+  id: string | number;
+}) => {
+  return apiClient.delete(`${details.identifier}/save/${details.id}`);
 };
 
 export const bookmarkLink = (id: string | number) => {

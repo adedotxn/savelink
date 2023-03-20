@@ -15,17 +15,10 @@ import { useRouter } from "next/router";
 const Dashboard: NextPage = () => {
   const { data: session } = useSession();
   const name: string = session?.user?.email!;
-  const { push } = useRouter();
 
   //getting user's data from db
   const { isLoading, error, data } = useDataGetter(name);
   const stored_data = data?.data;
-
-  useEffect(() => {
-    if (!session) {
-      push(`/signin`);
-    }
-  }, []);
 
   if (isLoading)
     return (
@@ -50,7 +43,7 @@ const Dashboard: NextPage = () => {
       ) : (
         <main className={styles.main}>
           <section>
-            <List array={stored_data} />
+            <List name={name} array={stored_data} />
           </section>
         </main>
       )}
