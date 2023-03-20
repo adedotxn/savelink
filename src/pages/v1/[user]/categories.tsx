@@ -1,14 +1,21 @@
 import type { GetServerSidePropsContext, NextPage } from "next";
-import { unstable_getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { dehydrate, QueryClient } from "react-query";
 import styles from "@styles/categories.module.css";
 import { useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
+import { useRouter } from "next/router";
 
 const Categories = () => {
-  const { data: session, status } = useSession();
+  const { replace } = useRouter();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      replace("/signin");
+    },
+  });
   const name: string = session?.user?.email!;
 
   function useLinks() {
@@ -63,12 +70,7 @@ const Categories = () => {
 export default Categories;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
+  const session = await getServerSession(context.req, context.res, authOptions);
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery("links", () =>
@@ -77,6 +79,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
+      session,
       dehydratedState: dehydrate(queryClient),
     },
   };

@@ -2,7 +2,7 @@ import styles from "@styles/dashboard.module.css";
 import { GetServerSidePropsContext } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import { getCategories } from "@utils/api";
-import { unstable_getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import List from "@components/lists";
@@ -68,18 +68,14 @@ const Category = () => {
 export default Category;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
-
+  const session = await getServerSession(context.req, context.res, authOptions);
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery("perCategory", () => session?.user?.email!);
 
   return {
     props: {
+      session,
       dehydratedState: dehydrate(queryClient),
     },
   };

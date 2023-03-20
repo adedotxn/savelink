@@ -9,8 +9,14 @@ import { AxiosResponse } from "axios";
 import { useLinkInfo, useMultiSelect } from "@utils/hooks";
 
 const ShareTarget = () => {
-  const { data: session } = useSession();
   const router = useRouter();
+
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.replace("/signin");
+    },
+  });
   const createMutation = useCreateOnly(toast);
 
   const name: string = session?.user?.email!;

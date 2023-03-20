@@ -1,15 +1,22 @@
+import { getServerSession } from "next-auth/next";
+import { useSession } from "next-auth/react";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import styles from "@styles/dashboard.module.css";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import { useSession } from "next-auth/react";
 import { userLinks } from "@utils/api";
-import { unstable_getServerSession } from "next-auth";
 
 import List from "@components/lists";
 import { authOptions } from "@api/auth/[...nextauth]";
+import { useRouter } from "next/router";
 
 const Bookmark: NextPage = () => {
-  const { data: session } = useSession();
+  const { replace } = useRouter();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      replace("/signin");
+    },
+  });
   const name: string = session?.user?.email!;
 
   const { isLoading, error, data } = useQuery(["bookmarks", name], () =>
@@ -65,11 +72,7 @@ const Bookmark: NextPage = () => {
 export default Bookmark;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   const queryClient = new QueryClient();
 
@@ -79,6 +82,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   return {
     props: {
+      session,
       dehydratedState: dehydrate(queryClient),
     },
   };
