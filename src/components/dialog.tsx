@@ -15,10 +15,8 @@ import styles from "./dialog.module.css";
 import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
 import Multiselect from "./multiselect";
 import { useDialogStore } from "@utils/zustand/store";
-import { useCreate, useLinkTitle } from "@utils/api";
-import { useQuery } from "react-query";
-import apiClient from "@utils/api/http-config";
-import { useLinkInfo, useMultiSelect } from "@utils/api/hooks";
+import { useCreate } from "@utils/api";
+import { useLinkInfo, useMultiSelect } from "@utils/hooks";
 
 const Dialog = ({
   name,

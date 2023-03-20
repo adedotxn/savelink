@@ -6,7 +6,7 @@ import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
 import Multiselect from "@components/multiselect";
 import { AxiosResponse } from "axios";
-import { useLinkInfo, useMultiSelect } from "@utils/api/hooks";
+import { useLinkInfo, useMultiSelect } from "@utils/hooks";
 
 const ShareTarget = () => {
   const { data: session } = useSession();
