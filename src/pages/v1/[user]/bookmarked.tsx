@@ -39,13 +39,12 @@ const Bookmark: NextPage = () => {
     let bookmarked = data.filter(
       (e: { bookmarked: boolean }) => e.bookmarked === true
     );
-    console.log("bk", bookmarked);
 
     return (
       <div className={styles.container}>
         <main className={styles.main}>
           <section>
-            <List array={bookmarked} />
+            <List name={name} array={bookmarked} />
           </section>
         </main>
       </div>

@@ -37,7 +37,7 @@ const Category = () => {
       <div className={styles.container}>
         <main className={styles.main}>
           <section>
-            <List array={array} />
+            <List name={name} array={array} />
           </section>
         </main>
       </div>
