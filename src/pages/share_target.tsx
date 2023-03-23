@@ -23,9 +23,14 @@ const ShareTarget = () => {
  
   const { title: queryTitle, text: queryText } = router.query;
 
-  const [title, setTitle] = useState(queryTitle?.toString() ?? "");
-  const [link, setLink] = useState(queryText?.toString() ?? "");
+  const [title, setTitle] = useState('');
+  const [link, setLink] = useState('');
   
+  // useEEffect 'cause i cant't debug/inspect share target and this is honestly what works blindly
+  useEffect(() => {
+    setTitle(queryTitle?.toString()!);
+    setLink(queryText?.toString()!);
+  }, [queryTitle, queryText]);
 
   function useData() {
     const result = useDataGetter(name);
