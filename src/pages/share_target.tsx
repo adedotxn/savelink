@@ -20,9 +20,12 @@ const ShareTarget = () => {
   const createMutation = useCreateOnly(toast);
 
   const name: string = session?.user?.email!;
+ 
+  const { title: queryTitle, text: queryText } = router.query;
 
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
+  const [title, setTitle] = useState(queryTitle?.toString() ?? "");
+  const [link, setLink] = useState(queryText?.toString() ?? "");
+  
 
   function useData() {
     const result = useDataGetter(name);
