@@ -5,14 +5,21 @@ import ThemeSwitcher from "./buttons/themeSwitcher";
 import Options from "./options";
 import MoreSvg from "./svg/moresvg";
 import { useSearch } from "@utils/context";
+import SLAvatar from "./ui/avatar";
 
-const Header = ({ name }: { name: string }) => {
+const Header = ({
+  user,
+}: {
+  user: { mail: string; name: string; image: string | undefined };
+}) => {
   const { search, setSearch } = useSearch();
   const [options, setOptions] = useState(false);
 
   return (
     <header className={styles.header}>
-      <div className={styles.hamburger}>📌</div>
+      <div className={styles.avatar}>
+        <SLAvatar image={user.image} name={user.name} />
+      </div>
 
       <div className={[styles.searchbar, "searchbar"].join(" ")}>
         <input
@@ -24,9 +31,7 @@ const Header = ({ name }: { name: string }) => {
       </div>
 
       <div>
-        <h2>{name}</h2>
         {/* <ThemeSwitcher /> */}
-        <ThemeSwitcher />
         <Logout />
 
         <div
@@ -38,7 +43,7 @@ const Header = ({ name }: { name: string }) => {
           <MoreSvg />
         </div>
       </div>
-      <Options options={options} name={name} />
+      <Options options={options} name={user.name} />
     </header>
   );
 };

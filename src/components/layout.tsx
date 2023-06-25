@@ -13,6 +13,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   const name: string = session ? session.user?.name! : "";
   const mail: string = session?.user?.email!;
+  const image = session?.user?.image as string | undefined;
+  const user = { name, mail, image };
 
   return (
     <>
@@ -60,7 +62,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </Head>
 
       <header className={styles.header}>
-        <Header name={name} />
+        <Header user={user} />
       </header>
 
       <main className={styles.main}>

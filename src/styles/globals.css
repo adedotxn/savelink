@@ -1,11 +1,11 @@
 /* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap");
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: "Inter Tight", sans-serif;
   /* font-family: 'Barlow Condensed', sans-serif; */
   background-color: var(--background);
   color: var(--text-color);
@@ -21,23 +21,35 @@ a {
 }
 
 :root {
-  --background-dark: #161616;
-  --accent-color-dark: #232323;
+  /* --background-dark: #161616; */
+  --background-dark: #09090b;
+  /*--accent-color-dark: #232323; */
+  --accent-color-dark: #27272a;
   --border-line-dark: #8d8b8b;
-  --tag-gradient-dark: linear-gradient(39deg, rgba(88, 86, 86, 1) 22%, rgba(32, 30, 30, 1) 57%, rgba(88, 83, 83, 1) 100%);
+  --card-bg-dark: #18181b;
+  --tag-gradient-dark: linear-gradient(
+    39deg,
+    rgba(88, 86, 86, 1) 22%,
+    rgba(32, 30, 30, 1) 57%,
+    rgba(88, 83, 83, 1) 100%
+  );
 
   --text-color-dark: white;
   --accent-color-d-opposite: #f1f3f4;
 
-
-  --background-light: #EDEDED;
+  --background-light: #ededed;
+  --card-bg-light: #f4f4f5;
   --border-line-light: #747575;
-  --accent-color-light: #f1f3f4;
+  --accent-color-light: #f4f4f5;
   --text-color-light: rgb(0, 0, 0);
   --accent-color-l-opposite: #3b3b40;
-  --tag-gradient-light: linear-gradient(39deg, rgba(255, 255, 255, 1) 22%, rgba(183, 183, 183, 1) 57%, rgba(171, 163, 163, 1) 100%);
+  --tag-gradient-light: linear-gradient(
+    39deg,
+    rgba(255, 255, 255, 1) 22%,
+    rgba(183, 183, 183, 1) 57%,
+    rgba(171, 163, 163, 1) 100%
+  );
 }
-
 
 .hide {
   display: none;
@@ -45,7 +57,7 @@ a {
 
 .show {
   display: block;
-  transition: all .15s linear 0s;
+  transition: all 0.15s linear 0s;
 }
 
 .hoverOn {
@@ -53,45 +65,66 @@ a {
   box-shadow: 3px 0 3px -2px rgba(0, 0, 0, 0.507);
 }
 
-@media(prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --background: var(--background-dark);
     --accent-color: var(--accent-color-dark);
     --text-color: var(--text-color-dark);
     --accent-color-opposite: var(--accent-color-d-opposite);
     --border-line: var(--border-line-dark);
-    --tag-gradient: var(--tag-gradient-dark)
+    --tag-gradient: var(--tag-gradient-dark);
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: var(--background-dark);
+    --accent-color: var(--accent-color-dark);
+    --text-color: var(--text-color-dark);
+    --accent-color-opposite: var(--accent-color-d-opposite);
+    --border-line: var(--border-line-dark);
+    --tag-gradient: var(--tag-gradient-dark);
+  }
+}
 
-
-@media(prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     --background: var(--background-light);
     --accent-color: var(--accent-color-light);
     --text-color: var(--text-color-light);
-    --accent-color-opposite: var(--accent-color-l-opposite), ;
+    --accent-color-opposite: var(--accent-color-l-opposite);
     --border-line: var(--border-line-light);
-    --tag-gradient: var(--tag-gradient-light)
+    --tag-gradient: var(--tag-gradient-light);
+    --card-bg: var(--card-bg-light);
   }
-}
+} */
 
 [color-scheme="dark"] {
   --background: var(--background-dark);
   --accent-color: var(--accent-color-dark);
   --text-color: var(--text-color-dark);
   --accent-color-opposite: var(--accent-color-d-opposite);
-  --tag-gradient: var(--tag-gradient-dark)
+  --tag-gradient: var(--tag-gradient-dark);
+  --card-bg: var(--card-bg-dark);
 }
 
 [color-scheme="light"] {
+  --background: var(--background-dark);
+  --accent-color: var(--accent-color-dark);
+  --text-color: var(--text-color-dark);
+  --accent-color-opposite: var(--accent-color-d-opposite);
+  --tag-gradient: var(--tag-gradient-dark);
+  --card-bg: var(--card-bg-dark);
+}
+
+/* [color-scheme="light"] {
   --background: var(--background-light);
   --accent-color: var(--accent-color-light);
   --text-color: var(--text-color-light);
   --accent-color-opposite: var(--accent-color-l-opposite);
-  --tag-gradient: var(--tag-gradient-light)
-}
+  --tag-gradient: var(--tag-gradient-light);
+  --card-bg: var(--card-bg-light);
+} */
 
 .theme {
   background-color: var(--text-color);
@@ -105,14 +138,13 @@ a {
 
 .theme:is(:hover, :focus) {
   background-color: var(--accent-color);
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .svg_fill {
   color: var(--text-color);
   fill: var(--text-color);
 }
-
 
 /*Loading animation global style*/
 .loading_container {
@@ -227,14 +259,13 @@ a {
   }
 }
 
-
 .burger {
   height: 3em;
   width: 3em;
   position: relative;
   font-size: 12px;
   cursor: pointer;
-  transition: .2s all;
+  transition: 0.2s all;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -249,7 +280,7 @@ a {
 }
 
 .burger:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   height: 150%;
@@ -268,7 +299,7 @@ a {
 .burger .burger-lines:before {
   pointer-events: none;
   display: block;
-  content: '';
+  content: "";
   width: 100%;
   border-radius: 0.25em;
   background-color: white;
@@ -280,18 +311,19 @@ a {
 
 .burger .burger-lines:after {
   left: 0;
-  top: -.6em;
+  top: -0.6em;
 }
 
 .burger .burger-lines:before {
   left: 1em;
-  top: .6em;
+  top: 0.6em;
 }
 
 .burger.burger-squeeze .burger-lines,
 .burger.burger-squeeze .burger-lines:after,
 .burger.burger-squeeze .burger-lines:before {
-  transition: .2s top .2s, .1s left, .2s transform, .4s background-color .2s;
+  transition: 0.2s top 0.2s, 0.1s left, 0.2s transform,
+    0.4s background-color 0.2s;
 }
 
 .burger.burger-squeeze .burger-lines:after,
@@ -302,7 +334,7 @@ a {
 .burger.burger-squeeze.open .burger-lines,
 .burger.burger-squeeze.open .burger-lines:after,
 .burger.burger-squeeze.open .burger-lines:before {
-  transition: .2s background-color, .2s top, .2s left, .2s transform .15s;
+  transition: 0.2s background-color, 0.2s top, 0.2s left, 0.2s transform 0.15s;
 }
 
 .burger.burger-squeeze.open .burger-lines {

@@ -11,7 +11,7 @@ const ThemeSwitcher = () => {
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          <button onClick={switchTheme}>
+          <button className={styles.btn} onClick={switchTheme}>
             {theme ? (
               <SunIcon width={20} height={20} color="var(--text-color)" />
             ) : (
