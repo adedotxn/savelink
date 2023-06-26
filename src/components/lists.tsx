@@ -1,10 +1,7 @@
 import Link from "next/link";
 import styles from "./list.module.css";
-import SvgComponent from "./svg/starsvg";
-import ShareSvg from "./svg/share";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
-import CopySvg from "./svg/copy";
 import DeleteOption from "./deleteDialog";
 import {
   BookmarkFilledIcon,
@@ -14,9 +11,10 @@ import {
 
 import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
-// import { SchemeInterface_Array } from "@utils/interface";
 import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
-import { LinksInterface, LinkInterface } from "@utils/interface";
+import { LinkInterface } from "@utils/interface";
+import { useRouter } from "next/router";
+import { CopySvg, ShareSvg } from "./svg";
 
 interface arrayInterface {
   array: LinkInterface[];
@@ -26,6 +24,7 @@ interface arrayInterface {
 const List = ({ name, array }: arrayInterface) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark(toast);
+  const router = useRouter();
 
   const [modal, setModal] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -78,29 +77,27 @@ const List = ({ name, array }: arrayInterface) => {
                   styles.light_scheme,
                 ].join(" ")}
               >
-                <Link
-                  target="_blank"
-                  href={
+                <div
+                  className={styles.links}
+                  onClick={() => {
                     data.url.includes("http")
-                      ? `${data.url}`
-                      : `https://${data.url}`
-                  }
+                      ? router.push(`${data.url}`)
+                      : router.push(`https://${data.url}`);
+                  }}
                 >
-                  <div className={styles.links}>
-                    <h3>{data.title}</h3>
-                    <p>
-                      {data.url.includes("http") ? (
-                        <Link target="_blank" href={data.url}>
-                          {data.url}
-                        </Link>
-                      ) : (
-                        <Link target="_blank" href={`https://${data.url}`}>
-                          {`https://${data.url}`}
-                        </Link>
-                      )}
-                    </p>
-                  </div>
-                </Link>
+                  <h3>{data.title}</h3>
+                  <p>
+                    {data.url.includes("http") ? (
+                      <Link target="_blank" href={data.url}>
+                        {data.url}
+                      </Link>
+                    ) : (
+                      <Link target="_blank" href={`https://${data.url}`}>
+                        {`https://${data.url}`}
+                      </Link>
+                    )}
+                  </p>
+                </div>
                 <div className={styles.link__footer}>
                   <div className={styles.link__category}>
                     <div>
@@ -191,12 +188,6 @@ const List = ({ name, array }: arrayInterface) => {
                       onClick={() => setModal(data._id)}
                       className={styles.link__image}
                     >
-                      {/* <DeleteOption
-                          deleteLink={() => deleteLink(data._id)}
-                          title={data.title}
-                          open={open}
-                          setOpen={setOpen}
-                        /> */}
                       <TrashIcon width="26" height="26" />
                     </div>
                   </div>

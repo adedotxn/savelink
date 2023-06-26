@@ -193,7 +193,7 @@
   justify-content: center;
 }
 
-.desktop_footer {
+.footer {
   display: none;
 }
 
@@ -308,13 +308,6 @@
     position: fixed;
     bottom: 5rem;
     right: 3rem;
-  }
-
-  .mobile_footer {
-    display: none;
-  }
-
-  .desktop_footer {
     display: block;
   }
 
@@ -327,20 +320,17 @@
     border-radius: 50%;
     display: flex;
     place-items: center;
-  }
-
-  .add:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  .cr8 {
     -webkit-transform: scale(2.5);
     transform: scale(2.5);
     cursor: pointer;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
+  }
+
+  .add:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
   }
 
   .btn {

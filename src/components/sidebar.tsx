@@ -5,9 +5,7 @@ import styles from "@styles/dashboard.module.css";
 import ArchiveActive from "./svg/active/archive";
 import BookmarkActive from "./svg/active/bookmarked";
 import CategActive from "./svg/active/categ";
-import ArchiveSvg from "./svg/archive";
-import BookmarkSvg from "./svg/bookmark";
-import CategoriesSvg from "./svg/categoriesvg";
+import { ArchiveSvg, BookmarkSvg, CategoriesSvg } from "./svg";
 
 const Sidebar = ({ name }: { name: string }) => {
   const navRef = useRef<HTMLElement>(null);

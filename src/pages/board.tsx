@@ -53,18 +53,12 @@ const Dashboard: NextPage = () => {
       )}
 
       <footer className={styles.footer}>
-        <div className={styles.desktop_footer}>
-          <div className={styles.add}>
-            <div className={styles.cr8}>
-              <Dialog
-                name={name}
-                isLoading={isLoading}
-                error={error}
-                storedData={stored_data}
-              />
-            </div>
-          </div>
-        </div>
+        <Dialog
+          name={name}
+          isLoading={isLoading}
+          error={error}
+          storedData={stored_data}
+        />
       </footer>
     </div>
   );

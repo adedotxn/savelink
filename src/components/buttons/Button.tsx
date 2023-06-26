@@ -1,5 +1,5 @@
+import { Options } from "@components/svg";
 import { PropsWithChildren } from "react";
-import Options from "../svg/options";
 
 type ButtonProps = {
   color?: string;

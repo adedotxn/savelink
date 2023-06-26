@@ -12,11 +12,16 @@ import { toast } from "react-hot-toast";
 
 import styles from "./dialog.module.css";
 
-import { CardStackPlusIcon, Cross2Icon } from "@radix-ui/react-icons";
-import Multiselect from "./multiselect";
+import {
+  CheckIcon,
+  Cross2Icon,
+  Pencil1Icon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import { useDialogStore } from "@utils/zustand/store";
 import { useCreate } from "@utils/api";
 import { useLinkInfo, useMultiSelect } from "@utils/hooks";
+import Multiselect from "./multiselect";
 
 const Dialog = ({
   name,
@@ -35,6 +40,14 @@ const Dialog = ({
 
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    if (link.length === 0) {
+      setTitle("");
+    }
+  }, [link]);
+
+  const [editLink, setEditLink] = useState(false);
 
   let returnedCategories: string[] = [];
 
@@ -120,7 +133,8 @@ const Dialog = ({
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
       <RadixDialog.Trigger asChild>
         <div className={styles.cardStack}>
-          <CardStackPlusIcon width="20" height="20" color="black" />
+          {/* <CardStackPlusIcon width="20" height="20" color="black" /> */}
+          <PlusIcon />
         </div>
       </RadixDialog.Trigger>
       <RadixDialog.Portal>
@@ -147,64 +161,100 @@ const Dialog = ({
               placeholder="Link"
               required
             />
-            {/* <input ref={titleField} name="title" placeholder="Title" /> */}
 
-            <div className={styles.link_info__btns}>
-              <button type="button" onClick={() => generateLinkInfo()}>
-                Generate Link Info
-              </button>
-
+            {title.length === 0 ? (
               <button
+                className={styles.next__btn}
                 type="button"
-                onClick={() =>
-                  setGettingLinkInfo({ manually: true, opengraph: false })
-                }
+                onClick={() => {
+                  if (link.length === 0) return toast.error("Type in a link");
+                  generateLinkInfo();
+                }}
               >
-                Type it in manually
+                Next
               </button>
-            </div>
+            ) : null}
 
             {infoLoading ? (
               <span style={{ margin: ".8rem 0rem" }}>Getting...</span>
             ) : (
-              <input
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                name="title"
-                placeholder="Title"
-              />
+              <>
+                {title.length > 0 ? (
+                  editLink ? (
+                    <div className={styles.editLink}>
+                      <input
+                        value={title}
+                        onChange={(e) => {
+                          setTitle(e.target.value);
+                        }}
+                        name="title"
+                        placeholder="Title"
+                      />
+
+                      <div
+                        className={styles.confirmIcon}
+                        onClick={() => {
+                          if (title.length === 0)
+                            return toast.error("Link needs a title");
+                          setEditLink(false);
+                        }}
+                      >
+                        <CheckIcon width="20" height="20" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={styles.editLink}>
+                      <p>{title}</p>
+
+                      <div
+                        className={styles.confirmIcon}
+                        onClick={() => setEditLink(true)}
+                      >
+                        <Pencil1Icon width="20" height="20" />
+                      </div>
+                    </div>
+                  )
+                ) : null}
+              </>
             )}
 
-            <section className={styles.category}>
-              <p>
-                Type in a new category to save to or select from pre-existing
-              </p>
+            {title.length > 0 ? (
+              <>
+                <section className={styles.category}>
+                  <p>
+                    Type in a new category to save to or select from
+                    pre-existing
+                  </p>
 
-              <div className={styles.add_category}>
-                <input
-                  onChange={handleChange}
-                  type="text"
-                  placeholder='Example : "Software Eng. Links"'
-                />
+                  <div className={styles.add_category}>
+                    <input
+                      onChange={handleChange}
+                      type="text"
+                      placeholder='Example : "Software Eng. Links"'
+                    />
 
-                <Multiselect
-                  options={categories}
-                  toggleOption={toggleOption}
-                  selected={selectedStore}
-                />
-              </div>
-            </section>
+                    <Multiselect
+                      options={categories}
+                      toggleOption={toggleOption}
+                      selected={selectedStore}
+                    />
+                  </div>
+                </section>
 
-            <div
-              style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}
-              className={styles.submit}
-            >
-              <button className={styles.submit__button} type="submit">
-                Save Link
-              </button>
-            </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 25,
+                    justifyContent: "flex-end",
+                  }}
+                  className={styles.submit}
+                >
+                  <button className={styles.submit__button} type="submit">
+                    Save Link
+                  </button>
+                </div>
+              </>
+            ) : null}
           </form>
 
           <div style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}>

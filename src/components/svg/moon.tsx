@@ -1,6 +1,6 @@
-import { SVGProps } from "react"
+import { SVGProps } from "react";
 
-const MoonSvg = (props: SVGProps<SVGSVGElement>) => (
+export const MoonSvg = (props: SVGProps<SVGSVGElement>) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="2em" height="2em">
     <path fill="none" d="M0 0h24v24H0z" />
     <path
@@ -8,6 +8,4 @@ const MoonSvg = (props: SVGProps<SVGSVGElement>) => (
       fill="currentColor"
     />
   </svg>
-)
-
-export default MoonSvg;
+);

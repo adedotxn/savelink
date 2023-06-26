@@ -1,6 +1,6 @@
-import { SVGProps } from "react"
+import { SVGProps } from "react";
 
-const SearchSvg = (props: SVGProps<SVGSVGElement>) => (
+export const SearchSvg = (props: SVGProps<SVGSVGElement>) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
     <path fill="none" d="M0 0h24v24H0z" />
     <path
@@ -8,6 +8,4 @@ const SearchSvg = (props: SVGProps<SVGSVGElement>) => (
       fill="currentColor"
     />
   </svg>
-)
-
-export default SearchSvg
+);

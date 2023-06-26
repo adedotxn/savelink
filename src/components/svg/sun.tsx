@@ -1,7 +1,7 @@
 import { SVGProps } from "react";
 import styles from "@components/header.module.css";
 
-const SunSvg = (props: SVGProps<SVGSVGElement>) => (
+export const SunSvg = (props: SVGProps<SVGSVGElement>) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="2em" height="2em">
     <path fill="none" d="M0 0h24v24H0z" />
     <path
@@ -11,5 +11,3 @@ const SunSvg = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
-export default SunSvg;

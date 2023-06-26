@@ -1,11 +1,23 @@
 .cardStack {
-  background-color: white;
+  background-color: var(--card-bg);
   margin: 0;
-  width: 20px;
-  height: 18px;
-  border-radius: .25rem;
+  width: 22px;
+  height: 20px;
+  border-radius: 0.25rem;
   display: grid;
   place-items: center;
+  border: 1px solid var(--accent-color);
+  transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  -webkit-transform: scale(2.5);
+  transform: scale(2.5);
+  cursor: pointer;
+}
+
+.cardStack:hover {
+  -webkit-transform: scale(2.6);
+  transform: scale(2.6);
 }
 
 .cardStack button {
@@ -22,9 +34,10 @@
 }
 
 .RadixDialogContent {
-  background-color: var(--accent-color);
+  background-color: var(--card-bg);
   border-radius: 6px;
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -60,9 +73,8 @@
 .submit {
   display: flex;
   justify-content: flex-end;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
-
 
 .submit__button {
   border: 0px solid;
@@ -78,6 +90,19 @@
   cursor: pointer;
 }
 
+.next__btn {
+  margin-top: 1rem;
+  border: 0px solid;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0.35rem 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  width: fit-content;
+  cursor: pointer;
+}
+
 .submit__button:hover,
 .submit__button:focus {
   background-color: rgb(214, 213, 213);
@@ -87,17 +112,18 @@
   display: grid;
 }
 
-.form>input {
-  padding: .25rem .5rem;
-  margin-top: .5rem;
+.form > input,
+.editLink > input {
+  padding: 0.5rem 0.5rem;
+  margin-top: 0.5rem;
   width: 80%;
   outline: none;
   border: 1px solid transparent;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
 }
 
-.form>input:focus {
-  border: 1px solid red;
+.form > input:focus {
   outline: none;
 }
 
@@ -113,8 +139,23 @@
   font-size: 1rem;
 }
 
-.add_category>input {
-  padding: .2rem .5rem;
+.editLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.confirmIcon {
+  background: var(--card-bg);
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.add_category > input {
+  padding: 0.2rem 0.5rem;
   width: 60%;
 }
 
@@ -141,7 +182,6 @@
 .IconButton:focus {
   box-shadow: 0 0 0 2px #bebcbc;
 }
-
 
 @-webkit-keyframes overlayShow {
   from {
@@ -189,20 +229,4 @@
     -webkit-transform: translate(-50%, -50%) scale(1);
     transform: translate(-50%, -50%) scale(1);
   }
-}
-
-
-
-.form .link_info__btns {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-
-}
-
-.link_info__btns>button {
-  border: 0px solid;
-  padding: .2rem .6rem;
-  border-radius: .25rem;
-  cursor: pointer;
 }

@@ -88,10 +88,6 @@
     align-items: center;
   }
 
-  .avatar {
-    display: none;
-  }
-
   .hamburger {
     display: block;
     -webkit-transform: scale(2);

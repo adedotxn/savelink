@@ -3,9 +3,9 @@ import styles from "./header.module.css";
 import Logout from "./buttons/logoutBtn";
 import ThemeSwitcher from "./buttons/themeSwitcher";
 import Options from "./options";
-import MoreSvg from "./svg/moresvg";
 import { useSearch } from "@utils/context";
 import SLAvatar from "./ui/avatar";
+import { MoreSvg } from "./svg";
 
 const Header = ({
   user,
