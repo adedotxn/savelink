@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export const useMultiSelect = () => {
   const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});
@@ -45,14 +46,16 @@ export const useLinkInfo = (
   const generateLinkInfo = () => {
     if (link.trim().length === 0) return;
 
+    const linkToGet = link.includes("https") ? link : `https://${link}`;
+
     setGettingLinkInfo({ manually: false, opengraph: true });
     setInfoLoading(true);
 
     // fetch the webpage using the Open Graph protocol
     fetch(
-      `https://opengraph.io/api/1.1/site/${encodeURIComponent(link)}?app_id=${
-        process.env.NEXT_PUBLIC_OG_KEY
-      }`
+      `https://opengraph.io/api/1.1/site/${encodeURIComponent(
+        linkToGet
+      )}?app_id=${process.env.NEXT_PUBLIC_OG_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -62,6 +65,7 @@ export const useLinkInfo = (
       })
       .catch((error) => {
         console.error(error);
+        toast.error(error);
         setInfoLoading(false);
       });
   };
