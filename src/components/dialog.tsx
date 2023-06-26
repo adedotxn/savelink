@@ -173,48 +173,52 @@ const Dialog = ({
               >
                 Next
               </button>
-            ) : null}
+            ) : (
+              <></>
+            )}
 
             {infoLoading ? (
               <span style={{ margin: ".8rem 0rem" }}>Getting...</span>
             ) : (
               <>
-                {title.length > 0 ? (
-                  editLink ? (
-                    <div className={styles.editLink}>
-                      <input
-                        value={title}
-                        onChange={(e) => {
-                          setTitle(e.target.value);
-                        }}
-                        name="title"
-                        placeholder="Title"
-                      />
+                {editLink ? (
+                  <div className={styles.editLink}>
+                    <input
+                      value={title}
+                      onChange={(e) => {
+                        setTitle(e.target.value);
+                      }}
+                      name="title"
+                      placeholder="Title"
+                    />
 
-                      <div
-                        className={styles.confirmIcon}
-                        onClick={() => {
-                          if (title.length === 0)
-                            return toast.error("Link needs a title");
-                          setEditLink(false);
-                        }}
-                      >
-                        <CheckIcon width="20" height="20" />
-                      </div>
+                    <div
+                      className={styles.confirmIcon}
+                      onClick={() => {
+                        if (title.length === 0)
+                          return toast.error("Link needs a title");
+                        setEditLink(false);
+                      }}
+                    >
+                      <CheckIcon width="20" height="20" />
                     </div>
-                  ) : (
-                    <div className={styles.editLink}>
-                      <p>{title}</p>
+                  </div>
+                ) : (
+                  <div className={styles.editLink}>
+                    <p>{title}</p>
 
+                    {title.length > 0 ? (
                       <div
                         className={styles.confirmIcon}
                         onClick={() => setEditLink(true)}
                       >
                         <Pencil1Icon width="20" height="20" />
                       </div>
-                    </div>
-                  )
-                ) : null}
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                )}
               </>
             )}
 
@@ -254,7 +258,9 @@ const Dialog = ({
                   </button>
                 </div>
               </>
-            ) : null}
+            ) : (
+              <></>
+            )}
           </form>
 
           <div style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}>
