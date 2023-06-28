@@ -20,6 +20,7 @@
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-scroll-area": "1.0.2",
     "@radix-ui/react-tooltip": "^1.0.3",
+    "@sentry/nextjs": "^7.56.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "mongoose": "^6.4.4",

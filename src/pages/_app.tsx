@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { QueryClient, QueryClientProvider, Hydrate } from "react-query";
 import { UtilityProvider } from "@utils/context";
 import Layout from "@components/layout";
+import ErrorBoundary from "@components/ui/errorboundary";
 
 const queryClient = new QueryClient();
 
@@ -19,17 +20,19 @@ function MyApp({ Component, pageProps, ...appProps }: AppProps) {
   }
 
   return (
-    <SessionProvider session={pageProps.session}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <UtilityProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </UtilityProvider>
-        </Hydrate>
-      </QueryClientProvider>
-    </SessionProvider>
+    <ErrorBoundary fallback={"An error occured :("}>
+      <SessionProvider session={pageProps.session}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <UtilityProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </UtilityProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
+    </ErrorBoundary>
   );
 }
 
