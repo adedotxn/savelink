@@ -60,8 +60,9 @@ export const useLinkInfo = (
     )
       .then((response) => {
         console.log(response.status);
+        let status = response.status;
 
-        if (response.status === 400) {
+        if (status.toString().startsWith("4")) {
           setInfoLoading(false);
           return toast.error("Invalid Link. Check again");
         }
