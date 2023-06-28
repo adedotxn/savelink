@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useCreateOnly, useDataGetter } from "@utils/api";
 import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
@@ -20,12 +20,12 @@ const ShareTarget = () => {
   const createMutation = useCreateOnly(toast);
 
   const name: string = session?.user?.email!;
- 
+
   const { title: queryTitle, text: queryText } = router.query;
 
-  const [title, setTitle] = useState('');
-  const [link, setLink] = useState('');
-  
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+
   // useEEffect 'cause i cant't debug/inspect share target and this is honestly what works blindly
   useEffect(() => {
     setTitle(queryTitle?.toString()!);
@@ -63,8 +63,11 @@ const ShareTarget = () => {
 
   const { generateLinkInfo, gettingLinkInfo, setGettingLinkInfo, infoLoading } =
     useLinkInfo(link, setTitle);
+
   const saveLink = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    if (title.trim().length === 0 || link.trim().length === 0)
+      return toast.error("Empty Link/Title");
 
     let categories;
     if (typedCateg.length === 0 && allSelected.length > 0) {

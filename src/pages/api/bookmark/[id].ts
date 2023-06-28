@@ -22,11 +22,11 @@ export default async function handler(
       if (sl.bookmarked) {
         return res
           .status(200)
-          .json({ status: "success", message: "Bookmarked!" });
+          .json({ status: "success", message: "Bookmarked." });
       } else {
         return res
           .status(200)
-          .json({ status: "success", message: "Unbookmarked!" });
+          .json({ status: "success", message: "Bookmark Removed." });
       }
     } catch (error) {
       res.status(404).json({ status: "error", data: error });

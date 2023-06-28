@@ -31,7 +31,6 @@ const Header = ({
       </div>
 
       <div>
-        {/* <ThemeSwitcher /> */}
         <Logout />
 
         <div

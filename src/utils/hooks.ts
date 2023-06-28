@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 export const useMultiSelect = () => {
   const [selectedStore, setStore] = useState<{ [key: string]: boolean }>({});

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./list.module.css";
-import toast, { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "sonner";
 import { useState } from "react";
 import DeleteOption from "./deleteDialog";
 import {
@@ -66,10 +66,6 @@ const List = ({ name, array }: arrayInterface) => {
           })
           ?.map((data) => (
             <div key={data._id} className={styles.link_wrapper}>
-              <div>
-                <Toaster position="top-center" reverseOrder={false} />
-              </div>
-
               <div
                 className={[
                   styles.link_list,

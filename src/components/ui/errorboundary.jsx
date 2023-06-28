@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component {
     return { hasError: true };
   }
   componentDidCatch(error, errorInfo) {
-    // You can use your own error logging service here
+    // LATER: error logging service here
     console.log({ error, errorInfo });
   }
   render() {
@@ -22,21 +22,22 @@ class ErrorBoundary extends React.Component {
       // You can render any custom fallback UI
       return (
         <div style={{ height: "100vh", display: "grid", placeItems: "center" }}>
-          {this.props.fallback ? <p>{this.props.fallback}</p> : <></>}
-          {this.props.error ? <p>{this.props.error}</p> : <></>}
+          <div>
+            {this.props.fallback ? <p>{this.props.fallback}</p> : <></>}
+            {this.props.error ? <p>{this.props.error}</p> : <></>}
 
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
+            <button
+              type="button"
+              onClick={() => this.setState({ hasError: false })}
+            >
+              Try again?
+            </button>
+          </div>
         </div>
       );
     }
 
     // Return children components in case of no error
-
     return this.props.children;
   }
 }

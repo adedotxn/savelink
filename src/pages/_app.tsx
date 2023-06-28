@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider, Hydrate } from "react-query";
 import { UtilityProvider } from "@utils/context";
 import Layout from "@components/layout";
 import ErrorBoundary from "@components/ui/errorboundary";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps, ...appProps }: AppProps) {
           <Hydrate state={pageProps.dehydratedState}>
             <UtilityProvider>
               <Layout>
+                <Toaster expand={false} position="top-right" />
                 <Component {...pageProps} />
               </Layout>
             </UtilityProvider>

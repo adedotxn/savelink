@@ -8,7 +8,7 @@ import {
 } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import styles from "./dialog.module.css";
 
@@ -95,7 +95,8 @@ const Dialog = ({
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user: string = name;
-    if (title.trim().length === 0 || link.trim().length === 0) return;
+    if (title.trim().length === 0 || link.trim().length === 0)
+      return toast.error("Empty Link/Title");
 
     let categories;
     if (typedCateg.length === 0 && allSelected.length > 0) {

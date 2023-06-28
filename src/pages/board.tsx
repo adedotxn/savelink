@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { useSession } from "next-auth/react";
-import { Toaster } from "react-hot-toast";
 import { useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
@@ -36,9 +35,6 @@ const Dashboard: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <Toaster position="top-center" reverseOrder={false} />
-      </div>
       {stored_data.length === 0 ? (
         <div className={styles.such_nothing}>
           <h2>Such nothing 👀 </h2>

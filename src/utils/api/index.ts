@@ -66,7 +66,7 @@ export const useCreateOnly = (toast: any) => {
   const queryClient = useQueryClient();
 
   return useMutation(addLink, {
-    onSuccess: () => {
+    onSuccess: (context) => {
       queryClient.invalidateQueries(["links"]);
     },
     onSettled: (error, variable, context) => {
@@ -85,12 +85,9 @@ export const useDelete = (toast: any) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);
+      return toast.success(`Deleted`);
     },
-    onSettled: (data) => {
-      if (data !== undefined && data.status === 204) {
-        return toast.success(`Deleted`);
-      }
-    },
+
     onError: () => {
       toast.error(`Error deleting. Retry`);
     },
@@ -100,17 +97,15 @@ export const useDelete = (toast: any) => {
 export const useBookmark = (toast: any) => {
   const queryClient = useQueryClient();
   return useMutation(bookmarkLink, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);
+      return toast.success(`${data.data.message}`);
     },
-    onSettled: (data) => {
-      if (data !== undefined && data.status === 200) {
-        return toast(`${data.data.message}`);
-      }
-    },
+
     onError: (error) => {
       console.log("Mutation error", error);
+      return toast.error("Error Bookmarking Link. Try again");
     },
   });
 };

@@ -1,4 +1,4 @@
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 export const webShare = async (title: string, url: string) => {
