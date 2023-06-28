@@ -20,8 +20,9 @@ import {
 } from "@radix-ui/react-icons";
 import { useDialogStore } from "@utils/zustand/store";
 import { useCreate } from "@utils/api";
-import { useLinkInfo, useMultiSelect } from "@utils/hooks";
 import Multiselect from "./multiselect";
+import { useMultiSelect } from "@utils/hooks/use-Multiselect";
+import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 
 const Dialog = ({
   name,

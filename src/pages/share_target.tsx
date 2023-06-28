@@ -6,7 +6,8 @@ import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
 import Multiselect from "@components/multiselect";
 import { AxiosResponse } from "axios";
-import { useLinkInfo, useMultiSelect } from "@utils/hooks";
+import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
+import { useMultiSelect } from "@utils/hooks/use-Multiselect";
 
 const ShareTarget = () => {
   const router = useRouter();
