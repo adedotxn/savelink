@@ -32,6 +32,7 @@ interface OpenGraph {
   favicon: string;
   site_name: string;
 }
+
 export const useLinkInfo = (
   link: string,
   setTitle: React.Dispatch<React.SetStateAction<string>>
@@ -57,16 +58,35 @@ export const useLinkInfo = (
         linkToGet
       )}?app_id=${process.env.NEXT_PUBLIC_OG_KEY}`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.status);
+
+        if (response.status === 400) {
+          setInfoLoading(false);
+          return toast.error("Invalid Link. Check again");
+        }
+
+        if (response.ok) {
+          return response.json();
+        }
+      })
       .then((data) => {
-        setOGData(data.hybridGraph);
-        setTitle(data.hybridGraph.title);
-        return setInfoLoading(false);
+        if (data.hybridGraph !== undefined) {
+          setOGData(data.hybridGraph);
+          setTitle(data.hybridGraph.title);
+          setInfoLoading(false);
+        } else {
+          setTitle(
+            "[Invalid link, but in incase this is a medium or an actually accurate link, type in your own title]"
+          );
+          setInfoLoading(false);
+        }
       })
       .catch((error) => {
         console.error(error);
-        toast.error(error);
+
         setInfoLoading(false);
+        return toast.error(error);
       });
   };
 

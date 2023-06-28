@@ -48,9 +48,9 @@ const Multiselect = ({
                 showOptions ? styles.dropdown__open : styles.dropdown__close
               }
             >
-              {options.map((category) => (
+              {options.map((category, index) => (
                 <li
-                  key={category}
+                  key={index}
                   className={styles.dropdown__option}
                   onClick={() => toggleOption(category)}
                 >
