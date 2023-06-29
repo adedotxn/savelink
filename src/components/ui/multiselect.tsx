@@ -1,6 +1,6 @@
 import styles from "./multiselect.module.css";
 import { useState } from "react";
-import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon } from "@radix-ui/react-icons";
 const Multiselect = ({
   options,
   toggleOption,

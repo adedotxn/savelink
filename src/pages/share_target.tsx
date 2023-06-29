@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useCreateOnly, useDataGetter } from "@utils/api";
 import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
-import Multiselect from "@components/multiselect";
+import Multiselect from "@components/ui/multiselect";
 import { AxiosResponse } from "axios";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
