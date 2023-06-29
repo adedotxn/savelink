@@ -14,6 +14,8 @@ export const useMultiSelect = () => {
         [category]: true,
       });
     }
+
+    console.log("clibked");
   };
   const allSelected = Object.keys(selectedStore).filter(
     (key) => selectedStore[key] === true

@@ -1,0 +1,117 @@
+.dropdown__container {
+}
+
+.dropdown {
+  /* margin-top: 0.5rem; */
+  /* border: 2px solid var(--accent-color);
+  border-radius: 0.3rem; */
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  z-index: 5;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 13rem;
+  border-radius: 0.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.dropdown__select {
+  border: 1px solid grey;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+  width: 12rem;
+  cursor: pointer;
+}
+
+.dropdown__select:active {
+  background-color: var(--background);
+}
+
+.dropdown__options {
+  position: absolute;
+  top: 2.3rem;
+  /* border: 2px solid var(--accent-color);
+  border-radius: 0.3rem; */
+  width: 12rem;
+  padding: 0;
+}
+
+.dropdown__options ul {
+  z-index: 10;
+  background-color: var(--background);
+  height: 10rem;
+  overflow-y: scroll;
+  border: 2px solid var(--accent-color);
+  border-radius: 0.2rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 0.3rem 0.5rem;
+}
+
+.dropdown__options ul::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown__options li,
+.option_selected {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+}
+
+.dropdown__options li:hover,
+.option_selected {
+  background-color: var(--accent-color);
+  border-radius: 0.3rem;
+}
+
+.dropdown__open input[type="checkbox"].hidden {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.dropdown__open {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.dropdown__close {
+  display: none;
+}
+
+.selected_list {
+  position: absolute;
+  top: 4rem;
+  display: flex;
+  gap: 0.5rem;
+  width: 13rem;
+  padding: 0rem;
+  height: fit-content;
+}
+
+.selected_list p {
+  background: var(--accent-color);
+  border: 1px solid var(--card-bg);
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.3rem;
+}
+
+@media screen and (min-width: 768px) {
+  .dropdown__selected {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}

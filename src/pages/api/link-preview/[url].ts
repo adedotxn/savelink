@@ -6,13 +6,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const url = req.query.url as string;
-  console.log(url);
 
   try {
     const response = await fetch(url);
     const html = await response.text();
     const $ = cheerio.load(html);
-    console.log({ $ });
     const title = $("head title").text().trim();
     const description =
       $('head meta[name="description"]').attr("content") || "";
