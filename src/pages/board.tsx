@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import { useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
+import { CabinetGrotesk } from "@utils/font";
+import Nolinks from "@components/ui/nolinks";
 
 const Dashboard: NextPage = () => {
   const { replace } = useRouter();
@@ -36,10 +38,7 @@ const Dashboard: NextPage = () => {
   return (
     <div className={styles.container}>
       {stored_data.length === 0 ? (
-        <div className={styles.such_nothing}>
-          <h2>Such nothing 👀 </h2>
-          <p>Click the button to start saving </p>
-        </div>
+        <Nolinks />
       ) : (
         <main className={styles.main}>
           <section>

@@ -4,7 +4,8 @@ import styles from "@styles/Home.module.css";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { CabinetGrotesk } from "@utils/font";
+import Image from "next/image";
 const SignIn = (): JSX.Element => {
   const { data: session, status } = useSession();
 
@@ -28,20 +29,32 @@ const SignIn = (): JSX.Element => {
     );
   }
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.shimmer}>Savelink</h1>
+    <>
+      <header className={styles.header}>📌</header>
+      <div className={styles.container}>
+        <main className={`${styles.main} ${CabinetGrotesk.className}`}>
+          <h1> Savelink. </h1>
+          <p>
+            Save web links from anywhere and organize into categories with
+            <strong> savelink</strong>, the easiest link manager to keep all
+            your favorite links in one place.
+          </p>
 
-        <p>
-          Save and categorise your important links from all across the web in
-          one place.
-        </p>
-
-        <div>
-          <button onClick={handleSignIn}> Sign in with google </button>
-        </div>
-      </main>
-    </div>
+          <div>
+            <button onClick={handleSignIn} className={CabinetGrotesk.className}>
+              {" "}
+              <Image
+                src="/google.svg"
+                width={25}
+                height={25}
+                alt="google logo"
+              />
+              Sign in with Google{" "}
+            </button>
+          </div>
+        </main>
+      </div>
+    </>
   );
 };
 

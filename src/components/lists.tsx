@@ -15,6 +15,7 @@ import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
 import { LinkInterface } from "@utils/interface";
 import { useRouter } from "next/router";
 import { CopySvg, ShareSvg } from "./svg";
+import Nolinks from "./ui/nolinks";
 
 interface arrayInterface {
   array: LinkInterface[];
@@ -49,9 +50,7 @@ const List = ({ name, array }: arrayInterface) => {
   return (
     <>
       {array.length === 0 ? (
-        <div>
-          <h2>Wow, such nothing 👀</h2>
-        </div>
+        <Nolinks />
       ) : (
         array
           .filter((data) => {

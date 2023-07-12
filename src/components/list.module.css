@@ -11,13 +11,15 @@
   box-shadow: var(--background) 0px 1px 4px;
   transition: all 0.2s ease-in-out;
   border: 1px solid var(--accent-color);
+  transition: border 0.25s ease-in-out;
+}
+
+.link_wrapper:hover {
+  border: 1.1px solid #3e3e42;
 }
 
 .links {
   padding-bottom: 0.5rem;
-  /* border-bottom: 1px solid var(--accent-color);
-  border-bottom-left-radius: 0.6rem;
-  border-bottom-right-radius: 0.6rem; */
   cursor: pointer;
 }
 

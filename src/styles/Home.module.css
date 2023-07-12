@@ -1,5 +1,4 @@
-.container {
-  /* padding: 1rem 2rem; */
+/* .container {
   display: grid;
   place-items: center;
   height: 100vh;
@@ -50,8 +49,7 @@
 
 .main div button:hover,
 .main div button:active {
-  /* -webkit-transform: scale(.95);
-  transform: scale(.95); */
+
   background-color: transparent;
   color: rgba(244, 225, 225, 0.954);
   -webkit-transform: translateY(10%);
@@ -102,11 +100,10 @@
   to {
     background-position: top right;
   }
-}
+} */
 
-
-@media screen and (min-width: 1024px) {
-  .main p {
+/* @media screen and (min-width: 1024px) { */
+/* .main p {
     width: 60vw
   }
 
@@ -119,9 +116,9 @@
     width: fit-content;
     cursor: pointer;
 
-  }
+  } */
 
-  /* 
+/* 
   .main div button:nth-child(2) {
     margin-left: 3rem;
   }
@@ -129,5 +126,78 @@
   .main div button:nth-child(3) {
     margin-left: 6rem;
   } */
+/* } */
 
+.header {
+  padding: 1rem 1.5rem;
+  font-size: 2rem;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  height: 85vh;
+}
+.main {
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+}
+
+.main > h1 {
+  font-size: 5rem;
+  margin: 0;
+  letter-spacing: 0.1rem;
+  font-weight: 900;
+}
+
+.main > p {
+  width: 90vw;
+  margin: 0;
+  font-size: 1.3rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.main > div > button {
+  margin-top: 2rem;
+  background-color: var(--text-color);
+  color: var(--background);
+  width: fit-content;
+  border: 0px solid;
+  padding: 0.5rem 0.9rem;
+  /* font-size: 1rem; */
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  justify-content: flex-end;
+  cursor: pointer;
+  transition: transform 0.15s linear 0s;
+}
+
+.main > div > button:hover,
+.main > div > button:active {
+  filter: brightness(80%);
+}
+
+.main > div > button:active {
+  transform: translateY(10%) scale(1.02);
+}
+
+@media screen and (min-width: 1024px) {
+  .main > p {
+    font-size: 1.4rem;
+    width: 35ch;
+  }
+
+  .main > h1 {
+    font-size: 7rem;
+  }
+
+  .main > div > button {
+    font-size: 1.4rem;
+  }
 }

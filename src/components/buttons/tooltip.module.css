@@ -20,8 +20,15 @@
   border: 1px solid var(--text-color);
 }
 
+.btn {
+  transition: transform 0.15s linear 0s;
+}
 .btn:hover {
   background-color: #27272a;
+}
+
+.btn:active {
+  transform: translateY(10%) scale(1.02);
 }
 
 .TooltipContent[data-state="delayed-open"][data-side="top"] {

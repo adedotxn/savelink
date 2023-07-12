@@ -134,7 +134,7 @@ const Dialog = ({
   return (
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
       <RadixDialog.Trigger asChild>
-        <div className={styles.cardStack}>
+        <div className={styles.addBtn}>
           {/* <CardStackPlusIcon width="20" height="20" color="black" /> */}
           <PlusIcon />
         </div>

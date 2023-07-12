@@ -1,4 +1,4 @@
-.cardStack {
+.addBtn {
   background-color: var(--card-bg);
   margin: 0;
   width: 22px;
@@ -9,18 +9,23 @@
   border: 1px solid var(--accent-color);
   transition: -webkit-transform 0.2s ease-in-out;
   transition: transform 0.2s ease-in-out;
-  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out,
+    border 0.2s ease-in-out;
   -webkit-transform: scale(2.5);
   transform: scale(2.5);
   cursor: pointer;
 }
 
-.cardStack:hover {
-  -webkit-transform: scale(2.6);
-  transform: scale(2.6);
+.addBtn:hover {
+  border: 1px solid grey;
 }
 
-.cardStack button {
+.addBtn:active {
+  -webkit-transform: scale(2.6);
+  transform: translateY(10%) scale(2.8);
+}
+
+.addBtn button {
   cursor: pointer;
 }
 
