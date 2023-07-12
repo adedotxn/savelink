@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { CabinetGrotesk } from "@utils/font";
 import Image from "next/image";
+
 const SignIn = (): JSX.Element => {
   const { data: session, status } = useSession();
 
