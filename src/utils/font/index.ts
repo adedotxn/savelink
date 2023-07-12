@@ -24,7 +24,7 @@ export const CabinetGrotesk = localFont({
       style: "normal",
     },
     {
-      path: "./fonts/CabinetGrotesk/Fonts/OTF/CabinetGrotesk-ExtraBold.otf",
+      path: "./fonts/CabinetGrotesk/Fonts/OTF/CabinetGrotesk-Extrabold.otf",
       weight: "800",
       style: "normal",
     },
