@@ -23,6 +23,7 @@ export const useLinkInfo = (
   });
 
   const generateLinkInfo = async () => {
+    setInfoLoading(true);
     const response = await getLinkPreview(link);
     if (response?.status === "success") {
       setTitle(response.data?.title);
