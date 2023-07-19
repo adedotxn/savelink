@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext, NextPage } from "next";
 import { dehydrate, QueryClient } from "react-query";
 import { useSession } from "next-auth/react";
-import { useDataGetter, userLinks } from "@utils/api";
+import { listCategories, useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { CabinetGrotesk } from "@utils/font";
@@ -22,10 +22,14 @@ const Dashboard: NextPage = () => {
   const name: string = session?.user?.email!;
 
   //getting user's data from db
-  const { isLoading, error, data } = useDataGetter(name);
-  const stored_data = data?.data;
+  const { isLoading, error, data: stored_data } = useDataGetter(name);
 
-  if (isLoading)
+  async function getCategories() {
+    const data = await listCategories(name);
+    console.log("categs", data);
+  }
+
+  if (isLoading || stored_data === undefined)
     return (
       <div className="loading_container">
         <div className="lds_ripple">
@@ -35,6 +39,7 @@ const Dashboard: NextPage = () => {
       </div>
     );
 
+  getCategories();
   return (
     <div className={styles.container}>
       {stored_data.length === 0 ? (
@@ -42,7 +47,7 @@ const Dashboard: NextPage = () => {
       ) : (
         <main className={styles.main}>
           <section>
-            <List name={name} array={stored_data} />
+            <List name={name} savedlinks={stored_data} />
           </section>
         </main>
       )}

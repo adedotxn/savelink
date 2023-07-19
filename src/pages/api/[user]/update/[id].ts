@@ -10,16 +10,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getServerSession(req, res, authOptions);
-  if (session) {
+  if (session && req.method === "UPDATE") {
     try {
       const { id } = req.query;
       await connect();
-      const sl = await Link.findById(id).sort({ time: -1 });
-      sl.title = req.body.title;
-      sl.url = req.body.url;
-      sl.save();
-      res.json(sl);
-      return;
+      const savedLink = await Link.findById(id).sort({ time: -1 });
+      savedLink.title = req.body.title;
+      savedLink.url = req.body.url;
+      savedLink.save();
+
+      return res.status(200).json(savedLink);
     } catch (error) {
       res.json(error);
     }

@@ -23,6 +23,7 @@ import { useCreate } from "@utils/api";
 import Multiselect from "./ui/multiselect";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
+import { SavedLink } from "@utils/interface";
 
 const Dialog = ({
   name,
@@ -33,7 +34,7 @@ const Dialog = ({
   name: string;
   isLoading: boolean;
   error: unknown;
-  storedData: any;
+  storedData: SavedLink[];
 }) => {
   const dialog = useDialogStore((state) => state.dialog);
   const setDialog = useDialogStore((state) => state.setDialog);
@@ -62,24 +63,26 @@ const Dialog = ({
 
   if (!isLoading) {
     for (let i: number = 0; i < storedData.length; ++i) {
-      returnedCategories.push(storedData[i].category);
+      const data = storedData[i]?.category;
+
+      if (data !== undefined) returnedCategories.push(data);
+
+      storedData[i].categories.forEach((data) => {
+        returnedCategories.push(data);
+      });
     }
   }
 
   const categories = [...new Set(returnedCategories)];
-
   //State for handling typed category
   const [typedCateg, setTypedCateg] = useState("");
 
   const { allSelected, selectedStore, setStore, toggleOption } =
     useMultiSelect();
 
-  const handleChange = useCallback(
-    (e: { target: { value: React.SetStateAction<string> } }) => {
-      setTypedCateg(e.target.value);
-    },
-    []
-  );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTypedCateg(e.target.value);
+  };
 
   const reset = () => {
     setTitle("");
@@ -90,12 +93,14 @@ const Dialog = ({
 
   const createMutation = useCreate(toast, reset);
 
-  const { generateLinkInfo, gettingLinkInfo, setGettingLinkInfo, infoLoading } =
-    useLinkInfo(link, setTitle);
+  const { generateLinkInfo, setGettingLinkInfo, infoLoading } = useLinkInfo(
+    link,
+    setTitle
+  );
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const user: string = name;
+
     if (title.trim().length === 0 || link.trim().length === 0)
       return toast.error("Empty Link/Title");
 
@@ -125,9 +130,9 @@ const Dialog = ({
   // logging mutation error if any
   if (createMutation.error) {
     if (createMutation.error instanceof Error) {
-      console.log("mutation error", createMutation.error);
+      console.error("Mutation error", createMutation.error);
     } else {
-      console.log(`Unexpected error in mutation: ${createMutation.error}`);
+      console.error(`Unexpected error in mutation: ${createMutation.error}`);
     }
   }
 
@@ -135,7 +140,6 @@ const Dialog = ({
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
       <RadixDialog.Trigger asChild>
         <div className={styles.addBtn}>
-          {/* <CardStackPlusIcon width="20" height="20" color="black" /> */}
           <PlusIcon />
         </div>
       </RadixDialog.Trigger>

@@ -1,13 +1,13 @@
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useCreateOnly, useDataGetter } from "@utils/api";
+import { listCategories, useCreateOnly } from "@utils/api";
 import styles from "@styles/target.module.css";
 import { useRouter } from "next/router";
 import Multiselect from "@components/ui/multiselect";
-import { AxiosResponse } from "axios";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
+import { useQuery } from "react-query";
 
 const ShareTarget = () => {
   const router = useRouter();
@@ -33,34 +33,26 @@ const ShareTarget = () => {
     setLink(queryText?.toString()!);
   }, [queryTitle, queryText]);
 
-  function useData() {
-    const result = useDataGetter(name);
-    const data = result.data as AxiosResponse<any, any>;
-    const isLoading: boolean = result.isLoading;
-    return { data, isLoading };
+  async function getCategories(name: string): Promise<string[]> {
+    const data = await listCategories(name);
+    return data;
   }
 
-  const storedData = useData();
-  const data = storedData?.data?.data;
-  const isLoading = storedData.isLoading;
-
-  let returnedCategories: string[] = [];
-  if (!isLoading) {
-    for (let i: number = 0; i < data.length; ++i) {
-      returnedCategories.push(data[i].category);
-    }
-  }
-  const categories = [...new Set(returnedCategories)];
+  const {
+    data: categories,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(name),
+  });
 
   const { allSelected, selectedStore, toggleOption } = useMultiSelect();
 
   const [typedCateg, setTypedCateg] = useState("");
-  const handleChange = useCallback(
-    (e: { target: { value: React.SetStateAction<string> } }) => {
-      setTypedCateg(e.target.value);
-    },
-    []
-  );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTypedCateg(e.target.value);
+  };
 
   const { generateLinkInfo, gettingLinkInfo, setGettingLinkInfo, infoLoading } =
     useLinkInfo(link, setTitle);
@@ -141,16 +133,14 @@ const ShareTarget = () => {
               type="text"
               placeholder='Example : "Software Eng. Links"'
             />
-            {!isLoading ? (
-              <>
-                <Multiselect
-                  options={categories}
-                  toggleOption={toggleOption}
-                  selected={selectedStore}
-                />
-              </>
-            ) : (
+            {isLoading || categories === undefined ? (
               <p>loading..</p>
+            ) : (
+              <Multiselect
+                options={categories}
+                toggleOption={toggleOption}
+                selected={selectedStore}
+              />
             )}
           </div>
           <button onClick={saveLink}> Save </button>

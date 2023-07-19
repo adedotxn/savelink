@@ -3,11 +3,12 @@ import { useSession } from "next-auth/react";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import styles from "@styles/dashboard.module.css";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import { userLinks } from "@utils/api";
+import { getBookmarks, userLinks } from "@utils/api";
 
 import List from "@components/lists";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
+import { SavedLink } from "@utils/interface";
 
 const Bookmark: NextPage = () => {
   const { replace } = useRouter();
@@ -19,9 +20,14 @@ const Bookmark: NextPage = () => {
   });
   const name: string = session?.user?.email!;
 
-  const { isLoading, error, data } = useQuery(["bookmarks", name], () =>
-    userLinks(name)
-  );
+  async function getData(name: string): Promise<SavedLink[]> {
+    const data = await getBookmarks(name);
+    return data;
+  }
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["bookmarks", name],
+    queryFn: () => getData(name),
+  });
 
   if (error) {
     if (error instanceof Error) {
@@ -31,7 +37,7 @@ const Bookmark: NextPage = () => {
     }
   }
 
-  if (isLoading) {
+  if (isLoading || data === undefined) {
     return (
       <div className="loading_container">
         <div className="lds_ripple">
@@ -43,15 +49,11 @@ const Bookmark: NextPage = () => {
   }
 
   if (!isLoading) {
-    let bookmarked = data.filter(
-      (e: { bookmarked: boolean }) => e.bookmarked === true
-    );
-
     return (
       <div className={styles.container}>
         <main className={styles.main}>
           <section>
-            <List name={name} array={bookmarked} />
+            <List name={name} savedlinks={data} />
           </section>
         </main>
       </div>

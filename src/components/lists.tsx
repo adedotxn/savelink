@@ -12,17 +12,17 @@ import {
 import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
 import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
-import { LinkInterface } from "@utils/interface";
 import { useRouter } from "next/router";
 import { CopySvg, ShareSvg } from "./svg";
 import Nolinks from "./ui/nolinks";
+import { SavedLink } from "@utils/interface";
 
 interface arrayInterface {
-  array: LinkInterface[];
+  savedlinks: SavedLink[];
   name: string;
 }
 
-const List = ({ name, array }: arrayInterface) => {
+const List = ({ name, savedlinks }: arrayInterface) => {
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark(toast);
   const router = useRouter();
@@ -49,18 +49,18 @@ const List = ({ name, array }: arrayInterface) => {
 
   return (
     <>
-      {array.length === 0 ? (
+      {savedlinks.length === 0 ? (
         <Nolinks />
       ) : (
-        array
+        savedlinks
           .filter((data) => {
             if (search === "") {
-              return array;
+              return savedlinks;
             } else if (
               data.title.toLowerCase().includes(search.toLowerCase()) ||
               data.url.toLowerCase().includes(search.toLowerCase())
             ) {
-              return array;
+              return savedlinks;
             }
           })
           ?.map((data) => (
@@ -94,52 +94,13 @@ const List = ({ name, array }: arrayInterface) => {
                   </p>
                 </div>
                 <div className={styles.link__footer}>
-                  <div className={styles.link__category}>
-                    <div>
-                      {data.categories.length === 0 && data.category ? (
-                        <Link
-                          href={`/v1/${data.identifier}/category/${data.category}`}
-                        >
-                          <span className={styles.categ}>{data.category}</span>
-                        </Link>
-                      ) : data.category === undefined && data.categories ? (
-                        <>
-                          {data.categories.length === 0 && <></>}
+                  <div className={styles.link__category}></div>
 
-                          {data.categories.length === 1 && (
-                            <Link
-                              href={`/v1/${data.identifier}/category/${data.categories[0]}`}
-                            >
-                              <span className={styles.categ}>
-                                {data.categories[0]}
-                              </span>
-                            </Link>
-                          )}
-
-                          {data.categories.length > 1 && (
-                            <>
-                              <Link
-                                href={`/v1/${data.identifier}/category/${data.categories[0]}`}
-                              >
-                                <span className={styles.categ}>
-                                  {data.categories[0]}
-                                </span>
-                              </Link>
-
-                              <Link
-                                href={`/v1/${data.identifier}/category/${data.categories[1]}`}
-                              >
-                                <span className={styles.categ}>
-                                  {data.categories[1]}
-                                </span>
-                              </Link>
-                            </>
-                          )}
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
-
+                  <Categories
+                    categories={data.categories}
+                    category={data.category}
+                    identifier={data.identifier}
+                  />
                   <div className={styles.link__images}>
                     <div
                       className={styles.link__image}
@@ -166,13 +127,17 @@ const List = ({ name, array }: arrayInterface) => {
                       <ShareSvg />
                     </div>
 
-                    <div onClick={() => copyToClipboard(data.url, data._id)}>
+                    <div
+                      onClick={() =>
+                        copyToClipboard(data.url, Number(data._id))
+                      }
+                    >
                       <CopySvg />
                     </div>
 
-                    {modal === data._id && (
+                    {modal === Number(data._id) && (
                       <DeleteOption
-                        id={data._id}
+                        id={Number(data._id)}
                         title={data.title}
                         deleteLink={deleteLink}
                         closeDeleteDialog={closeDeleteDialog}
@@ -180,7 +145,7 @@ const List = ({ name, array }: arrayInterface) => {
                     )}
 
                     <div
-                      onClick={() => setModal(data._id)}
+                      onClick={() => setModal(Number(data._id))}
                       className={styles.link__image}
                     >
                       <TrashIcon width="26" height="26" />
@@ -196,3 +161,55 @@ const List = ({ name, array }: arrayInterface) => {
 };
 
 export default List;
+
+function Categories(props: {
+  categories: String[];
+  identifier: String;
+  category?: string;
+}) {
+  // if we're only dealing with the old schema (when I was using category and not categories)
+  if (props.category !== undefined) {
+    if (props.categories.length === 0 && props.category) {
+      return (
+        <Link href={`/v1/${props.identifier}/category/${props.category}`}>
+          <span className={styles.categ}>{props.category}</span>
+        </Link>
+      );
+    }
+  }
+
+  // if dealing with categories
+  if (props.category === undefined && props.categories) {
+    if (props.categories.length === 0) {
+      return <></>;
+    }
+
+    if (props.categories.length === 1) {
+      return (
+        <Link href={`/v1/${props.identifier}/category/${props.categories[0]}`}>
+          <span className={styles.categ}>{props.categories[0]}</span>
+        </Link>
+      );
+    }
+
+    if (props.categories.length > 1) {
+      return (
+        <>
+          <Link
+            href={`/v1/${props.identifier}/category/${props.categories[0]}`}
+          >
+            <span className={styles.categ}>{props.categories[0]}</span>
+          </Link>
+
+          <Link
+            href={`/v1/${props.identifier}/category/${props.categories[1]}`}
+          >
+            <span className={styles.categ}>{props.categories[1]}</span>
+          </Link>
+        </>
+      );
+    }
+  }
+
+  return <></>;
+}

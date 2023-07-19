@@ -2,9 +2,9 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import styles from "@styles/categories.module.css";
-import { useDataGetter, userLinks } from "@utils/api";
+import { listCategories, useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 
@@ -18,21 +18,15 @@ const Categories = () => {
   });
   const name: string = session?.user?.email!;
 
-  function useLinks() {
-    const { isLoading, error, data } = useDataGetter(name);
-
-    return {
-      data,
-      error,
-      isLoading,
-    };
+  async function getCategories(name: string): Promise<string[]> {
+    const data = await listCategories(name);
+    return data;
   }
 
-  const storedData = useLinks();
-  const data = storedData?.data?.data!;
-  const isLoading = storedData.isLoading;
-
-  const categories: string[] = [];
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(name),
+  });
 
   if (isLoading) {
     return (
@@ -46,16 +40,11 @@ const Categories = () => {
   }
 
   if (!isLoading) {
-    for (let i = 0; i < data.length; ++i) {
-      categories.push(data[i].category);
-    }
-    const allcategories = [...new Set(categories)];
-
     return (
       <div className={styles.container}>
         <div className={styles.categories}>
-          {allcategories?.map((data) => (
-            <Link key={data} href={`/v1/${name}/category/${data}`}>
+          {data?.map((data, index) => (
+            <Link key={index} href={`/v1/${name}/category/${data}`}>
               <div className={styles.category_cards}>
                 <h1>{data}</h1>
               </div>

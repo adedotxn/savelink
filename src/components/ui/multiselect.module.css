@@ -47,7 +47,8 @@
 .dropdown__options ul {
   z-index: 10;
   background-color: var(--background);
-  height: 10rem;
+  height: 100%;
+  max-height: 10rem;
   overflow-y: scroll;
   border: 2px solid var(--accent-color);
   border-radius: 0.2rem;
@@ -58,6 +59,10 @@
 
 .dropdown__options ul::-webkit-scrollbar {
   display: none;
+}
+
+.dropdown__options li {
+  height: fit-content;
 }
 
 .dropdown__options li,

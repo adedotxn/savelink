@@ -26,7 +26,7 @@ export default async function handler(
       return res.status(500).json(error);
     }
   } else {
-    res.status(404).send({
+    return res.status(404).send({
       error:
         "You must be signed in to view the protected content of this route.",
     });

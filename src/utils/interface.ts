@@ -1,18 +1,19 @@
-export interface LinkInterface {
-  bookmarked: boolean;
+export interface SavedLink {
+  _id: string;
   identifier: string;
-  time?: string;
   title: string;
   url: string;
+  bookmarked: boolean;
+  time?: string;
+  category?: string;
   categories: string[];
-  category: string;
-  _id: number;
+  __v?: number;
 }
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 export interface addLinkInterface
   extends Modify<
-    LinkInterface,
+    SavedLink,
     {
       bookmarked?: boolean;
       title?: string;
@@ -21,7 +22,7 @@ export interface addLinkInterface
     }
   > {}
 
-export interface LinksInterface extends Array<LinkInterface> {}
+export interface LinksInterface extends Array<SavedLink> {}
 
 export interface SidePropsInterface {
   side: boolean;

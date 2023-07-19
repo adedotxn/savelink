@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "@db/lib/connectdb";
 import Link from "@db/models/schema";
@@ -34,7 +33,7 @@ export default async function handler(
 
     try {
       await connect();
-      const save = new Link({
+      const linkToSave = new Link({
         identifier,
         title,
         url,
@@ -42,17 +41,17 @@ export default async function handler(
         bookmarked,
         time,
       });
-      const saved = save.save();
+      const saved = linkToSave.save();
 
-      res.status(200).json({
+      return res.status(200).json({
         status: "success",
         data: saved,
       });
     } catch (error) {
-      res.status(400).json({ error });
+      return res.status(400).json({ error });
     }
   } else {
-    res.status(400).send({
+    return res.status(400).send({
       error: "Wrong request method",
     });
   }
