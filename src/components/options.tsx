@@ -10,15 +10,16 @@ const Options = ({ options, name }: { options: boolean; name: string }) => {
     return { data, error, isLoading };
   }
   const storedData = useData();
-  const data = storedData?.data?.data;
+  const data = storedData?.data;
   const { data: session } = useSession();
 
   const download = () => {
-    generateCSV(
-      header,
-      data,
-      `${session?.user?.name?.toLowerCase()}_savelink_data`
-    );
+    if (data)
+      generateCSV(
+        header,
+        data,
+        `${session?.user?.name?.toLowerCase()}_savelink_data`
+      );
   };
 
   const [supportsPWA, setSupportsPWA] = useState(false);
