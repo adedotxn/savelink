@@ -1,22 +1,18 @@
 import React from "react";
-
 import * as Tooltip from "@radix-ui/react-tooltip";
-
 import styles from "./tooltip.module.css";
 import { ExitIcon } from "@radix-ui/react-icons";
-
+import Button from "./button";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
-import Button from "./button";
 
 const Logout = () => {
   const router = useRouter();
 
   const handleSignOut = async (e: { preventDefault: () => void }) => {
-    const data = await signOut({ redirect: false, callbackUrl: "/" });
     e.preventDefault();
+    const data = await signOut({ redirect: false, callbackUrl: "/" });
     router.push(data.url);
-    // router.replace('/')
   };
 
   return (
