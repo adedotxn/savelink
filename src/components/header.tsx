@@ -1,11 +1,12 @@
 import { useState } from "react";
 import styles from "./header.module.css";
-import Logout from "./buttons/logoutBtn";
-import ThemeSwitcher from "./buttons/themeSwitcher";
+import Logout from "./buttons/logout-btn";
+import ThemeSwitcher from "./buttons/theme-switcher";
 import Options from "./options";
 import { useSearch } from "@utils/context";
 import SLAvatar from "./ui/avatar";
 import { MoreSvg } from "./svg";
+import Button from "./buttons/button";
 
 const Header = ({
   user,
@@ -33,16 +34,17 @@ const Header = ({
       <div>
         <Logout />
 
-        <div
+        <Button
           onClick={() => setOptions(!options)}
+          icon={<MoreSvg />}
           className={
             options ? [styles.active, styles.more].join(" ") : styles.more
           }
-        >
-          <MoreSvg />
-        </div>
+        ></Button>
+
+        {/* <ThemeSwitcher /> */}
       </div>
-      <Options options={options} name={user.name} />
+      <Options options={options} setOptions={setOptions} name={user.name} />
     </header>
   );
 };

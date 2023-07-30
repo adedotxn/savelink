@@ -1,10 +1,18 @@
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { generateCSV, header } from "@utils/helpers/downloadCsv";
 import styles from "./options.module.css";
 import { useDataGetter } from "@utils/api";
 
-const Options = ({ options, name }: { options: boolean; name: string }) => {
+const Options = ({
+  options,
+  name,
+  setOptions,
+}: {
+  options: boolean;
+  name: string;
+  setOptions?: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   function useData() {
     const { isLoading, error, data } = useDataGetter(name);
     return { data, error, isLoading };
@@ -12,6 +20,8 @@ const Options = ({ options, name }: { options: boolean; name: string }) => {
   const storedData = useData();
   const data = storedData?.data;
   const { data: session } = useSession();
+
+  const modalContainerRef = useRef<HTMLDivElement>(null);
 
   const download = () => {
     if (data)
@@ -44,10 +54,33 @@ const Options = ({ options, name }: { options: boolean; name: string }) => {
     promptInstall.prompt();
   };
 
+  useEffect(() => {
+    if (setOptions) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          modalContainerRef.current &&
+          !modalContainerRef.current.contains(event.target as Node)
+        ) {
+          setOptions(false);
+        }
+      };
+
+      if (typeof window !== "undefined") {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+
+      return () => {
+        if (typeof window !== "undefined") {
+          document.removeEventListener("mousedown", handleClickOutside);
+        }
+      };
+    }
+  }, [modalContainerRef]);
+
   return (
     <>
       {options && (
-        <div className={styles.options}>
+        <div ref={modalContainerRef} className={styles.options}>
           <ul>
             <li onClick={download}> Export my savelink data</li>
             <li onClick={onClick}>Install web app</li>

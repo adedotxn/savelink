@@ -106,6 +106,8 @@
   font-weight: 500;
   width: fit-content;
   cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--text-color);
 }
 
 .submit__button:hover,

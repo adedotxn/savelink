@@ -1,0 +1,27 @@
+.default {
+  transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out,
+    border 0.5s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  /* gap: 0.5rem; */
+}
+
+.default span:nth-child(1) {
+  padding-right: 0.5rem;
+}
+
+/* .default span:nth-child(2) {
+  padding-left: 0.5rem;
+} */
+
+.default:hover {
+  border: 1px solid grey;
+}
+
+.default:active {
+  -webkit-transform: scale(0.9);
+  transform: translateY(10%) scale(0.9);
+}

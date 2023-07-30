@@ -27,22 +27,22 @@ const List = ({ name, savedlinks }: arrayInterface) => {
   const bookmarkMutation = useBookmark(toast);
   const router = useRouter();
 
-  const [modal, setModal] = useState<number>(0);
+  const [modal, setModal] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
 
   const { search } = useSearch();
 
-  const triggerDeleteDialog = (id: number): void => {
+  const triggerDeleteDialog = (id: string): void => {
     if (modal === id) {
       setOpen(true);
     }
   };
 
   const closeDeleteDialog = (): void => {
-    setModal(0);
+    setModal("");
   };
 
-  const deleteLink = (id: number): void => {
+  const deleteLink = (id: string): void => {
     deleteMutation.mutate({ identifier: name, id });
     closeDeleteDialog();
   };
@@ -127,17 +127,13 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                       <ShareSvg />
                     </div>
 
-                    <div
-                      onClick={() =>
-                        copyToClipboard(data.url, Number(data._id))
-                      }
-                    >
+                    <div onClick={() => copyToClipboard(data.url)}>
                       <CopySvg />
                     </div>
 
-                    {modal === Number(data._id) && (
+                    {modal === data._id && (
                       <DeleteOption
-                        id={Number(data._id)}
+                        id={data._id}
                         title={data.title}
                         deleteLink={deleteLink}
                         closeDeleteDialog={closeDeleteDialog}
@@ -145,7 +141,7 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                     )}
 
                     <div
-                      onClick={() => setModal(Number(data._id))}
+                      onClick={() => setModal(data._id)}
                       className={styles.link__image}
                     >
                       <TrashIcon width="26" height="26" />
@@ -171,7 +167,7 @@ function Categories(props: {
   if (props.category !== undefined) {
     if (props.categories.length === 0 && props.category) {
       return (
-        <Link href={`/v1/${props.identifier}/category/${props.category}`}>
+        <Link href={`/category/${props.category}`}>
           <span className={styles.categ}>{props.category}</span>
         </Link>
       );
@@ -186,7 +182,7 @@ function Categories(props: {
 
     if (props.categories.length === 1) {
       return (
-        <Link href={`/v1/${props.identifier}/category/${props.categories[0]}`}>
+        <Link href={`/category/${props.categories[0]}`}>
           <span className={styles.categ}>{props.categories[0]}</span>
         </Link>
       );
@@ -195,15 +191,11 @@ function Categories(props: {
     if (props.categories.length > 1) {
       return (
         <>
-          <Link
-            href={`/v1/${props.identifier}/category/${props.categories[0]}`}
-          >
+          <Link href={`/category/${props.categories[0]}`}>
             <span className={styles.categ}>{props.categories[0]}</span>
           </Link>
 
-          <Link
-            href={`/v1/${props.identifier}/category/${props.categories[1]}`}
-          >
+          <Link href={`/category/${props.categories[1]}`}>
             <span className={styles.categ}>{props.categories[1]}</span>
           </Link>
         </>

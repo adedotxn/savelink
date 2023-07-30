@@ -1,52 +1,19 @@
 import { Options } from "@components/svg";
 import { PropsWithChildren } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
+import styles from "./button.module.css";
 
-type ButtonProps = {
-  color?: string;
-  bg?: string;
-  borderColor?: string;
-  borderWidth?: number;
-  action?: (e: any) => void;
-  width?: string;
-  padding?: string;
-  margin?: string;
-  options?: boolean;
-  textSize?: string;
-  type?: "button" | "submit" | "reset" | undefined;
-};
-const Button = ({
-  color,
-  borderColor = "black",
-  borderWidth = 0,
-  children,
-  action = (e: any) => {},
-  width = "fit-content",
-  padding = ".2rem 1rem",
-  margin = ".3rem 0rem",
-  options = false,
-  textSize = "15px",
-  type = "button",
-}: PropsWithChildren<ButtonProps>) => {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  setOptions?: React.Dispatch<React.SetStateAction<boolean>>;
+  icon?: JSX.Element | null;
+}
+
+const Button = (props: PropsWithChildren<ButtonProps>) => {
+  const { children, icon, className, ...rest } = props;
   return (
-    <button
-      onClick={action}
-      style={{
-        backgroundColor: `var(--background)`,
-        color: `${color === undefined ? `var(--text-color)` : `${color}`}`,
-        border: `${borderWidth}px solid ${borderColor}`,
-        cursor: "pointer",
-        width: `${width}`,
-        padding: `${padding}`,
-        margin: `${margin}`,
-        display: "flex",
-        alignItems: "center",
-        fontSize: `${textSize}`,
-      }}
-      type={type}
-    >
+    <button className={`${styles.default} ${className} `} {...rest}>
+      {icon && <span>{icon}</span>}
       {children}
-
-      {options && <Options />}
     </button>
   );
 };

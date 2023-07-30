@@ -14,7 +14,7 @@ export const webShare = async (title: string, url: string) => {
   }
 };
 
-export const copyToClipboard = (link: string, id: number) => {
+export const copyToClipboard = (link: string) => {
   navigator.clipboard.writeText(link).then(() => {
     toast.success("Link copied to clipboard");
   });

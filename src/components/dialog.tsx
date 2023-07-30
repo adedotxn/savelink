@@ -24,6 +24,8 @@ import Multiselect from "./ui/multiselect";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 import { SavedLink } from "@utils/interface";
+import Button from "./buttons/button";
+import Spinner from "./ui/spinner";
 
 const Dialog = ({
   name,
@@ -169,23 +171,22 @@ const Dialog = ({
             />
 
             {title.length === 0 ? (
-              <button
+              <Button
                 className={styles.next__btn}
                 type="button"
                 onClick={() => {
                   if (link.length === 0) return toast.error("Type in a link");
                   generateLinkInfo();
                 }}
+                icon={infoLoading ? <Spinner /> : null}
               >
                 Next
-              </button>
+              </Button>
             ) : (
               <></>
             )}
 
-            {infoLoading ? (
-              <span style={{ margin: ".8rem 0rem" }}>Getting...</span>
-            ) : (
+            {!infoLoading && (
               <>
                 {editLink ? (
                   <div className={styles.editLink}>

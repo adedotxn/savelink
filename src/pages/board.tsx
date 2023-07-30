@@ -26,7 +26,6 @@ const Dashboard: NextPage = () => {
 
   async function getCategories() {
     const data = await listCategories(name);
-    console.log("categs", data);
   }
 
   if (isLoading || stored_data === undefined)

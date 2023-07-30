@@ -7,8 +7,8 @@ import * as Popover from "@radix-ui/react-popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./hamburger.module.css";
-import Logout from "./buttons/logoutBtn";
-import ThemeSwitcher from "./buttons/themeSwitcher";
+import Logout from "./buttons/logout-btn";
+import ThemeSwitcher from "./buttons/theme-switcher";
 import { useTheme } from "@utils/context";
 
 const Hamburger = ({ name }: { name: string }) => {
@@ -42,20 +42,20 @@ const Hamburger = ({ name }: { name: string }) => {
                 </li>
               </Link>
 
-              <Link href={`/v1/${name}/bookmarked`}>
+              <Link href={`/bookmarked`}>
                 <li
                   className={
                     router.pathname.includes(`/bookmarked`) ? styles.active : ""
                   }
                 >
-                  Starred
+                  Bookmarks
                   <span>
                     <ArrowTopRightIcon width={12} height={12} />
                   </span>
                 </li>
               </Link>
 
-              <Link href={`/v1/${name}/categories`}>
+              <Link href={`/categories`}>
                 <li
                   className={
                     router.pathname.includes(`/categories`) ? styles.active : ""

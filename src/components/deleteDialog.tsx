@@ -9,9 +9,9 @@ const DeleteOption = ({
   deleteLink,
   closeDeleteDialog,
 }: {
-  id: number;
+  id: string;
   title: string;
-  deleteLink: (id: number) => void;
+  deleteLink: (id: string) => void;
   closeDeleteDialog: () => void;
 }) => {
   return (

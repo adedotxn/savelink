@@ -1,7 +1,7 @@
 import styles from "@styles/app.module.css";
 import Head from "next/head";
 import Header from "./header";
-import Sidebar from "./sidebar";
+import Sidebar from "./ui/sidebar";
 import { ReactNode, useState } from "react";
 import { useSession } from "next-auth/react";
 import Footer from "./footer";
