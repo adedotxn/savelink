@@ -6,7 +6,7 @@ import Options from "./options";
 import { useSearch } from "@utils/context";
 import SLAvatar from "./ui/avatar";
 import { MoreSvg } from "./svg";
-import Button from "./buttons/button";
+import Button from "./buttons/base-button";
 
 const Header = ({
   user,

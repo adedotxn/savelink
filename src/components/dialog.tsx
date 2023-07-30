@@ -24,7 +24,7 @@ import Multiselect from "./ui/multiselect";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 import { SavedLink } from "@utils/interface";
-import Button from "./buttons/button";
+import Button from "./buttons/base-button";
 import Spinner from "./ui/spinner";
 
 const Dialog = ({

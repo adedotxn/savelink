@@ -2,7 +2,7 @@ import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import styles from "./tooltip.module.css";
 import { ExitIcon } from "@radix-ui/react-icons";
-import Button from "./button";
+import Button from "./base-button";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 

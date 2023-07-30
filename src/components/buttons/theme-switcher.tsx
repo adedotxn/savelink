@@ -3,7 +3,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useTheme } from "@utils/context";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import styles from "./tooltip.module.css";
-import Button from "./button";
+import Button from "./base-button";
 
 const ThemeSwitcher = () => {
   const { theme, switchTheme } = useTheme();
