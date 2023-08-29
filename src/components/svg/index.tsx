@@ -1,3 +1,5 @@
+"use client";
+
 export * from "./add";
 export * from "./archive";
 export * from "./bookmark";

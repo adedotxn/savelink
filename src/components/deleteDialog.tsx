@@ -1,3 +1,4 @@
+"use client";
 import React, { SetStateAction } from "react";
 import * as DeleteDialog from "@radix-ui/react-alert-dialog";
 import styles from "./deleteDialog.module.css";

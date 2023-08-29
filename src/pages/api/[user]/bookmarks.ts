@@ -12,7 +12,7 @@ export default async function handler(
   await connect();
   const { user } = req.query;
 
-  if (session && req.method === "GET") {
+  if (req.method === "GET") {
     try {
       const data = await Link.find({
         identifier: `${user}`,
@@ -26,8 +26,4 @@ export default async function handler(
       return res.status(404).json(error);
     }
   }
-
-  res.send({
-    error: "You must be signed in to view the protected content on this page.",
-  });
 }

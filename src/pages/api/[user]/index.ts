@@ -16,19 +16,13 @@ export default async function handler(
     return res.status(400).json({ status: "error", message: "Wrong method" });
   }
 
-  if (req.method === "GET" && session) {
-    try {
-      const data = await Link.find({ identifier: `${user}` }).sort({
-        time: -1,
-      });
-      return res.status(200).json(data);
-    } catch (error) {
-      return res.status(500).json(error);
-    }
-  } else {
-    return res.status(404).send({
-      error:
-        "You must be signed in to view the protected content of this route.",
+  try {
+    const data = await Link.find({ identifier: `${user}` }).sort({
+      time: -1,
     });
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).json(error);
   }
+
 }

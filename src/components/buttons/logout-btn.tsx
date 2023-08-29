@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import styles from "./tooltip.module.css";
 import { ExitIcon } from "@radix-ui/react-icons";
 import Button from "./base-button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 const Logout = () => {

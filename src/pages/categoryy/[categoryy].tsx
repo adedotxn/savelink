@@ -12,7 +12,7 @@ const Category = () => {
   const router = useRouter();
   const user = router.query.user as string;
   const category = router.query.category as string;
-
+  console.log({ category });
   const { data: session, status } = useSession();
   const name: string = session?.user?.email!;
 

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./list.module.css";
 import { toast, Toaster } from "sonner";
@@ -12,7 +14,7 @@ import {
 import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
 import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { CopySvg, ShareSvg } from "./svg";
 import Nolinks from "./ui/nolinks";
 import { SavedLink } from "@utils/interface";
@@ -23,6 +25,7 @@ interface arrayInterface {
 }
 
 const List = ({ name, savedlinks }: arrayInterface) => {
+  console.log({ savedlinks });
   const deleteMutation = useDelete(toast);
   const bookmarkMutation = useBookmark(toast);
   const router = useRouter();
@@ -83,11 +86,11 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                   <h3>{data.title}</h3>
                   <p>
                     {data.url.includes("http") ? (
-                      <Link target="_blank" href={data.url}>
+                      <Link target="_blank" href={"/"}>
                         {data.url}
                       </Link>
                     ) : (
-                      <Link target="_blank" href={`https://${data.url}`}>
+                      <Link target="_blank" href={"/"}>
                         {`https://${data.url}`}
                       </Link>
                     )}

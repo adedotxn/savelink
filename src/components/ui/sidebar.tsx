@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+
 import styles from "@styles/dashboard.module.css";
 import ArchiveActive from "../svg/active/archive";
 import BookmarkActive from "../svg/active/bookmarked";
@@ -10,6 +11,7 @@ import { ArchiveSvg, BookmarkSvg, CategoriesSvg } from "../svg";
 const Sidebar = ({ name }: { name: string }) => {
   const navRef = useRef<HTMLElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const [hovering, setHovering] = useState(false);
 
@@ -26,12 +28,13 @@ const Sidebar = ({ name }: { name: string }) => {
   return (
     <nav ref={navRef} className={[styles.sidebar, "hide"].join(" ")}>
       <ul onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
-        <Link href={`/board`} legacyBehavior>
+        <Link href={`/board`}>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
-              {!router.pathname.includes("categories") &&
-              !router.pathname.includes("bookmarked") &&
-              !router.pathname.includes("category") ? (
+              {pathname &&
+              !pathname.includes("categories") &&
+              !pathname.includes("bookmarked") &&
+              !pathname.includes("category") ? (
                 <ArchiveActive />
               ) : (
                 <ArchiveSvg />
@@ -41,10 +44,10 @@ const Sidebar = ({ name }: { name: string }) => {
           </li>
         </Link>
 
-        <Link href={`/bookmarked`} legacyBehavior>
+        <Link href={`/bookmarked`}>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
-              {router.pathname.includes("bookmarked") ? (
+              {pathname && pathname.includes("bookmarked") ? (
                 <BookmarkActive />
               ) : (
                 <BookmarkSvg />
@@ -54,11 +57,11 @@ const Sidebar = ({ name }: { name: string }) => {
           </li>
         </Link>
 
-        <Link href={`/categories`} legacyBehavior>
+        <Link href={`/categories`}>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
-              {router.pathname.includes("categories") ||
-              router.pathname.includes("category") ? (
+              {(pathname && pathname.includes("categories")) ||
+              (pathname && pathname.includes("category")) ? (
                 <CategActive />
               ) : (
                 <CategoriesSvg />

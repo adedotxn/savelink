@@ -5,7 +5,7 @@ import {
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./hamburger.module.css";
 import Logout from "./buttons/logout-btn";
 import ThemeSwitcher from "./buttons/theme-switcher";
@@ -13,6 +13,7 @@ import { useTheme } from "@utils/context";
 
 const Hamburger = ({ name }: { name: string }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { theme } = useTheme();
 
   return (
@@ -28,9 +29,10 @@ const Hamburger = ({ name }: { name: string }) => {
               <Link href={`/board`}>
                 <li
                   className={
-                    !router.pathname.includes("categories") &&
-                    !router.pathname.includes("bookmarked") &&
-                    !router.pathname.includes("category")
+                    pathname &&
+                    !pathname.includes("categories") &&
+                    !pathname.includes("bookmarked") &&
+                    !pathname.includes("category")
                       ? styles.active
                       : ""
                   }
@@ -45,7 +47,9 @@ const Hamburger = ({ name }: { name: string }) => {
               <Link href={`/bookmarked`}>
                 <li
                   className={
-                    router.pathname.includes(`/bookmarked`) ? styles.active : ""
+                    pathname && pathname.includes(`/bookmarked`)
+                      ? styles.active
+                      : ""
                   }
                 >
                   Bookmarks
@@ -58,7 +62,9 @@ const Hamburger = ({ name }: { name: string }) => {
               <Link href={`/categories`}>
                 <li
                   className={
-                    router.pathname.includes(`/categories`) ? styles.active : ""
+                    pathname && pathname.includes(`/categories`)
+                      ? styles.active
+                      : ""
                   }
                 >
                   Categories

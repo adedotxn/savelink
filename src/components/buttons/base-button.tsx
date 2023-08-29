@@ -1,3 +1,4 @@
+"use client";
 import { Options } from "@components/svg";
 import { PropsWithChildren } from "react";
 import { ButtonHTMLAttributes, ReactNode } from "react";
