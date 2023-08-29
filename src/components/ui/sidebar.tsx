@@ -26,7 +26,7 @@ const Sidebar = ({ name }: { name: string }) => {
   return (
     <nav ref={navRef} className={[styles.sidebar, "hide"].join(" ")}>
       <ul onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
-        <Link href={`/board`}>
+        <Link href={`/board`} legacyBehavior>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
               {!router.pathname.includes("categories") &&
@@ -41,7 +41,7 @@ const Sidebar = ({ name }: { name: string }) => {
           </li>
         </Link>
 
-        <Link href={`/bookmarked`}>
+        <Link href={`/bookmarked`} legacyBehavior>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
               {router.pathname.includes("bookmarked") ? (
@@ -54,7 +54,7 @@ const Sidebar = ({ name }: { name: string }) => {
           </li>
         </Link>
 
-        <Link href={`/categories`}>
+        <Link href={`/categories`} legacyBehavior>
           <li className={hovering ? styles.sidebar__li : ""}>
             <div>
               {router.pathname.includes("categories") ||
