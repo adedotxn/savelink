@@ -3,9 +3,9 @@ import Dialog from "@components/dialog";
 import styles from "@styles/dashboard.module.css";
 import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { listCategories, useDataGetter, userLinks } from "@utils/api";
+import { listCategories, useLinks, userLinks, LinksHandler } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { CabinetGrotesk } from "@utils/font";
@@ -22,7 +22,7 @@ const Dashboard: NextPage = () => {
   const name: string = session?.user?.email!;
 
   //getting user's data from db
-  const { isLoading, error, data: stored_data } = useDataGetter(name);
+  const { isLoading, error, data: stored_data } = useLinks(name);
 
   async function getCategories() {
     const data = await listCategories(name);
@@ -70,7 +70,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("links", () =>
+  await queryClient.prefetchQuery(["links"], () =>
     userLinks(session?.user?.email!)
   );
 

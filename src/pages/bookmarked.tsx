@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import styles from "@styles/dashboard.module.css";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { getBookmarks, userLinks } from "@utils/api";
 
 import List from "@components/lists";
@@ -78,7 +78,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("bookmarks", () =>
+  await queryClient.prefetchQuery(["bookmarks"], () =>
     userLinks(session?.user?.email!)
   );
 

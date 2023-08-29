@@ -1,6 +1,6 @@
 import styles from "@styles/dashboard.module.css";
 import { GetServerSidePropsContext } from "next";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { getCategories } from "@utils/api";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
@@ -16,10 +16,10 @@ const Category = () => {
   const { data: session, status } = useSession();
   const name: string = session?.user?.email!;
 
-  const { isLoading, error, data } = useQuery(
-    ["perCategory", user, category],
-    () => getCategories(user, category)
-  );
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["perCategory", user, category],
+    queryFn: () => getCategories(user, category),
+  });
 
   if (isLoading)
     return (
@@ -71,7 +71,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("perCategory", () => session?.user?.email!);
+  await queryClient.prefetchQuery(["perCategory"], () => session?.user?.email!);
 
   return {
     props: {

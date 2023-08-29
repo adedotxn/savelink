@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Multiselect from "@components/ui/multiselect";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const ShareTarget = () => {
   const router = useRouter();
@@ -43,7 +43,7 @@ const ShareTarget = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["categories"],
+    queryKey: [name, "categories"],
     queryFn: () => getCategories(name),
   });
 
