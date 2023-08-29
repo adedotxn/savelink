@@ -1,7 +1,11 @@
 import "@styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { QueryClient, QueryClientProvider, Hydrate } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  Hydrate,
+} from "@tanstack/react-query";
 import { UtilityProvider } from "@utils/context";
 import Layout from "@components/layout";
 import ErrorBoundary from "@components/ui/errorboundary";

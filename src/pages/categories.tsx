@@ -2,7 +2,7 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import styles from "@styles/categories.module.css";
 import { listCategories, useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
@@ -62,7 +62,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("links", () =>
+  await queryClient.prefetchQuery(["links"], () =>
     userLinks(session?.user?.email!)
   );
 

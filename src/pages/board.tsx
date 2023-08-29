@@ -3,7 +3,7 @@ import Dialog from "@components/dialog";
 import styles from "@styles/dashboard.module.css";
 import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext, NextPage } from "next";
-import { dehydrate, QueryClient } from "react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { listCategories, useDataGetter, userLinks } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
@@ -70,7 +70,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("links", () =>
+  await queryClient.prefetchQuery(["links"], () =>
     userLinks(session?.user?.email!)
   );
 

@@ -1,5 +1,5 @@
 import { addLinkInterface, SavedLink } from "@utils/interface";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiClient from "./http-config";
 
 export const userLinks = async (user: string): Promise<SavedLink[]> => {
