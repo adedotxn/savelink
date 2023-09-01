@@ -1,5 +1,5 @@
-import List from "@components/lists";
-import Dialog from "@components/dialog";
+import List from "@components/shared/lists";
+import Dialog from "@components/board/dialog";
 import styles from "@styles/dashboard.module.css";
 import { getServerSession } from "next-auth/next";
 import { GetServerSidePropsContext, NextPage } from "next";
@@ -9,7 +9,7 @@ import { listCategories, useLinks, userLinks, LinksHandler } from "@utils/api";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { CabinetGrotesk } from "@utils/font";
-import Nolinks from "@components/ui/nolinks";
+import Nolinks from "@components/shared/nolinks";
 
 const Dashboard: NextPage = () => {
   const { replace } = useRouter();

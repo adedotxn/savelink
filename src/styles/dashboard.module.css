@@ -160,14 +160,6 @@
   padding: 0.3rem 0.2rem;
 }
 
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
 .category p {
   margin: 0;
 }
@@ -231,7 +223,7 @@
   .sidebar {
     width: -webkit-fit-content;
     width: -moz-fit-content;
-    width: fit-content;
+    /* width: 40vh; */
     display: block;
     transition: all 0.15s 0s;
     z-index: 2;
@@ -239,6 +231,37 @@
     background: var(--background);
     border: 0.3px solid var(--accent-color-dark);
     position: fixed;
+    transition: all 0.2s linear 0s;
+  }
+
+  .expand {
+    width: 16vw;
+  }
+
+  .contract {
+    width: 5vw;
+  }
+
+  .control {
+    position: absolute;
+    top: 4.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 30%;
+    background: var(--accent-color);
+    border: 0px solid var(--accent-color-dark);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s linear 0s;
+  }
+
+  .expand_control {
+    left: 11rem;
+  }
+
+  .contract_control {
+    left: 2.3rem;
   }
 
   .sidebar ul {
@@ -249,7 +272,7 @@
     margin-top: 6rem;
   }
 
-  .sidebar ul li {
+  .sidebar ul a li {
     display: flex;
     align-items: center;
     margin-top: 1rem;
@@ -257,15 +280,29 @@
     cursor: pointer;
     padding: 0.5rem 0.4rem;
     border-radius: 0.5rem;
-    transition: all 0.15s linear 0s;
+    /* transition: transform 0.7s linear; */
   }
 
   .sidebar ul li span {
     margin-left: 1rem;
+    transition: transform 0.7s ease;
+    width: 30ch;
   }
 
-  .sidebar__li:hover {
+  .sidebar ul li:hover {
     background-color: var(--accent-color);
+  }
+
+  .yo {
+    transition: opacity 0.8s ease 0.4s;
+  }
+  .hide {
+    opacity: 0;
+    /* display: none; */
+  }
+
+  .show {
+    opacity: 1;
   }
 
   .main {

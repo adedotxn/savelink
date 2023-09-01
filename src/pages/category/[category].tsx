@@ -5,7 +5,7 @@ import { getCategories } from "@utils/api";
 import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import List from "@components/lists";
+import List from "@components/shared/lists";
 import { authOptions } from "@api/auth/[...nextauth]";
 
 const Category = () => {

@@ -1,0 +1,239 @@
+.addBtn {
+  background-color: var(--card-bg);
+  margin: 0;
+  width: 22px;
+  height: 20px;
+  border-radius: 0.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent-color);
+  transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out,
+    border 0.2s ease-in-out;
+  -webkit-transform: scale(2.5);
+  transform: scale(2.5);
+  cursor: pointer;
+}
+
+.addBtn:hover {
+  border: 1px solid grey;
+}
+
+.addBtn:active {
+  -webkit-transform: scale(2.6);
+  transform: translateY(10%) scale(2.8);
+}
+
+.addBtn button {
+  cursor: pointer;
+}
+
+.RadixDialogOverlay {
+  background-color: rgba(0, 0, 0, 0.674);
+  position: fixed;
+  inset: 0;
+  -webkit-animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.RadixDialogContent {
+  background-color: var(--card-bg);
+  border-radius: 6px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 500px;
+  max-height: 85vh;
+  padding: 25px;
+  -webkit-animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 6;
+}
+
+.RadixDialogContent:focus {
+  outline: none;
+}
+
+.RadixDialogTitle {
+  margin: 0;
+  color: var(--mauve12);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.RadixDialogDescription {
+  margin-bottom: 20px;
+  color: var(--mauve11);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.submit {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.submit__button {
+  border: 0px solid;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  height: 35px;
+  cursor: pointer;
+}
+
+.next__btn {
+  margin-top: 1rem;
+  border: 0px solid;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0.35rem 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  width: fit-content;
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+.submit__button:hover,
+.submit__button:focus {
+  background-color: rgb(214, 213, 213);
+}
+
+.form {
+  display: grid;
+}
+
+.form > input,
+.editLink > input {
+  padding: 0.5rem 0.5rem;
+  margin-top: 0.5rem;
+  width: 80%;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.form > input:focus {
+  outline: none;
+}
+
+.form p {
+  color: var(--text-color);
+}
+
+.form select {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 1.5rem;
+  font-size: 1rem;
+}
+
+.editLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.confirmIcon {
+  background: var(--card-bg);
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.add_category > input {
+  padding: 0.2rem 0.5rem;
+  width: 60%;
+}
+
+.IconButton {
+  font-family: inherit;
+  border: 0px solid;
+  border-radius: 100%;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.IconButton:hover {
+  background-color: #bebcbc;
+}
+
+.IconButton:focus {
+  box-shadow: 0 0 0 2px #bebcbc;
+}
+
+@-webkit-keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes contentShow {
+  from {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -48%) scale(0.96);
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -48%) scale(0.96);
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

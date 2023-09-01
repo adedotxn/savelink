@@ -7,7 +7,7 @@ import {
   Hydrate,
 } from "@tanstack/react-query";
 import { UtilityProvider } from "@utils/context";
-import Layout from "@components/layout";
+import Layout from "@components/shared/layout/layout";
 import ErrorBoundary from "@components/ui/errorboundary";
 import { Toaster } from "sonner";
 import { useState } from "react";

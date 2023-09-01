@@ -4,8 +4,7 @@ import type { GetServerSidePropsContext, NextPage } from "next";
 import styles from "@styles/dashboard.module.css";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { getBookmarks, userLinks } from "@utils/api";
-
-import List from "@components/lists";
+import List from "@components/shared/lists";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { SavedLink } from "@utils/interface";
