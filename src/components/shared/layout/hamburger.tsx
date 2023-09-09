@@ -35,7 +35,7 @@ const Hamburger = ({ name }: { name: string }) => {
                       : ""
                   }
                 >
-                  All Links
+                  Links
                   <span>
                     <ArrowTopRightIcon width={12} height={12} />
                   </span>

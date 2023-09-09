@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import styles from "@styles/dashboard.module.css";
+import styles from "@styles/sidebar.module.css";
 import ArchiveActive from "../../ui/svg/active/archive";
 import BookmarkActive from "../../ui/svg/active/bookmarked";
 import CategActive from "../../ui/svg/active/categ";
@@ -71,7 +71,7 @@ const Sidebar = ({ name }: { name: string }) => {
                   hovering ? styles.show : styles.hide
                 }`}
               >
-                All links{" "}
+                Links{" "}
               </span>
             </li>
           </Link>
@@ -80,9 +80,13 @@ const Sidebar = ({ name }: { name: string }) => {
             <li className={""}>
               <div>
                 {router.pathname.includes("bookmarked") ? (
-                  <BookmarkFilledIcon color="white" />
+                  <BookmarkFilledIcon
+                    width="22px"
+                    height="22px"
+                    color="white"
+                  />
                 ) : (
-                  <BookmarkIcon color="white" />
+                  <BookmarkIcon width="22px" height="22px" color="white" />
                 )}
               </div>
               <span
