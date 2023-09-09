@@ -1,24 +1,27 @@
 import { Metadata } from "next";
 import "@styles/globals.css";
 import Providers from "./providers";
-import { SessionProvider } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import SessionProvider from "../lib/session-provider";
 
 export const metadata: Metadata = {
   title: "Savelink",
-  description: "Welcome to Next.js",
+  description:
+    "Web app to safely store and categorise links from all across the web",
 };
 
-export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <SessionProvider session={session}>
+          <Providers>{children}</Providers>
+        </SessionProvider>
       </body>
     </html>
   );

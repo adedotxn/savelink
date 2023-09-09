@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { CabinetGrotesk } from "@utils/font";
 import Image from "next/image";
 
-const SignIn = (): JSX.Element => {
+const SignIn = () => {
   const { data: session, status } = useSession();
 
   const handleSignIn = () => {

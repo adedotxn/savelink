@@ -45,16 +45,48 @@ async function getAllUserSavedLinks(user: string): Promise<SavedLink[]> {
   return response.data;
 }
 
-export const useDataGetter = (user: string) => {
+export const useLinks = (user: string) => {
   return useQuery({
     queryKey: ["links", user],
     queryFn: () => getAllUserSavedLinks(user),
   });
+}
+
+export const LinksHandler = () => {
+  const useLinksQuery = (user: string) => {
+    return useQuery({
+      queryKey: ["links", user],
+      queryFn: () => getAllUserSavedLinks(user),
+    });
+  }
+
+  const useLinksMutation = (toast: any) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: addLink,
+      onSuccess: (context) => {
+        queryClient.invalidateQueries(["links"]);
+        queryClient.invalidateQueries(["categories"]);
+      },
+      onSettled: (error, variable, context) => {
+        toast.success(`Saved ${context.title}`);
+      },
+      onError: (error) => {
+        toast.error("Error saving link", error);
+        console.log("Error saving link", error);
+      },
+    });
+  }
+
+  return { useLinksQuery, useLinksMutation }
 };
+
+
 
 export const useLinkTitle = (url: string) => {
   return useQuery({
-    queryKey: ["link"],
+    queryKey: [url, "link"],
     queryFn: () => {
       apiClient.get(`link/${url}`);
     },
@@ -64,26 +96,28 @@ export const useLinkTitle = (url: string) => {
 export const useCreate = (toast: any, resetForm: () => void) => {
   const queryClient = useQueryClient();
 
-  return useMutation(addLink, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["links"]);
-      queryClient.invalidateQueries(["categories"]);
-    },
-    onSettled: (error, variable, context) => {
-      resetForm();
-      toast.success(`Saved ${context.title}`);
-    },
-    onError: (error) => {
-      toast.error("Error saving link", error);
-      console.log("Error saving link", error);
-    },
+  return useMutation({
+    mutationFn: addLink,
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries(["links"]);
+    //   queryClient.invalidateQueries(["categories"]);
+    // },
+    // onSettled: (error, variable, context) => {
+    //   resetForm();
+    //   toast.success(`Saved ${context.title}`);
+    // },
+    // onError: (error) => {
+    //   toast.error("Error saving link", error);
+    //   console.log("Error saving link", error);
+    // },
   });
 };
 
 export const useCreateOnly = (toast: any) => {
   const queryClient = useQueryClient();
 
-  return useMutation(addLink, {
+  return useMutation({
+    mutationFn: addLink,
     onSuccess: (context) => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["categories"]);
@@ -100,7 +134,8 @@ export const useCreateOnly = (toast: any) => {
 
 export const useDelete = (toast: any) => {
   const queryClient = useQueryClient();
-  return useMutation(deleteLink, {
+  return useMutation({
+    mutationFn: deleteLink,
     onSuccess: () => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);
@@ -116,7 +151,8 @@ export const useDelete = (toast: any) => {
 
 export const useBookmark = (toast: any) => {
   const queryClient = useQueryClient();
-  return useMutation(bookmarkLink, {
+  return useMutation({
+    mutationFn: bookmarkLink,
     onSuccess: (data) => {
       queryClient.invalidateQueries(["links"]);
       queryClient.invalidateQueries(["bookmarks"]);

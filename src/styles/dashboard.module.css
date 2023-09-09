@@ -16,63 +16,10 @@
   place-items: center;
 }
 
-.open_sidebar {
-  display: flex;
-  top: 0;
-  position: absolute;
-  z-index: 3;
-  width: 100vw;
-}
-
-.open_sidebar .mobile_sidebar {
-  display: block;
-  background-color: var(--background);
-  height: 100vh;
-  width: 70vw;
-}
-
 .empty {
   width: 30vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.449);
-}
-
-.close_sidebar {
-  display: none;
-}
-
-.mobile_sidebar ul {
-  list-style-type: none;
-  margin-top: 2rem;
-  padding: 0rem 1rem 0rem 2rem;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-}
-
-.mobile_sidebar ul li {
-  display: flex;
-  margin-top: 1rem;
-  font-size: 1.4rem;
-}
-
-.mobile_sidebar ul li span {
-  margin-left: 1rem;
-}
-
-.mobile_sidebar h1 {
-  padding-left: 1rem;
-  margin-top: 2rem;
-}
-
-.mobile_active_route {
-  background-color: var(--accent-color);
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  padding: 0.2rem 1.2rem 0.2rem 0.5rem;
-
-  border-radius: 0.5rem;
 }
 
 .dialog_container {
@@ -160,14 +107,6 @@
   padding: 0.3rem 0.2rem;
 }
 
-.hide {
-  display: none;
-}
-
-.show {
-  display: block;
-}
-
 .category p {
   margin: 0;
 }
@@ -213,11 +152,6 @@
     position: relative;
   }
 
-  .open_sidebar,
-  .close_sidebar {
-    display: none;
-  }
-
   .active_route {
     background-color: rgba(255, 0, 0, 0.492);
     position: relative;
@@ -226,46 +160,6 @@
     border-radius: 50%;
     display: grid;
     place-content: center;
-  }
-
-  .sidebar {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
-    display: block;
-    transition: all 0.15s 0s;
-    z-index: 2;
-    height: 100vh;
-    background: var(--background);
-    border: 0.3px solid var(--accent-color-dark);
-    position: fixed;
-  }
-
-  .sidebar ul {
-    list-style-type: none;
-    /* border-right: 1px solid white; */
-    height: 80vh;
-    padding: 0rem 0.5rem;
-    margin-top: 6rem;
-  }
-
-  .sidebar ul li {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0.5rem 0.4rem;
-    border-radius: 0.5rem;
-    transition: all 0.15s linear 0s;
-  }
-
-  .sidebar ul li span {
-    margin-left: 1rem;
-  }
-
-  .sidebar__li:hover {
-    background-color: var(--accent-color);
   }
 
   .main {
