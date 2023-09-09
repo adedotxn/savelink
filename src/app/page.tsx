@@ -1,11 +1,16 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "src/lib/authOptions";
 
-import { Metadata } from "next";
+export default async function Page() {
+  const session = await getServerSession(authOptions);
 
-export const metadata: Metadata = {
-  title: "Index Page",
-};
+  if (session) {
+    redirect("/board");
+  }
+  if (!session) {
+    redirect("/sign-in");
+  }
 
-export default function Page() {
-  return <p>yooo</p>;
+  return <p>Boo!</p>;
 }
