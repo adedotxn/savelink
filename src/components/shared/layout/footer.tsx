@@ -1,3 +1,4 @@
+"use client";
 import styles from "./footer.module.css";
 import { useState } from "react";
 import Options from "./options";

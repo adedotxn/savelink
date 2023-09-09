@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useRef } from "react";
 import { generateCSV, header } from "@utils/helpers/downloadCsv";

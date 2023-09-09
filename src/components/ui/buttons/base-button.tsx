@@ -1,3 +1,5 @@
+"use client";
+
 import { PropsWithChildren } from "react";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import styles from "./button.module.css";

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@styles/app.module.css";
 import Head from "next/head";
 import Header from "./header";

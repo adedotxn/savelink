@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import styles from "@styles/sidebar.module.css";
 import ArchiveActive from "../../ui/svg/active/archive";
@@ -15,6 +17,7 @@ import {
 
 const Sidebar = ({ name }: { name: string }) => {
   const navRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
   const router = useRouter();
 
   const [hovering, setHovering] = useState(false);
@@ -58,9 +61,10 @@ const Sidebar = ({ name }: { name: string }) => {
           <Link href={`/board`}>
             <li className={hovering ? styles.sidebar__li : ""}>
               <div>
-                {!router.pathname.includes("categories") &&
-                !router.pathname.includes("bookmarked") &&
-                !router.pathname.includes("category") ? (
+                {pathname &&
+                !pathname.includes("categories") &&
+                !pathname.includes("bookmarked") &&
+                !pathname.includes("category") ? (
                   <ArchiveActive />
                 ) : (
                   <ArchiveSvg />
@@ -79,7 +83,7 @@ const Sidebar = ({ name }: { name: string }) => {
           <Link href={`/bookmarked`}>
             <li className={""}>
               <div>
-                {router.pathname.includes("bookmarked") ? (
+                {pathname && pathname.includes("bookmarked") ? (
                   <BookmarkFilledIcon
                     width="22px"
                     height="22px"
@@ -102,8 +106,8 @@ const Sidebar = ({ name }: { name: string }) => {
           <Link href={`/categories`}>
             <li className={hovering ? styles.sidebar__li : ""}>
               <div>
-                {router.pathname.includes("categories") ||
-                router.pathname.includes("category") ? (
+                {(pathname && pathname.includes("categories")) ||
+                (pathname && pathname.includes("category")) ? (
                   <CategActive />
                 ) : (
                   <CategoriesSvg />

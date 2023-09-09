@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,13 +20,30 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@api/*": ["src/pages/api/*"],
-      "@styles/*": ["src/styles/*"],
-      "@test/*": ["src/tests/*"],
-      "@db/*": ["src/db/*"]
-    }
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@api/*": [
+        "src/pages/api/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@test/*": [
+        "src/tests/*"
+      ],
+      "@db/*": [
+        "src/db/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -31,7 +52,10 @@
     "utils/helpers/downloadPwa.js",
     "backend/lib/connectdb.ts",
     "pages/share_target.tsx",
-    "src/components/ui/errorboundary.jsx"
+    "src/components/ui/errorboundary.jsx",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

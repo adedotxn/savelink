@@ -1,11 +1,6 @@
-import {
-  FormEvent,
-  MutableRefObject,
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+"use client";
+
+import { FormEvent, useState, useEffect, useRef } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 
 import { toast } from "sonner";
@@ -23,21 +18,18 @@ import { useCreate } from "@utils/api";
 import Multiselect from "../ui/multiselect";
 import { useMultiSelect } from "@utils/hooks/use-Multiselect";
 import { useLinkInfo } from "@utils/hooks/use-LinkInfo";
-import { SavedLink } from "@utils/interface";
 import Button from "../ui/buttons/base-button";
 import Spinner from "../ui/spinner";
+import { save } from "src/app/board/actions";
 
 const Dialog = ({
   name,
-  isLoading,
-  error,
-  storedData,
+  categories,
 }: {
   name: string;
-  isLoading: boolean;
-  error: unknown;
-  storedData: SavedLink[];
+  categories: string[];
 }) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const dialog = useDialogStore((state) => state.dialog);
   const setDialog = useDialogStore((state) => state.setDialog);
   const closeDialog = useDialogStore((state) => state.closeDialog);
@@ -53,90 +45,46 @@ const Dialog = ({
 
   const [editLink, setEditLink] = useState(false);
 
-  let returnedCategories: string[] = [];
-
-  if (error) {
-    if (error instanceof Error) {
-      console.log("creation error", error.message);
-    } else {
-      console.log(`Unexpected error in cr8 : ${error}`);
-    }
-  }
-
-  if (!isLoading) {
-    for (let i: number = 0; i < storedData.length; ++i) {
-      const data = storedData[i]?.category;
-
-      if (data !== undefined) returnedCategories.push(data);
-
-      storedData[i].categories.forEach((data) => {
-        returnedCategories.push(data);
-      });
-    }
-  }
-
-  const categories = [...new Set(returnedCategories)];
-  //State for handling typed category
-  const [typedCateg, setTypedCateg] = useState("");
-
   const { allSelected, selectedStore, setStore, toggleOption } =
     useMultiSelect();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTypedCateg(e.target.value);
-  };
 
   const reset = () => {
     setTitle("");
     setLink("");
-    setTypedCateg("");
     setStore({});
   };
 
-  const createMutation = useCreate(toast, reset);
+  const { generateLinkInfo, infoLoading } = useLinkInfo(link, setTitle);
+  const [formResponse, setFormResponse] = useState<{
+    status: string;
+    message: string;
+  }>();
 
-  const { generateLinkInfo, setGettingLinkInfo, infoLoading } = useLinkInfo(
-    link,
-    setTitle
-  );
+  const onSubmit = async () => {
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (title.trim().length === 0 || link.trim().length === 0)
-      return toast.error("Empty Link/Title");
-
-    let categories;
-    if (typedCateg.length === 0 && allSelected.length > 0) {
-      categories = allSelected;
-    } else if (typedCateg.length > 0 && allSelected.length === 0) {
-      categories = [typedCateg];
-    } else if (typedCateg.length === 0 && allSelected.length === 0) {
-      categories = ["default"];
-    } else if (typedCateg.length > 0 && allSelected.length > 0) {
-      categories = allSelected;
-    }
-
-    if (categories !== undefined) {
-      createMutation.mutate({
-        identifier: name,
-        title,
-        url: link,
-        categories,
+      const data: { [key: string]: string } = {};
+      formData.forEach((value, key) => {
+        data[key] = value as string;
       });
-    }
 
-    closeDialog();
+      const res = await save({ name, title, allSelected, formData });
+      setFormResponse(res);
+    }
   };
 
-  // logging mutation error if any
-  if (createMutation.error) {
-    if (createMutation.error instanceof Error) {
-      console.error("Mutation error", createMutation.error);
-    } else {
-      console.error(`Unexpected error in mutation: ${createMutation.error}`);
+  useEffect(() => {
+    if (formResponse?.status === "success") {
+      toast.success(formResponse.message);
+      reset();
+      closeDialog();
     }
-  }
+
+    if (formResponse?.status === "error") {
+      toast.error(formResponse?.message);
+    }
+  }, [formResponse]);
 
   return (
     <RadixDialog.Root open={dialog} onOpenChange={setDialog}>
@@ -159,13 +107,14 @@ const Dialog = ({
           <form
             className={styles.form}
             id="input-form"
-            onSubmit={onSubmit}
-            action=""
+            // onSubmit={onSubmit}
+            action={onSubmit}
+            ref={formRef}
           >
             <input
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              name="link"
+              name="url"
               placeholder="Link"
               required
             />
@@ -239,8 +188,8 @@ const Dialog = ({
 
                   <div className={styles.add_category}>
                     <input
-                      onChange={handleChange}
                       type="text"
+                      name="categories"
                       placeholder='Example : "Software Eng. Links"'
                     />
 
@@ -261,7 +210,7 @@ const Dialog = ({
                   className={styles.submit}
                 >
                   <button className={styles.submit__button} type="submit">
-                    Save Link
+                    Savee Link
                   </button>
                 </div>
               </>

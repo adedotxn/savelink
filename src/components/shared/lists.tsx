@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./list.module.css";
 import { toast, Toaster } from "sonner";
@@ -11,11 +13,12 @@ import {
 import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
 import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { CopySvg, ShareSvg } from "../ui/svg";
 import Nolinks from "./nolinks";
 import { SavedLink } from "@utils/interface";
 import DeleteOption from "./deleteDialog";
+import { revalidateAll } from "src/app/board/actions";
 
 interface arrayInterface {
   savedlinks: SavedLink[];
@@ -83,11 +86,11 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                   <h3>{data.title}</h3>
                   <p>
                     {data.url.includes("http") ? (
-                      <Link target="_blank" href={data.url}>
+                      <Link target="_blank" href={"/"}>
                         {data.url}
                       </Link>
                     ) : (
-                      <Link target="_blank" href={`https://${data.url}`}>
+                      <Link target="_blank" href={`https://${"/"}`}>
                         {`https://${data.url}`}
                       </Link>
                     )}
@@ -106,6 +109,7 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                       className={styles.link__image}
                       onClick={() => {
                         bookmarkMutation.mutate(data._id);
+                        revalidateAll();
                       }}
                     >
                       {data.bookmarked ? (

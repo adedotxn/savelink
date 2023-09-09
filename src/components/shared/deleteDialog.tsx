@@ -1,7 +1,10 @@
+"use client";
+
 import React, { SetStateAction } from "react";
 import * as DeleteDialog from "@radix-ui/react-alert-dialog";
 import styles from "./deleteDialog.module.css";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { revalidateAll } from "src/app/board/actions";
 
 const DeleteOption = ({
   id,
@@ -37,7 +40,10 @@ const DeleteOption = ({
               Cancel
             </button>
             <button
-              onClick={() => deleteLink(id)}
+              onClick={() => {
+                deleteLink(id);
+                revalidateAll();
+              }}
               className={styles.delete__button}
             >
               Yes, delete link
