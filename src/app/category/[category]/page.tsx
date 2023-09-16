@@ -1,10 +1,5 @@
 import styles from "@styles/dashboard.module.css";
-import { GetServerSidePropsContext } from "next";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
-import { getCategories } from "@utils/api";
 import { getServerSession } from "next-auth/next";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import List from "@components/shared/lists";
 import Loader from "@components/ui/loader";
 import { authOptions } from "src/lib/authOptions";

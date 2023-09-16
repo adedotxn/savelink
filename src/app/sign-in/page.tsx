@@ -45,7 +45,7 @@ const SignIn = () => {
             <button onClick={handleSignIn} className={CabinetGrotesk.className}>
               {" "}
               <Image
-                src="/google.svg"
+                src="/assets/google.svg"
                 width={25}
                 height={25}
                 alt="google logo"

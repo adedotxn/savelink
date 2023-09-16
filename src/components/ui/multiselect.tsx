@@ -1,6 +1,9 @@
 import styles from "./multiselect.module.css";
 import { useState } from "react";
 import { CaretSortIcon } from "@radix-ui/react-icons";
+import { useRef } from "react";
+import { useClickOutside } from "@utils/helpers/toolbox";
+
 const Multiselect = ({
   options,
   toggleOption,
@@ -16,10 +19,19 @@ const Multiselect = ({
     (key) => selected[key] === true
   );
 
+  const ref = useRef(null);
+
+  const handleClickOutside = () => {
+    setShowOptions("closed");
+  };
+
+  useClickOutside(ref, handleClickOutside);
+
   return (
     <>
       <section className={styles.dropdown}>
         <button
+          ref={ref}
           type="button"
           onClick={() =>
             setShowOptions((curr: Options) =>
@@ -41,6 +53,7 @@ const Multiselect = ({
 
         <div className={styles.dropdown__options}>
           <ul
+            ref={ref}
             className={
               showOptions === "open"
                 ? styles.dropdown__open

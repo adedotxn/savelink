@@ -20,7 +20,6 @@
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-scroll-area": "1.0.2",
     "@radix-ui/react-tooltip": "^1.0.3",
-    "@sentry/nextjs": "^7.56.0",
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.35.0",
     "axios": "^0.27.2",
@@ -33,18 +32,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sonner": "^0.5.0",
+    "usehooks-ts": "^2.9.1",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@next/bundle-analyzer": "^13.4.19",
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -54,6 +47,7 @@
     "@types/react-dom": "18.0.5",
     "autoprefixer": "^10.4.8",
     "babel-loader": "^8.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "8.18.0",
     "eslint-config-next": "^13.4.19",
     "eslint-plugin-storybook": "^0.6.10",
@@ -63,7 +57,7 @@
     "typescript": "4.7.4"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=18.0.0",
     "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
   }

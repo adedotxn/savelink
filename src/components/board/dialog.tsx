@@ -2,6 +2,7 @@
 
 import { FormEvent, useState, useEffect, useRef } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 
@@ -29,6 +30,7 @@ const Dialog = ({
   name: string;
   categories: string[];
 }) => {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const dialog = useDialogStore((state) => state.dialog);
   const setDialog = useDialogStore((state) => state.setDialog);
@@ -127,7 +129,7 @@ const Dialog = ({
                   if (link.length === 0) return toast.error("Type in a link");
                   generateLinkInfo();
                 }}
-                icon={infoLoading ? <Spinner /> : null}
+                icon={infoLoading ? <Spinner size="15px" /> : null}
               >
                 Next
               </Button>
@@ -210,7 +212,7 @@ const Dialog = ({
                   className={styles.submit}
                 >
                   <button className={styles.submit__button} type="submit">
-                    Savee Link
+                    Save Link
                   </button>
                 </div>
               </>

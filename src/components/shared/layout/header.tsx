@@ -1,13 +1,11 @@
 import { useState } from "react";
 import styles from "./header.module.css";
 import Logout from "../../ui/buttons/logout-btn";
-import ThemeSwitcher from "../../ui/buttons/theme-switcher";
 import Options from "./options";
 import { useSearch } from "@utils/context";
 import SLAvatar from "../../ui/avatar";
-
-import { MoreSvg } from "../../ui/svg";
 import Button from "../../ui/buttons/base-button";
+import { MoreSvg } from "@components/ui/svg/moresvg";
 
 const Header = ({
   user,

@@ -1,22 +1,20 @@
-import styles from "@styles/dashboard.module.css";
-import { getServerSession } from "next-auth";
-import getQueryClient from "src/lib/get-query-client";
-import { dehydrate } from "@tanstack/react-query";
-import List from "@components/shared/lists";
-import Dialog from "@components/board/dialog";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { authOptions } from "src/lib/authOptions";
+import BoardList from "./board";
+import { SavedLink } from "@utils/interface";
 
-async function getUserData() {
+async function getUserData(limit = 0) {
+  "use server";
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
     redirect("/sign-in");
   }
 
-  const user = session?.user?.email;
+  const user = session?.user?.email ?? "";
 
-  const res = await fetch(`${process.env.URL}/api/${user}`, {
+  const res = await fetch(`${process.env.URL}/api/${user}?limit=${limit}`, {
     next: { tags: ["all_links"] },
   });
 
@@ -24,26 +22,33 @@ async function getUserData() {
 
   let categories = [];
 
-  for (let i: number = 0; i < data.data.length; ++i) {
-    const _data = data.data[i]?.category;
+  for (let i: number = 0; i < data.result.data.length; ++i) {
+    const _data = data.result.data[i]?.category;
 
     if (_data !== undefined) categories.push("");
 
-    data.data[i].categories.forEach((data: string) => {
+    data.result.data[i].categories.forEach((data: string) => {
       categories.push(data);
     });
   }
 
   categories = [...new Set(categories)];
 
-  return { name: user, data: data.data, categories };
+  return {
+    name: user,
+    data: data.result.data,
+    categories,
+    total: data.result.totalPosts,
+  };
 }
 
 const Dashboard = async () => {
-  const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(["user"], getUserData);
-  const dehydratedState = dehydrate(queryClient);
-  const data = await getUserData();
+  const data: {
+    name: string;
+    data: SavedLink[];
+    categories: string[];
+    total: number;
+  } = await getUserData();
 
   if (!data.name || data.name === undefined) {
     return (
@@ -56,18 +61,6 @@ const Dashboard = async () => {
     );
   }
 
-  return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <section>
-          <List name={data.name} savedlinks={data.data} />
-        </section>
-      </main>
-
-      <footer className={styles.footer}>
-        <Dialog name={data.name} categories={data.categories} />
-      </footer>
-    </div>
-  );
+  return <BoardList data={data} getUserData={getUserData} total={data.total} />;
 };
 export default Dashboard;

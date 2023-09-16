@@ -1,9 +1,7 @@
 "use client";
 
-import React, { SetStateAction } from "react";
-import * as DeleteDialog from "@radix-ui/react-alert-dialog";
+import React from "react";
 import styles from "./deleteDialog.module.css";
-import { TrashIcon } from "@radix-ui/react-icons";
 import { revalidateAll } from "src/app/board/actions";
 
 const DeleteOption = ({

@@ -5,15 +5,15 @@ import { useRouter, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import styles from "@styles/sidebar.module.css";
 import ArchiveActive from "../../ui/svg/active/archive";
-import BookmarkActive from "../../ui/svg/active/bookmarked";
 import CategActive from "../../ui/svg/active/categ";
-import { ArchiveSvg, BookmarkSvg, CategoriesSvg } from "../../ui/svg";
 import {
   BookmarkFilledIcon,
   BookmarkIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
+import { ArchiveSvg } from "@components/ui/svg/archive";
+import { CategoriesSvg } from "@components/ui/svg/categoriesvg";
 
 const Sidebar = ({ name }: { name: string }) => {
   const navRef = useRef<HTMLElement>(null);
@@ -98,7 +98,7 @@ const Sidebar = ({ name }: { name: string }) => {
                   hovering ? styles.show : styles.hide
                 }`}
               >
-                Bookmarkss
+                Bookmarks
               </span>
             </li>
           </Link>

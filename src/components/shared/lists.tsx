@@ -14,11 +14,12 @@ import { useBookmark, useDelete } from "@utils/api";
 import { useSearch } from "@utils/context";
 import { copyToClipboard, webShare } from "@utils/helpers/toolbox";
 import { useRouter } from "next/navigation";
-import { CopySvg, ShareSvg } from "../ui/svg";
 import Nolinks from "./nolinks";
 import { SavedLink } from "@utils/interface";
 import DeleteOption from "./deleteDialog";
 import { revalidateAll } from "src/app/board/actions";
+import { ShareSvg } from "@components/ui/svg/share";
+import { CopySvg } from "@components/ui/svg/copy";
 
 interface arrayInterface {
   savedlinks: SavedLink[];
@@ -117,7 +118,6 @@ const List = ({ name, savedlinks }: arrayInterface) => {
                       ) : (
                         <BookmarkIcon width={24} height={24} />
                       )}
-                      {/* <SvgComponent starred={data.bookmarked} /> */}
                     </div>
 
                     <div

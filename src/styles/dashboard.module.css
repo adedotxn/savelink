@@ -10,7 +10,7 @@
   padding-bottom: 8rem;
 }
 
-.main > section {
+.main>section {
   display: grid;
   row-gap: 1.5rem;
   place-items: center;
@@ -22,129 +22,15 @@
   background-color: rgba(0, 0, 0, 0.449);
 }
 
-.dialog_container {
-  background-color: rgba(0, 0, 0, 0.433);
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  z-index: 20;
-  overflow: hidden;
-}
-
-.dialog {
-  width: 87vw;
-  top: 9rem;
-  background-color: var(--accent-color);
-  border: 1px solid white;
-  border-radius: 0.5rem;
-}
-
-.dialog form {
-  display: grid;
-}
-
-.dialog form > input {
-  padding: 0.2rem 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.dialog form > input:focus {
-  outline: 1px solid rgb(68, 68, 68);
-}
-
-.dialog p {
-  color: var(--text-color);
-}
-
-.dialog select {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: 1.5rem;
-  font-size: 1rem;
-}
-
-.btn {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 0 auto;
-  padding: 0.2rem 0.5rem;
-  border: 0px solid;
-  background-color: var(--accent-color-opposite);
-  color: var(--accent-color);
-  font-weight: 500;
-  font-size: 1.2rem;
-  border-radius: 0.3rem;
-  transition: all 0.1s linear 0s;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-}
-
-.btn:active,
-.btn:hover {
-  background-color: var(--text-color);
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
-}
-
-.dialog section {
-  /* border: 1px solid white; */
+.paginator {
   margin-top: 1rem;
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dialog section div p {
-  padding: 0rem;
-  margin: 0rem;
-}
-
-.dialog section div input {
-  padding: 0.3rem 0.2rem;
-}
-
-.category p {
-  margin: 0;
-}
-
-.add_category {
-  /* border: 1px solid green; */
-  display: grid;
-}
-
-.add_category select {
-  margin-top: 0.5rem;
-}
-
-.category_area {
-  /* border: 1px solid red; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  place-items: center;
 }
 
 .footer {
   display: none;
 }
 
-.close_btn {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 0.3rem;
-  background: var(--background);
-  cursor: pointer;
-}
-
-.close_btn div {
-  /* padding:.1rem .2rem; */
-  margin: 0;
-  padding: 0;
-}
 
 @media screen and (min-width: 768px) {
   .container {
@@ -152,15 +38,6 @@
     position: relative;
   }
 
-  .active_route {
-    background-color: rgba(255, 0, 0, 0.492);
-    position: relative;
-    height: 2.25rem;
-    width: 2.25rem;
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
-  }
 
   .main {
     display: flex;
@@ -168,29 +45,19 @@
     margin: 0;
   }
 
-  .main > section {
+  .main>section {
     margin-top: 2rem;
+    margin-bottom: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     -webkit-column-gap: 2rem;
     column-gap: 2rem;
   }
 
-  .dialog {
-    width: 50vw;
-    top: 8rem;
-  }
-
-  .dialog_container {
-    background-color: transparent;
-  }
-
-  .dialog section {
-    padding: 0rem 2rem;
-  }
-
-  .create_category {
-    display: grid;
+  .paginator {
+    margin-top: 1rem;
+    place-items: center;
+    grid-column: 2 / span 1;
   }
 
   .footer {
@@ -200,29 +67,5 @@
     display: block;
   }
 
-  .add {
-    padding: 0;
-    margin: 0;
-    transition: -webkit-transform 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out;
-    transition: transform 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
-    border-radius: 50%;
-    display: flex;
-    place-items: center;
-    -webkit-transform: scale(2.5);
-    transform: scale(2.5);
-    cursor: pointer;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
-  }
 
-  .add:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  .btn {
-    cursor: pointer;
-  }
 }

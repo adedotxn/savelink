@@ -33,9 +33,9 @@ export async function save(props: FormInput) {
     }
     try {
 
-        const request = await fetch(`${process.env.URL}/api/${name}/save`, requestOptions);
-        const reqResponse = await request.json();
-        console.log("reqres", reqResponse)
+        const request = await fetch(`${process.env.URL}/api/${name}`, requestOptions);
+        await request.json();
+        // console.log("reqres", reqResponse)
 
         revalidateTag('all_links')
         return { status: "success", message: "Link Saved!" }
