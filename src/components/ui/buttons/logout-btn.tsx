@@ -13,8 +13,8 @@ const Logout = () => {
 
   const handleSignOut = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const data = await signOut({ redirect: false, callbackUrl: "/" });
-    router.push(data.url);
+    await signOut({ redirect: false, callbackUrl: "/" });
+    router.push("/");
   };
 
   return (

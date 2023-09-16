@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const runtimeCaching = require("next-pwa/cache");
-const { withSentryConfig } = require("@sentry/nextjs");
+
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const withPWA = require("next-pwa")({
   dest: "public",
@@ -22,22 +25,11 @@ const nextConfig = withPWA({
     ];
   },
 
-  // Optional build-time configuration options
-  sentry: {
-    tunnelRoute: "/monitoring-tunnel",
-    hideSourceMaps: false,
-  },
-
   experimental: {
     serverActions: true,
   },
 });
 
-const sentryWebpackPluginOptions = {
-  org: "batcave-6m",
-  project: "javascript-nextjs",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  silent: true, // Suppresses all logs
-};
+const configWithBundleAnalyzer = withBundleAnalyzer(nextConfig);
 
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = configWithBundleAnalyzer;

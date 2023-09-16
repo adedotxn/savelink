@@ -119,8 +119,8 @@
   display: grid;
 }
 
-.form > input,
-.editLink > input {
+.form>input,
+.editLink>input {
   padding: 0.5rem 0.5rem;
   margin-top: 0.5rem;
   width: 80%;
@@ -130,7 +130,7 @@
   font-size: 1rem;
 }
 
-.form > input:focus {
+.form>input:focus {
   outline: none;
 }
 
@@ -161,7 +161,7 @@
   cursor: pointer;
 }
 
-.add_category > input {
+.add_category>input {
   padding: 0.2rem 0.5rem;
   width: 60%;
 }
